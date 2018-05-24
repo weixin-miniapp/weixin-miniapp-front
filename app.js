@@ -10,28 +10,51 @@ App({
     wx.login({
       success: res => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
-      }
-    })
-    // 获取用户信息
-    wx.getSetting({
-      success: res => {
-        if (res.authSetting['scope.userInfo']) {
-          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-          wx.getUserInfo({
-            success: res => {
-              // 可以将 res 发送给后台解码出 unionId
-              this.globalData.userInfo = res.userInfo
+        // 获取用户信息
+        wx.getSetting({
+          success: res => {
+            if (res.authSetting['scope.userInfo']) {
+              // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+              wx.getUserInfo({
+                success: userRes => {
+                  // 可以将 res 发送给后台解码出 unionId
+                  if(userRes)
+                  wx.request({
+                    url: "",
+                    data: {
+                      code: res.code,
+                      encryptedData: userRes.encryptedData,
+                      iv: userRes.iv
+                    },
+                    header: {
+                      "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    method: 'POST',
+                    //服务端的回掉  
+                    success: function (result) {
 
-              // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-              // 所以此处加入 callback 以防止这种情况
-              if (this.userInfoReadyCallback) {
-                this.userInfoReadyCallback(res)
-              }
+                      var userId = result.data.id;                
+                      wx.setStorageSync("userId", userId);
+                      this.globalData.userId = userId;
+                    },
+                      fail: function () {
+                      console.log('登陆失败，检查网络连接')
+                    }
+                  })  
+                  this.globalData.userInfo = userRes.userInfo;
+                  // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
+                  // 所以此处加入 callback 以防止这种情况
+                  if (this.userInfoReadyCallback) {
+                    this.userInfoReadyCallback(res)
+                  }
+                }
+              })
             }
-          })
-        }
+          }
+        })
       }
     })
+   
   },
   getUserInfo: function (cb) {
     var that = this
@@ -52,6 +75,8 @@ App({
     }
   },
   globalData: {
-    userInfo: null
+    userInfo: null,
+    //每次请求带上该userId
+    userId:null
   }
 })
