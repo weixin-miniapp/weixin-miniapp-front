@@ -1,0 +1,60 @@
+
+<view class="container more">
+  <view class="user flex-wrp">
+    <view class="avatar flex-item">
+      <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+    </view>
+    <view class="user-info flex-item">
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+      <text class="edit">查看或编辑个人主页</text>
+    </view>
+  </view>
+
+  <view class="my">
+    <view class="my-item flex-wrp">
+      <view class="myitem-icon flex-item" >
+        <image src="../../images/name.png"></image>
+      </view>
+      <view class="myitem-name flex-item">
+        <text>姓名</text>
+        <text class="item">黄靖萱</text>
+      </view>  
+    </view>
+    <view class="my-item flex-wrp">
+      <view class="myitem-icon flex-item" >
+        <image src="../../images/gender.png"></image>
+      </view>
+      <view class="myitem-name flex-item">
+        <text>性别</text>
+        <text class="item">女</text>
+      </view>
+    </view>
+    <view class="my-item flex-wrp">
+      <view class="myitem-icon flex-item" >
+        <image src="../../images/status.png"></image>
+      </view>
+      <view class="myitem-name flex-item">
+        <text>身份</text>
+        <text class="item">学生</text>
+      </view>
+    </view>
+    <view class="my-item flex-wrp">
+      <view class="myitem-icon flex-item" >
+        <image src="../../images/stuId.png"></image>
+      </view>
+      <view class="myitem-name flex-item">
+        <text>学号</text>
+        <text class="item">12345678</text>
+      </view>
+    </view>
+    <view class="my-item flex-wrp">
+      <view class="myitem-icon flex-item" >
+        <image src="../../images/email.png"></image>
+      </view>
+      <view class="myitem-name flex-item">
+        <text>邮箱</text>
+        <text class="item">66666@qq.com</text>
+      </view>
+    </view>
+  </view>
+</view>
