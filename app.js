@@ -8,7 +8,7 @@ App({
 
     // 登录
     wx.login({
-      success: res => {
+      success: wxres => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
         // 获取用户信息
         wx.getSetting({
@@ -20,22 +20,23 @@ App({
                   // 可以将 res 发送给后台解码出 unionId
                   if(userRes)
                   wx.request({
-                    url: "",
+                    url: 'https://www.sunlikeme.xyz/user/login',
                     data: {
-                      code: res.code,
+                      code: wxres.code,
                       encryptedData: userRes.encryptedData,
                       iv: userRes.iv
                     },
                     header: {
-                      "Content-Type": "application/x-www-form-urlencoded"
+                      "content-type": "application/x-www-form-urlencoded"
                     },
-                    method: 'POST',
+                    method: "POST",
                     //服务端的回掉  
                     success: function (result) {
 
                       var userId = result.data.id;                
                       wx.setStorageSync("userId", userId);
                       this.globalData.userId = userId;
+                      console.log('yeah')
                     },
                       fail: function () {
                       console.log('登陆失败，检查网络连接')
