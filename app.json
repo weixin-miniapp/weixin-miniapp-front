@@ -1,5 +1,6 @@
 {
-  "pages": [
+  "pages":[
+    "pages/login/login",
     "pages/index/index",
     "pages/logs/logs",
     "pages/main/main",
@@ -11,8 +12,7 @@
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle": "black"
+    "navigationBarTitleText": "WeChat"
   },
   "tabBar": {
     "selectedColor": "#1296db",
@@ -44,3 +44,6 @@
     ]
   }
 }
+
+
+

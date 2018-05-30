@@ -1,60 +1,57 @@
 <!--index.wxml-->
 <!--index.wxml-->
-<import src="../public/item.wxml"/>
 
-<scroll-view scroll-y="true" class="container" bindscrolltoupper="upper" upper-threshold="10" lower-threshold="5" bindscrolltolower="lower"  scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+  <import src="../public/item.wxml" />
 
-  <view class="search">
-  
-    
+  <scroll-view scroll-y="true" class="container" bindscrolltoupper="upper" upper-threshold="10" lower-threshold="5" bindscrolltolower="lower" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+
+    <view class="search">
+
+
       <view class="search-left flex-item">
-          <image src="../../images/search.png"></image>
-          <input placeholder="搜索老师或课程" placeholder-class="search-placeholder"/>
-      </view>    
+        <image src="../../images/search.png"></image>
+        <input placeholder="搜索老师或课程" placeholder-class="search-placeholder" bindinput='searchLesson' />
+      </view>
       <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
-
-    </block>
-  </view>
-
-  </view>
-  <!-- 滚动广告 begin -->
-  <view class="slider-wrapper">
-    <swiper indicator-dots="{{indicatorDots}}"
-  autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-      <block wx:for="{{imgUrls}}" wx:key="*this">
-        <swiper-item>
-          <image src="{{item}}" class="slide-image"/>
-        </swiper-item>
-      </block>
-    </swiper>
-  </view>
-  <!-- 滚动广告 end -->
-
-  <!-- 正在直播 begin -->
-  <view class="row-container">
-    <navigator class="header">
-      <view class="left">
-        <view class="bilibili-index-sprite bilibili-index-live"></view>
-        <text>正在直播</text>
+  
+          <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image> 
       </view>
-      <view class="right">
-        <text>查看更多直播</text>
-        <view class="bilibili-index-sprite bilibili-index-arrow"></view>
-      </view>
-    </navigator>
-    <view class="content-wrapper">
-      <block wx:for="{{liveList}}" wx:key="avid">
-        <!-- 使用正在直播模板，传入当前循环对象item -->
-        <template is="jiefItem2" data="{{...item}}"/>
-      </block>
+
     </view>
-  </view>
-  <!-- 正在直播 end -->
+    <!-- 滚动广告 begin -->
+    <view class="slider-wrapper">
+      <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+        <block wx:for="{{imgUrls}}" wx:key="*this">
+          <swiper-item>
+            <image src="{{item}}" class="slide-image" />
+          </swiper-item>
+        </block>
+      </swiper>
+    </view>
+    <!-- 滚动广告 end -->
+
+    <!-- 正在直播 begin -->
+    <view class="row-container">
+      <navigator class="header">
+        <view class="left">
+          <view class="bilibili-index-sprite bilibili-index-live"></view>
+          <text>正在直播</text>
+        </view>
+        <view class="right">
+          <text>查看更多直播</text>
+          <view class="bilibili-index-sprite bilibili-index-arrow"></view>
+        </view>
+      </navigator>
+      <view class="content-wrapper">
+        <block wx:for="{{liveList}}" wx:key="avid">
+          <!-- 使用正在直播模板，传入当前循环对象item -->
+          <template is="jiefItem2" data="{{...item}}" />
+        </block>
+      </view>
+    </view>
+    <!-- 正在直播 end -->
 
 
 
-</scroll-view>
+  </scroll-view>
 
