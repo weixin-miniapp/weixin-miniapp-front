@@ -10,7 +10,11 @@
 	"compileType": "miniprogram",
 	"libVersion": "1.9.94",
 	"appid": "wx176ac26d699650cb",
+<<<<<<< HEAD
 	"projectname": "minifront",
+=======
+	"projectname": "xiaochengxu",
+>>>>>>> eda0bfae7031a4d76410540112723f4321ad7307
 	"isGameTourist": false,
 	"condition": {
 		"search": {

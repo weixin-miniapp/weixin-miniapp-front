@@ -1,9 +1,14 @@
 {
+<<<<<<< HEAD
   "pages": [
+=======
+  "pages":[
+>>>>>>> eda0bfae7031a4d76410540112723f4321ad7307
     "pages/index/index",
     "pages/logs/logs",
     "pages/main/main",
     "pages/myPage/myPage",
+<<<<<<< HEAD
     "pages/course/course",
     "pages/login/login"
   ],
@@ -12,6 +17,15 @@
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "WeChat",
     "navigationBarTextStyle": "black"
+=======
+    "pages/course/course"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle":"black"
+>>>>>>> eda0bfae7031a4d76410540112723f4321ad7307
   },
   "tabBar": {
     "selectedColor": "#1296db",
@@ -36,4 +50,8 @@
       }
     ]
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> eda0bfae7031a4d76410540112723f4321ad7307

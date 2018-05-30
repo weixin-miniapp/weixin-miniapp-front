@@ -50,6 +50,7 @@ Page({
     ],
   },
 
+<<<<<<< HEAD
   onLoad: function (e) 
   {
     if (!app.globalData.userInfo) {
@@ -57,6 +58,9 @@ Page({
         url: '/pages/login/login',
       })
     }
+=======
+  onLoad: function (e) {
+>>>>>>> eda0bfae7031a4d76410540112723f4321ad7307
     this.scrollR(e);
   },
 

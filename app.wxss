@@ -139,6 +139,7 @@
 .container .feed-item .feed-content .answer-actions .dot ::after{
   content: "•";
 }
+<<<<<<< HEAD
 
 .unlogin-card {
   display: flex;
@@ -196,3 +197,5 @@
 .unlogin-btn::after {
   border: none;
 }
+=======
+>>>>>>> eda0bfae7031a4d76410540112723f4321ad7307
