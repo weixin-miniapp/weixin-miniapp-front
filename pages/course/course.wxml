@@ -1,0 +1,22 @@
+<!--pages/course/course.wxml-->
+<view class="mobi_title">
+    <text class="mobi_icon"></text>
+    <text>我的课程</text>
+  </view>
+<button class='registerBtn' bindtap='sumbit' >添加课程</button>
+<scroll-view scroll-y="true" bindscroll="scroll">
+  <block wx:for-items="{{lists}}" wx:for-item="list" wx:key="list.id">
+    <view class="list" data-id="{{list.id}}">
+      <view class="list-img">
+        <image class="video-img" mode="scaleToFill" src="{{list.image}}"></image>
+      </view>
+      <view class="list-detail">
+        <view class="list-title"><text>{{list.title}}</text></view>
+        <view class="list-tag"><view class="state">{{list.state}}</view><view class="join"><text class="list-num">{{list.num}}</text>人观看 </view></view>
+        <view class="list-info"><text>{{list.address}}</text>|<text>{{list.time}}</text></view>
+      </view> 
+    </view>
+  </block>
+</scroll-view>
+<include src="../layout/footer.wxml"/>
+

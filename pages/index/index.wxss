@@ -1,0 +1,319 @@
+/**index.wxss**/
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.userinfo-avatar {
+  width: 65rpx;
+  height: 65rpx;
+  margin: 2rpx 15rpx;
+  border-radius: 50%;
+}
+
+.slider-wrapper {
+    position: relative;
+    width: 100%;
+    height: 175px;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+.slide-image, swiper {
+  width: 100%;
+  height: 185px;
+}
+
+
+
+
+
+.container .search{
+  width: 735rpx;
+  height: 65rpx;
+  display: flex;
+  flex-direction: row;
+  padding: 12.5rpx 0 12.5rpx 15rpx;
+  background: #2A8CE5;
+}
+.container .search-left{
+  flex: 8;
+  background: #4EA3E7;
+  text-align: left;
+}
+.container .search-left input{
+  display: inline-block;
+  height: 65rpx;
+  font-size: 26rpx;
+}
+.search-placeholder{
+  color: #8CCEFD;
+  line-height: 20rpx;
+}
+.container .search .search-left image{
+  display: inline-block;
+  width: 35rpx;
+  height: 35rpx;
+  padding: 15rpx 15rpx 15rpx 20rpx;
+}
+.container .search .search-right{
+  flex: 1;
+}
+.container .search .search-right image{
+  width: 45rpx;
+  height: 45rpx;
+  padding: 10rpx;
+}
+
+
+
+
+.container{
+  padding: 0;
+  font-size: 14rpx;
+  background: #F0F4F3;
+  color: #000;
+}.row-container {
+    position: relative;
+    width: 100%;
+    margin-bottom: 12px;
+    background-color: #fff;
+    box-sizing: border-box;
+}
+.row-container .header {
+    display: block;
+    height: 44px;
+    line-height: 44px;
+    padding: 0 12px;
+}
+.row-container .header .left {
+    float: left;
+    color: #444;
+    font-size: 14px;
+    position: relative;
+    padding-left: 25px;
+}
+.bilibili-index-sprite {
+    display: inline-block;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 12px;
+    left: 0;
+}
+.bilibili-index-hot {
+    background-position: -5px -215px;
+    width: 20px;
+    height: 20px;
+}
+.row-container .header .right {
+    float: right;
+    font-size: 14px;
+    color: #999;
+    position: relative;
+    padding-right: 25px;
+}
+.row-container .header .hot {
+    font-size: 13px;
+    color: #ffb30f;
+    padding: 0 0 0 25px;
+}
+.bilibili-index-ranking {
+    background-position: -5px -65px;
+    width: 20px;
+    height: 20px;
+}
+.row-container .content-wrapper {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    padding: 0 6px;
+    box-sizing: border-box;    
+}
+.row-container img {
+    vertical-align: top;
+}
+.row-container .content-list {
+    width: 50%;
+    display: inline-block;
+    position: relative;
+    padding: 0 6px 24px;
+    vertical-align: top;
+    box-sizing: border-box;
+}
+.row-container .content-list .item {
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    box-sizing: border-box;  
+}
+.row-container .content-list .item .top {
+    position: relative;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100%;
+    height: 0;
+    padding-bottom: 63%;
+    box-sizing: border-box;  
+}
+.row-container .content-list .info {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding-top: 5px;
+    box-sizing: border-box;  
+}
+.row-container .content-list .item .cover-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    -webkit-transition: opacity .3s;
+    transition: opacity .3s;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    border-radius: 5px;
+    box-sizing: border-box;  
+}
+.row-container .content-list .info .title {
+    width: 100%;
+    max-height: 36px;
+    overflow: hidden;
+    color: #444;
+    font-size: 13px;
+    box-sizing: border-box;  
+    margin-bottom: 4px;
+}
+.row-container .left {
+    float: left;
+    box-sizing: border-box;  
+}
+.row-container .content-list .info .cell {
+    position: relative;
+    width: 50%;
+    font-size: 13px;
+    color: #999;
+    padding-left: 18px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    box-sizing: border-box;
+}
+.bilibili-index-play {
+    background-position: -5px -425px;
+    width: 15px;
+    height: 11px;
+    top: 50%;
+    margin-top: -6px;
+}
+.bilibili-index-danmu {
+    background-position: -5px -446px;
+    width: 15px;
+    height: 11px;
+    top: 50%;
+    margin-top: -6px;
+}
+.bilibili-index-live {
+    background-position: -5px -155px;
+    width: 20px;
+    height: 20px;
+}
+.bilibili-index-arrow {
+    background-position: -5px -395px;
+    width: 20px;
+    height: 20px;
+    right: 0;
+    left: auto;
+}
+.row-container .content-list .info .avatar {
+    position: relative;
+    width: 42px;
+    height: 42px;
+    border-radius: 21px;
+    border: 2px solid #fff;
+    top: -26px;
+    left: 7px;
+    z-index: 10;
+    box-sizing: border-box;
+}
+.row-container .content-list .info .avatar image {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    box-sizing: border-box;
+}
+.row-container .content-list .info .user {
+    position: absolute;
+    left: 0;
+    top: 5px;
+    width: 100%;
+    padding-left: 56px;
+    box-sizing: border-box;
+}
+.row-container .text-overflow {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.row-container .content-list .info .name {
+    font-size: 13px;
+    color: #444;
+    line-height: 44rpx;
+}
+.row-container .content-list .info .desp {
+    font-size: 13px;
+    color: #999;
+    padding-top: 2px;
+}
+.row-container .content-list .info .online {
+    position: absolute;
+    top: 25px;
+    width: 48px;
+    padding: 0 1px;
+    color: #fff;
+    background-color: #ccc;
+    border-radius: 6px;
+    text-align: center;
+    height: 20px;
+    line-height: 20px;
+    font-size: 12px;
+}
+.bilibili-index-bangumi {
+    background-position: -5px -365px;
+    width: 20px;
+    height: 20px;
+}
+.row-container .bangumi-list {
+    width: 33.333333%;
+}
+.row-container .bangumi-list .top {
+    padding-top: 75%;
+}
+.row-container .content-list .info .bangumi-title {
+    text-align: center;
+    font-size: 14px;
+    line-height: 46rpx;
+    color: #444;
+}
+.row-container .content-list .info .bangumi-page {
+    text-align: center;
+    font-size: 13px;
+    color: #de698c;
+}
+.footer {
+    padding: 0 10px;
+    font-size: 26rpx;
+    line-height: 55rpx;
+    text-align: center;
+    clear: both;
+    color: #aaa;
+}
+
+
+/*feed-item part is in app.wxss for multiplexing*/

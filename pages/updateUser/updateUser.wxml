@@ -1,0 +1,42 @@
+
+<view class="page centerPage-wrap" id="userCenterPage" data-router="userCenterPage">
+  <view class="centerPage-user-info">
+    <view class="js-change-cover" bindtap="choosePhoto">
+      <image class="cover-thumb" src="{{ userInfo.cover_thumb }}"></image>
+      <label class="ico-moon icon-rightarrow"></label>
+    </view>
+  </view>
+  <view class="centerPage-user-info">
+    <view class="centerPage-info-item">
+      <label>姓名</label>
+      <label class="ico-moon icon-rightarrow"></label>
+      <input class="nickname" placeholder="请输入您的姓名" value="{{ userInfo.nickname }}" bindinput="inputNickname" />
+    </view>
+    <view class="centerPage-info-item">
+      <label>性别</label>
+      <label class="ico-moon icon-rightarrow"></label>
+      <picker mode="selector" class="centerPage-sex" bindchange="changeGender" value="{{ userInfo.sex }}" range="{{ genderArr }}">
+        <view class="picker">{{ genderArr[userInfo.sex] }}</view>
+      </picker>
+    </view>
+    <view class="centerPage-info-item">
+      <label>身份</label>
+      <label class="ico-moon icon-rightarrow"></label>
+      <picker mode="selector" class="centerPage-sex" bindchange="changeIdentity" value="{{ userInfo.identity }}" range="{{ identityArr }}">
+        <view class="picker">{{ identityArr[userInfo.identity] }}</view>
+      </picker>
+    </view>
+     <view class="centerPage-info-item">
+      <label>学号</label>
+      <label class="ico-moon icon-rightarrow"></label>
+      <input class="stuID" placeholder="请输入您的学号" value="{{ userInfo.stuID }}" bindinput="inputStuID" />
+    </view>
+     <view class="centerPage-info-item">
+      <label>联系电话</label>
+      <label class="ico-moon icon-rightarrow"></label>
+      <input class="phone" placeholder="请输入您的手机号码" value="{{ userInfo.phone }}" bindinput="inputPhone" />
+    </view>
+  </view>
+</view>
+<view class="centerPage-save-btn" bindtap="saveUserInfo">提交</view>
+
