@@ -1,9 +1,9 @@
-/* pages/main/main.wxss */
 .page-body-button {
   margin-bottom: 30rpx;
 }
 
-live-player {
-  width: 100%;
+live-pusher {
+  margin: 0 auto;
+  width: 300px;
   height: 225px;
 }

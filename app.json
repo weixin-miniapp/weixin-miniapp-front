@@ -1,16 +1,18 @@
 {
-  "pages":[
+  "pages": [
     "pages/index/index",
     "pages/logs/logs",
     "pages/main/main",
     "pages/myPage/myPage",
-    "pages/course/course"
+    "pages/course/course",
+    "pages/livepush/livepush",
+    "pages/livepull/livepull"
   ],
-  "window":{
-    "backgroundTextStyle":"light",
+  "window": {
+    "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle":"black"
+    "navigationBarTextStyle": "black"
   },
   "tabBar": {
     "selectedColor": "#1296db",
@@ -30,6 +32,12 @@
       {
         "pagePath": "pages/myPage/myPage",
         "text": "个人",
+        "iconPath": "images/resources/tab_course1.png",
+        "selectedIconPath": "images/resources/tab_course1.png"
+      },
+      {
+        "pagePath": "pages/livepush/livepush",
+        "text": "直播",
         "iconPath": "images/resources/tab_course1.png",
         "selectedIconPath": "images/resources/tab_course1.png"
       }

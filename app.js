@@ -8,21 +8,21 @@ App({
 
     // 登录
     wx.login({
-      success: res => {
+      success: wxres => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
         // 获取用户信息
         wx.getSetting({
           success: res => {
-            if (res.authSetting['scope.userInfo']) {
+            if (!res.authSetting['scope.userInfo']) {        
               // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
               wx.getUserInfo({
                 success: userRes => {
                   // 可以将 res 发送给后台解码出 unionId
                   if(userRes)
                   wx.request({
-                    url: "",
+                    url: "https://www.sunlikeme.xyz/user/login",
                     data: {
-                      code: res.code,
+                      code: wxres.code,
                       encryptedData: userRes.encryptedData,
                       iv: userRes.iv
                     },
@@ -32,7 +32,7 @@ App({
                     method: 'POST',
                     //服务端的回掉  
                     success: function (result) {
-
+                      result.data.data.id
                       var userId = result.data.id;                
                       wx.setStorageSync("userId", userId);
                       this.globalData.userId = userId;
@@ -49,6 +49,9 @@ App({
                   }
                 }
               })
+            }
+            else {
+              console.log('获取用户登录态失败！' + res.errMsg)
             }
           }
         })
