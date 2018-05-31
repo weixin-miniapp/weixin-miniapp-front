@@ -1,52 +1,24 @@
-
+var client;
 Page({
   data: {
-    lessonId:''
-    },
-  onLoad: function () {
-    wx.connectSocket({
-      url: 'wss://www.sunlikeme.xyz/hts-websocket'
-    })
-    wx.onSocketOpen(function (res) {
-      console.log('WebSocket连接已打开！')
-      socketOpen = true
-    })
-    wx.onSocketMessage(function (res) {
-      console.log('收到onmessage事件:', res)
-    })
-    Stomp = require('../../utils/stomp.js').Stomp;
-    Stomp.setInterval = function () { }
-    Stomp.clearInterval = function () { }
-    var client = Stomp.over(ws);
-    client.connect({ userId: getApp().globalData.userId, lessonId: "???" }, function (frame) {
-      setConnected(true);
-      console.log('Connected: ' + frame);
-      client.subscribe('/user/question/getQuestion', function (result) {
-
-        console.log(result);
-      });
-      client.subscribe('/user/question/getAnswer', function (result) {
-        //显示答案
-        console.log(result);
-      });
-      client.subscribe('/user/question/getCloseWindow', function (result) {
-        //关闭弹窗
-        console.log(result);
-      });
-      
+    lessonId: '',
+  },
+  onLoad: function (options) {
+    this.setData({
+      title: options.lessonId
     })
   },
   //发送问题
-  SendQuestions: function (questionId) {
-    client.send('/app/question/sendQuestion', { lessonId: this.data.lessonId }, questionId);
+  sendQuestions: function (questionId) {
+    client.send('/app/question/sendQuestion', { lessonId: this.data.lessonId, questionId: questionId, userId: getApp().globalData.userId }, );
   },
   //发送回答
-  SendAnswer: function (questionId) {
-    client.send('/app/question/sendAnswer', { lessonId: this.data.lessonId }, questionId);
+  sendAnswer: function (questionId) {
+    client.send('/app/question/sendAnswer', { lessonId: this.data.lessonId, questionId: questionId, userId: getApp().globalData.userId}, );
   },
   //结束答题
-  CloseQuestion: function () {
-    client.send('/app/question/closeQuestion', { lessonId: this.data.lessonId  },'');
+  closeQuestion: function () {
+    client.send('/app/question/closeQuestion', { lessonId: this.data.lessonId,  userId: getApp().globalData.userId }, '');
   },
   onReady(res) {
     this.ctx = wx.createLivePusherContext('pusher')
@@ -103,7 +75,89 @@ Page({
         console.log('switchCamera fail')
       }
     })
-  }
+  },
 
+  /**
+    * 生命周期函数--监听页面显示
+    */
+  onShow: function () {
+    var socketOpen = false
+    var socketMsgQueue = []
+    function sendSocketMessage(msg) {
+      console.log('send msg:')
+      console.log(msg);
+      if (socketOpen) {
+        wx.sendSocketMessage({
+          data: msg
+        })
+      } else {
+        socketMsgQueue.push(msg)
+      }
+    }
+    var ws = {
+      send: sendSocketMessage,
+      onopen: null,
+      onmessage: null,
+      close: function () {
+        wx.closeSocket({
+          code: 1000,
+          reason: '用户退出',
+          success: function (res) { },
+          fail: function (res) { },
+          complete: function (res) { },
+        })
+      }
+    }
+    wx.connectSocket({
+      url: 'wss://www.sunlikeme.xyz/websocket'
+    })
+    wx.onSocketOpen(function (res) {
+      console.log('WebSocket连接已打开！')
+      socketOpen = true
+      for (var i = 0; i < socketMsgQueue.length; i++) {
+        sendSocketMessage(socketMsgQueue[i])
+      }
+      socketMsgQueue = []
 
+      ws.onopen && ws.onopen()
+    })
+    wx.onSocketMessage(function (res) {
+      console.log('收到onmessage事件:', res)
+      ws.onmessage && ws.onmessage(res)
+    })
+    wx.onSocketClose(function (res) {
+      console.log('WebSocket 已关闭！')
+    })
+    var Stomp = require('../../utils/stomp.js').Stomp;
+    Stomp.setInterval = function () { }
+    Stomp.clearInterval = function () { }
+    client = Stomp.over(ws);
+    client.connect({ userId: getApp().globalData.userId, lessonId: this.data.lessonId }, function (frame) {
+      console.log('Connected: ' + frame);
+      //发送问题，教师的回掉
+      client.subscribe('/user/question/getQuestion', function (result) {
+
+        console.log(result);
+      });
+      client.subscribe('/user/question/getAnswer', function (result) {
+        //显示答案，，教师的回掉
+        console.log(result);
+      });
+      client.subscribe('/user/question/getCloseWindow', function (result) {
+        //关闭弹窗，教师的回掉
+        console.log(result);
+      });
+
+    })
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+    if (client != null) {
+      client.disconnect();
+    }
+    console.log('断开socket链接');
+  },
 })

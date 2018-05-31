@@ -5,7 +5,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-  
+    socketOpen:false,
+    lessonId:""
   },
 
   /**
@@ -13,20 +14,20 @@ Page({
    */
   onLoad: function () {
     wx.connectSocket({
-      url: 'wss://www.sunlikeme.xyz/hts-websocket'
+      url: 'wss://www.sunlikeme.xyz/websocket'
     })
     wx.onSocketOpen(function (res) {
       console.log('WebSocket连接已打开！')
-      socketOpen = true
+      this.socketOpen = true
     })
     wx.onSocketMessage(function (res) {
       console.log('收到onmessage事件:', res)
     })
-    Stomp = require('../../utils/stomp.js').Stomp;
+    var Stomp = require('../../utils/stomp.js').Stomp;
     Stomp.setInterval = function () { }
     Stomp.clearInterval = function () { }
-    var client = Stomp.over(ws);
-    client.connect({ userId: getApp().globalData.userId, lessonId: "???" }, function (frame) {
+    var client = Stomp.over(wx);
+    client.connect({ userId: getApp().globalData.userId, lessonId: this.data.lessonId }, function (frame) {
       setConnected(true);
       console.log('Connected: ' + frame);
       client.subscribe('/user/question/getQuestion', function (result) {
