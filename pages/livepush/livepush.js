@@ -4,8 +4,9 @@ Page({
     lessonId: '',
   },
   onLoad: function (options) {
-    this.setData({
-      title: options.lessonId
+    var that = this;
+    that.setData({
+      lessonId: options.lessonId
     })
   },
   //发送问题

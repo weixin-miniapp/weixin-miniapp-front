@@ -22,7 +22,7 @@
         <image class="video-img" mode="scaleToFill" src="{{list.header}}"></image>
       </view>
       <view class="list-detail">
-        <view class="list-title"><text>{{list.lessonName}}</text></view>
+        <view class="list-title"><text>{{list[0].lessonName}}</text></view>
         <view class="list-tag"><view class="state">{{list.state}}</view><view class="join"><text class="list-num">{{list.lessonName}}</text>人观看 </view></view>
         <view class="list-info"><text>{{list.lessonName}}</text>|<text>{{list.lessonName}}</text></view>
       </view> 
