@@ -6,7 +6,15 @@ Page({
   data: {
     motto: 'Hello World',
     userInfo: {},
-    lessonName:'',
+    lessonId:null,
+    header:null,
+    lessonName:null,
+    introduction:null,
+    status:null,
+    onlineTime:null,
+    offlineTime:null,
+    multiparts:null,
+    teach:null,
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
 
@@ -65,31 +73,9 @@ Page({
 
 
   },
-  searchInput:function(e){
-    this.setData({
-      lessonName:e.detail.value
-    })
-    wx.request({
-      url: 'https://www.sunlikeme.xyz/lesson/list',
-      data:{
-        unionId:app.globalData.userId,
-        pageSize:20,
-        pageNum:10,
-        showOnlyMine:0,
-        keyword:lessonName
-      },
-      header: {
-        "content-type": "application/x-www-form-urlencoded",
-        unionId: app.globalData.userId
-      },
-      method: "GET",
-      success: function (result) {
-        //返回参数
-        console.log('yeah')
-      },
-      fail: function () {
-        console.log('登陆失败，检查网络连接')
-      }
+  goToSearch:function(e){
+    wx.navigateTo({
+      url: '/pages/search/search',
     })
   },
   //事件处理函数

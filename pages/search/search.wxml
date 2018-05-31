@@ -1,0 +1,33 @@
+<!--index.wxml-->
+<!--index.wxml-->
+<import src="../public/item.wxml"/>
+
+<scroll-view scroll-y="true" class="container" bindscrolltoupper="upper" upper-threshold="10" lower-threshold="5" bindscrolltolower="lower"  scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+
+  <view class="search">
+  
+    
+      <view class="search-left flex-item">
+          <image src="../../images/search.png"></image>
+          <input placeholder="搜索老师或课程" placeholder-class="search-placeholder" bindinput='searchLesson'/>
+      </view>    
+      <view class="userinfo">
+
+  </view>
+  </view>
+
+  <block wx:for="{{list}}" wx:key="list.lessonId">
+    <view class="list" data-id="{{list.lessonId}}">
+      <view class="list-img">
+        <image class="video-img" mode="scaleToFill" src="{{list.header}}"></image>
+      </view>
+      <view class="list-detail">
+        <view class="list-title"><text>{{list.lessonName}}</text></view>
+        <view class="list-tag"><view class="state">{{list.state}}</view><view class="join"><text class="list-num">{{list.lessonName}}</text>人观看 </view></view>
+        <view class="list-info"><text>{{list.lessonName}}</text>|<text>{{list.lessonName}}</text></view>
+      </view> 
+    </view>
+  </block>
+
+</scroll-view>
+

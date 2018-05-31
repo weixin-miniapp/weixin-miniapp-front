@@ -32,11 +32,9 @@ App({
                     method: "POST",
                     //服务端的回掉  
                     success: function (result) {
-
-                      var userId = result.data.id;                
+                      var userId =result.data.data.id;         
                       wx.setStorageSync("userId", userId);
-                      this.globalData.userId = userId;
-                      console.log('yeah')
+                      getApp().globalData.userId = userId;
                     },
                       fail: function () {
                       console.log('登陆失败，检查网络连接')
@@ -78,6 +76,6 @@ App({
   globalData: {
     userInfo: null,
     //每次请求带上该userId
-    userId:null
+    userId:''
   }
 })
