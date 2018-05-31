@@ -1,11 +1,15 @@
 {
-  "pages": [
+
+  "pages":[
+    "pages/login/login",
     "pages/index/index",
     "pages/logs/logs",
     "pages/main/main",
     "pages/myPage/myPage",
     "pages/course/course",
-    "pages/search/search"
+    "pages/search/search",
+    "pages/livepush/livepush",
+    "pages/livepull/livepull"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -33,7 +37,15 @@
         "text": "个人",
         "iconPath": "images/resources/tab_course1.png",
         "selectedIconPath": "images/resources/tab_course1.png"
+      },
+      {
+        "pagePath": "pages/livepush/livepush",
+        "text": "直播",
+        "iconPath": "images/resources/tab_course1.png",
+        "selectedIconPath": "images/resources/tab_course1.png"
       }
     ]
   }
 }
+
+

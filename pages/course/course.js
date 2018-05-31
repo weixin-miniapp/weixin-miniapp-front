@@ -50,7 +50,14 @@ Page({
     ],
   },
 
-  onLoad: function (e) {
+
+  onLoad: function (e) 
+  {
+    if (!app.globalData.userInfo) {
+      wx.navigateTo({
+        url: '/pages/login/login',
+      })
+    }
     this.scrollR(e);
   },
 

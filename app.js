@@ -1,5 +1,43 @@
 //app.js
 App({
+  toLogin: function () {
+    // 前往授权登录界面
+    wx.navigateTo({
+      url: '/pages/login/login',
+    })
+
+  },
+  ready: function () {
+    return Promise((resolve, reject) => {
+      const userkey = wx.getStorageSync('userkey')
+      const userId = wx.getStorageSync('userId')
+      const sessionData = wx.getStorageSync('sessionData')
+      // 检查用户是否具有登陆态
+      if (!userkey || !userId || !sessionData) {
+        // 如果未登录就前往登录界面
+        this.toLogin()
+
+      } else {
+
+        resolve()
+
+      }
+    })
+  },
+  getUserInfo: function (cb) {
+
+    var that = this
+    if (this.globalData.userInfo) {
+      typeof cb == "function" && cb(this.globalData.userInfo)
+    } else {
+      wx.getUserInfo({
+        success: function (res) {
+          that.globalData.userInfo = res.userInfo
+          typeof cb == "function" && cb(that.globalData.userInfo)
+        }
+      })
+    }
+  },
   onLaunch: function () {
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
@@ -53,7 +91,7 @@ App({
         })
       }
     })
-   
+
   },
   getUserInfo: function (cb) {
     var that = this
@@ -76,6 +114,7 @@ App({
   globalData: {
     userInfo: null,
     //每次请求带上该userId
-    userId:''
+    userId: null
+
   }
 })
