@@ -13,7 +13,9 @@ Page({
     onlineTime: '',
     offlineTime: '',
     multiparts: '',
-    teach:[]
+    statusToString:'',
+    teach:[],
+    teacherName:''
   },
   searchLesson: function (e) {
     var that = this;
@@ -45,15 +47,32 @@ Page({
             status: result.data.data[i]["status"],
             onlineTime: result.data.data[i]["onlineTime"],
             offlineTime: result.data.data[i]["offlineTime"],
-            multiparts: result.data.data[i]["multiparts"],
-            teach: result.data.data[i]["teach"]});
-            /*for (var j = 0; j < teach.length; j++) {
-              console.log(teach[j]);
-            }*/
-          //console.log(this.data.teach);
+            multiparts: result.data.data[i]["multiparts"]});
           that.setData({
-            list: list
+            list: list,
+            teacherName: result.data.data[i]["teach"][0]["nickName"]
           })
+          /*for (var j = 0; j < result.data.data[i]["teach"].length; j++) {
+            teach.push({
+              teacherName:result.data.data[i]["teach"][j]["nickName"]
+            })
+          }*/
+          console.log(result.data.data[i]["teach"].length);
+          if (result.data.data[i]["status"]==0){
+            that.setData({
+              statusToString:'未开始'
+            })
+          }
+          else if (result.data.data[i]["status"]==1) {
+            that.setData({
+              statusToString: '直播中'
+            })
+          }
+          else if (result.data.data[i]["status"]==2) {
+            that.setData({
+              statusToString: '已结束'
+            })
+          }
         }
         console.log(that.data.list);
       },

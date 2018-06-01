@@ -36,7 +36,7 @@ Page({
                       //服务端的回掉  
                       success: function (result) {
 
-                        var userId = result.data.id;
+                        var userId = result.data.data.id;
                         wx.setStorageSync("userId", userId);
                         app.globalData.userId = userId;
                         app.globalData.userInfo = userRes.userInfo;

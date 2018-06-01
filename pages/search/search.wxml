@@ -24,8 +24,8 @@
       </view>
       <view class="list-detail">
         <view class="list-title"><text>{{item.lessonName}}</text></view>
-        <view class="list-tag"><view class="state">{{item.state}}</view><view class="join"><text class="list-num">{{item.lessonName}}</text>人观看 </view></view>
-        <view class="list-info"><text>{{item.lessonName}}</text>|<text>{{item.lessonName}}</text></view>
+        <view class="list-tag"><view class="state">{{statusToString}}</view></view>
+        <view class="list-info"><text>{{teacherName}}</text></view>
       </view> 
     </view>
   </block>

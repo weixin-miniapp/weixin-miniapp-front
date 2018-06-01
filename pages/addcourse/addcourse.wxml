@@ -14,7 +14,13 @@
   </view>
   <view class="wa-input-item">
     <text class="wa-input-label">开课时间：</text>
-    <input class="wa-input" placeholder="请填写开课时间" value="" bindinput='inputOnlineTime'/>
+    <view class="tui-picker-content">
+<picker mode="multiSelector" value="{{dateTime}}" bindchange="changeDateTime" bindcolumnchange="changeDateTimeColumn" range="{{dateTimeArray}}">
+<view class="tui-picker-detail">
+{{dateTimeArray[0][dateTime[0]]}}-{{dateTimeArray[1][dateTime[1]]}}-{{dateTimeArray[2][dateTime[2]]}} {{dateTimeArray[3][dateTime[3]]}}:{{dateTimeArray[4][dateTime[4]]}}:{{dateTimeArray[5][dateTime[5]]}}
+</view>
+</picker>
+</view>
   </view>
     <view class="space">课程简介：</view>
   <view class="padding">
