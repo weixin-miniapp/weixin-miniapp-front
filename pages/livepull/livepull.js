@@ -1,7 +1,15 @@
 Page({
-
+//questionId: 722bb1f21bcf47729a500787eff5f1bd
   data: {
-    lessonId: '',
+    lessonId: '17fc460c6100490ba0679168d032acaa',
+    showModalStatus:false,
+    questionId:'',
+    items: [
+      { name: 'USA', value: '美国' },
+      { name: 'CHN', value: '中国', checked: 'true' },
+      { name: 'BRA', value: '巴西' },
+      { name: 'JPN', value: '日本' },
+    ]
   },
   onLoad: function (options) {
     var that = this;
@@ -11,6 +19,7 @@ Page({
   },
   onReady(res) {
     this.ctx = wx.createLivePlayerContext('player')
+    this.ctx.exitFullScreen()
   },
   statechange(e) {
     console.log('live-player code:', e.detail.code)
@@ -69,6 +78,45 @@ Page({
     })
   },
 
+  //回答课堂问题
+  respondQuestion(){
+    wx.request({
+      url: 'https://www.sunlikeme.xyz/question/answerQuestion',
+      data: {
+        'answer':'',
+        'unionId': app.globalData.userId,
+        'questionId': that.data.questionId,
+      },
+      header: {
+        "content-type": "application/x-www-form-urlencoded",
+        'unionId': app.globalData.userId
+      },
+      method: "GET",
+      success: function (result) {
+        console.log(result);
+        // for (var i = 0; i < result.data.data.length; i++) {
+        //   var list = that.data.list
+        //   list.push({
+        //     checked: false,
+        //     content: result.data.data[i]["content"],
+        //     questionId: result.data.data[i]["questionId"],
+        //     answerTime: result.data.data[i]["answerTime"],
+        //     correctAnwser: result.data.data[i]["correctAnswer"],
+        //     isSingle: result.data.data[i]["isSingle"]
+        //   });
+
+        //   console.log(list)
+        //   that.setData({
+        //     list: list
+        //   })
+        // }
+
+      },
+      fail: function () {
+        console.log('获取问题失败')
+      }
+    })
+  },
    /**
     * 生命周期函数--监听页面显示
     */
@@ -126,17 +174,17 @@ Page({
     client = Stomp.over(ws);
     client.connect({ userId: getApp().globalData.userId, lessonId: this.data.lessonId }, function (frame) {
       console.log('Connected: ' + frame);
-      //发送问题，教师的回掉
+      //获取问题，学生的回掉
       client.subscribe('/user/question/getQuestion', function (result) {
 
         console.log(result);
       });
       client.subscribe('/user/question/getAnswer', function (result) {
-        //显示答案，，教师的回掉
+        //显示答案，，学生的回掉
         console.log(result);
       });
       client.subscribe('/user/question/getCloseWindow', function (result) {
-        //关闭弹窗，教师的回掉
+        //关闭弹窗，学生的回掉
         console.log(result);
       });
 

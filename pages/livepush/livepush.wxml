@@ -1,14 +1,47 @@
 <view class="page-body">
   <view class="page-section tc">
-    <live-pusher id="pusher" url="rtmp://23921.livepush.myqcloud.com/live/23921_2437192d66?bizid=23921&txSecret=6b6ff27fb1f563e7bc0bf71c570481c9&txTime=5B0D78FF" mode="RTC" autopush bindstatechange="statechange" />
+    <live-pusher id="pusher" url="rtmp://23921.livepush.myqcloud.com/live/23921_2437192d66?bizid=23921&txSecret=6b6ff27fb1f563e7bc0bf71c570481c9&txTime=5B0D78FF" mode="RTC" autopush bindstatechange="statechange">
+
+      <cover-view class="cover-view" wx:if="{{showModalStatus}}">
+        <!--问题弹窗-->
+        <cover-view class="drawer-box">
+          <cover-view class="drawer_title">课堂提问</cover-view>
+          <cover-view class="question" id="{{list[0].questionId}}" bindtap='tapQuest'>{{list[0].content}}</cover-view>
+          <cover-view class="question" id="{{list[1].questionId}}"  bindtap='tapQuest'>{{list[1].content}}</cover-view>
+          <cover-view class="question" id="{{list[2].questionId}}"  bindtap='tapQuest'>{{list[2].content}}</cover-view>
+          <cover-view class="question" id="{{list[3].questionId}}"  bindtap='tapQuest'>{{list[3].content}}</cover-view>
+          <cover-view class="question" id="{{list[4].questionId}}"  bindtap='tapQuest'>{{list[4].content}}</cover-view>
+          <cover-view class="question" id="{{list[5].questionId}}"  bindtap='tapQuest'>{{list[5].content}}</cover-view>
+          <cover-view class="question" id="{{list[6].questionId}}"  bindtap='tapQuest'>{{list[6].content}}</cover-view>
+          <cover-view class="question" id="{{list[7].questionId}}"  bindtap='tapQuest'>{{list[7].content}}</cover-view>
+          <cover-image class="send-question" src="../../images/send-answer.png"></cover-image>
+          <!-- <cover-view class="radio-cover">
+            <radio-group class="group" bindchange="radioChange">
+              <cover-view class="label-2" wx:for="{{list}}">
+                <radio id="{{item.questionId}}" hidden value="{{item.questionId}}" checked="{{item.checked}}"></radio>
+                <cover-view class="icon">
+                  <cover-view class="icon-checked" style="opacity:{{item.checked ? 1: 0}}"></cover-view>
+                </cover-view>
+                <label class="label-2-text" for="{{item.questionId}}">
+                  <text>{{item.content}}</text>
+                </label>
+              </cover-view>
+            </radio-group>
+          </cover-view>
+          <cover-view class="button-cover">
+            <button bindtap="sendQuestions" size="mini" class="buttonModal" type="default">发送问题</button>
+            <button bindtap="sendAnswer" size="mini" class="buttonModal" type="primary">发送答案</button>
+            <button bindtap="closeQuestion" size="mini" class="buttonModal" type="primary">关闭弹窗</button>
+          </cover-view> -->
+        </cover-view>
+      </cover-view>
+    </live-pusher>
 
     <view class="btn-area">
-      <button bindtap="sendQuestions" class="page-body-button" type="primary">发送问题</button>
-      <button bindtap="sendAnswer" class="page-body-button" type="primary">发送回答</button>
-      <button bindtap="closeQuestion" class="page-body-button" type="primary">关闭问题</button>
-      <button bindtap="bindStart" class="page-body-button" type="primary">播放推流</button>
-      <button bindtap="bindPause" class="page-body-button" type="primary">暂停推流</button>
-      <button bindtap="bindStop" class="page-body-button" type="primary">停止推流</button>
+      <button bindtap="prepareQuestions" size="mini" class="page-body-button" type="primary">发送问题</button>
+      <button bindtap="bindStart" size="mini" class="page-body-button" type="primary">播放推流</button>
+      <button bindtap="bindPause" size="mini" class="page-body-button" type="primary">暂停推流</button>
+      <button bindtap="bindStop" size="mini" class="page-body-button" type="primary">停止推流</button>
       <!-- <button bindtap="bindResume" class="page-body-button" type="primary">恢复推流</button>
       <button bindtap="bindSwitchCamera" class="page-body-button" type="primary">切换前后摄像头</button> -->
     </view>

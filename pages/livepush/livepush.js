@@ -1,25 +1,109 @@
 var client;
+const app = getApp();
 Page({
   data: {
-    lessonId: '',
+    lessonId: '17fc460c6100490ba0679168d032acaa',
+    questionId: '',
+    correctAnswer: '',
+    showModalStatus: false,
+    list:[],
+    q1: 'abc',
+    q2: 'bbc',
+    q3: '',
+    q4: '',
+    q5: '',
+    q6: '',
+    q7: '',
+    q8: '',
+
   },
+  //！！！！先不获取lessonId
   onLoad: function (options) {
     var that = this;
     that.setData({
-      lessonId: options.lessonId
+      //      lessonId: options.lessonId
+    })
+  },
+  tapQuest:function(e){
+    console.log(e)
+  },
+  //调出发送提问弹窗
+  prepareQuestions: function () {
+    var that = this
+    if (that.data.list.length==0) {
+      wx.request({
+        url: 'https://www.sunlikeme.xyz/question/getQuestionForLesson',
+        data: {
+          'unionId': app.globalData.userId,
+          'lessonId': that.data.lessonId,
+        },
+        header: {
+          "content-type": "application/x-www-form-urlencoded",
+          'unionId': app.globalData.userId
+        },
+        method: "GET",
+        success: function (result) {
+          var list = that.data.list
+          for (var i = 0; i < result.data.data.length; i++) {
+           
+            list.push({
+              checked:false,
+              content: result.data.data[i]["content"],
+              questionId: result.data.data[i]["questionId"],
+              answerTime: result.data.data[i]["answerTime"],
+              correctAnwser: result.data.data[i]["correctAnswer"],
+              isSingle: result.data.data[i]["isSingle"]
+            });
+          }
+            console.log(list)
+            that.setData({
+              list: list
+            })
+          
+
+        },
+        fail: function () {
+          console.log('获取问题失败')
+        }
+      })
+    }
+
+    this.setData({
+      showModalStatus: true
+    })
+  },
+
+  //获取选择的问题,将questionId设置为data值
+  radioChange: function (e) {
+    var answer
+    var checked = e.detail.value
+    console.log('radio发生change事件，携带value值为：', e.detail.value)
+    var changed = {}
+    for (var i = 0; i < this.data.list.length; i++) {
+      if (checked.indexOf(this.data.list[i].questionId) !== -1) {
+        changed['list[' + i + '].checked'] = true
+      } else {
+        changed['list[' + i + '].checked'] = false
+      }
+    }
+    this.setData(changed)
+    this.setData({
+      questionId: e.detail.value,
     })
   },
   //发送问题
-  sendQuestions: function (questionId) {
-    client.send('/app/question/sendQuestion', { lessonId: this.data.lessonId, questionId: questionId, userId: getApp().globalData.userId }, );
+  sendQuestions: function () {
+    client.send('/app/question/sendQuestion', { lessonId: this.data.lessonId, questionId: this.data.questionId, userId: getApp().globalData.userId }, );
+
   },
   //发送回答
-  sendAnswer: function (questionId) {
-    client.send('/app/question/sendAnswer', { lessonId: this.data.lessonId, questionId: questionId, userId: getApp().globalData.userId}, );
+  sendAnswer: function () {
+    client.send('/app/question/sendAnswer', { lessonId: this.data.lessonId, questionId: this.data.questionId, userId: getApp().globalData.userId }, );
   },
   //结束答题
   closeQuestion: function () {
-    client.send('/app/question/closeQuestion', { lessonId: this.data.lessonId,  userId: getApp().globalData.userId }, '');
+    client.send('/app/question/closeQuestion', { lessonId: this.data.lessonId, userId: getApp().globalData.userId }, '');
+    this.setData({ showModalStatus: false })
   },
   onReady(res) {
     this.ctx = wx.createLivePusherContext('pusher')
@@ -137,7 +221,6 @@ Page({
       console.log('Connected: ' + frame);
       //发送问题，教师的回掉
       client.subscribe('/user/question/getQuestion', function (result) {
-
         console.log(result);
       });
       client.subscribe('/user/question/getAnswer', function (result) {

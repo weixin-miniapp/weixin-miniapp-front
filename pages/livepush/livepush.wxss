@@ -1,9 +1,57 @@
 .page-body-button {
   margin-bottom: 30rpx;
+  size:mini;
 }
-
+.buttonModal{
+  margin-left: 15rpx;
+  color: #f0d264;
+  font-size: 14px;
+  display: inline-block;
+  
+}
 live-pusher {
   margin: 0 auto;
-  width: 300px;
-  height: 225px;
+  width: 650rpx;
+  height: 800rpx;
+ }
+ 
+ 
+.cover-view{
+  width: 600rpx;  
+  height:700rpx;
+  position: fixed;  
+  overflow:scroll;
+  /* top: 10%;   */
+ 
+  background: #ffffff;
+  opacity: 0.8;
+  margin: 50rpx 25rpx 50rpx 25rpx;   
+  border-radius: 3px;  
+} 
+.label-2__text {
+    display: inline-block;
+    vertical-align: middle;
+}
+label-2{
+    margin-bottom: 15px;
+}
+.icon {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+    width: 18px;
+    height: 18px;
+    background: #fcfff4;
+    border-radius: 50px;
+}
+
+.icon-checked {
+    position: absolute;
+    left: 3px;
+    top: 3px;
+    width: 12px;
+    height: 12px;
+    background: #1aad19;
+    border-radius: 50%;
 }
