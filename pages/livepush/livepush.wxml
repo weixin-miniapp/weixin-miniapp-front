@@ -5,20 +5,20 @@
       <cover-view class="cover-view" wx:if="{{showModalStatus}}">
         <!--问题弹窗-->
         <cover-view class="drawer-box">
-          <cover-view class="drawer_title">课堂提问</cover-view>
-          <cover-view class="question" id="{{list[0].questionId}}" bindtap='tapQuest'>{{list[0].content}}</cover-view>
-          <cover-view class="question" id="{{list[1].questionId}}" bindtap='tapQuest'>{{list[1].content}}</cover-view>
-          <cover-view class="question" id="{{list[2].questionId}}" bindtap='tapQuest'>{{list[2].content}}</cover-view>
-          <cover-view class="question" id="{{list[3].questionId}}" bindtap='tapQuest'>{{list[3].content}}</cover-view>
-          <cover-view class="question" id="{{list[4].questionId}}" bindtap='tapQuest'>{{list[4].content}}</cover-view>
-          <cover-view class="question" id="{{list[5].questionId}}" bindtap='tapQuest'>{{list[5].content}}</cover-view>
-          <cover-view class="question" id="{{list[6].questionId}}" bindtap='tapQuest'>{{list[6].content}}</cover-view>
-          <cover-view class="question" id="{{list[7].questionId}}" bindtap='tapQuest'>{{list[7].content}}</cover-view>
+          <cover-view class="{{list[0].questionId==questionId?'active':'non-active'}}"  id="{{list[0].questionId}}" bindtap='tapQuest'>1.{{list[0].content}} </cover-view>
+          <cover-view id="{{list[1].questionId}}" class="{{list[1].questionId==questionId?'active':'non-active'}}"  bindtap='tapQuest'>2.{{list[1].content}}</cover-view>
+          <cover-view id="{{list[2].questionId}}" class="{{list[2].questionId==questionId?'active':'non-active'}}" bindtap='tapQuest'>3.{{list[2].content}}</cover-view>
+          <cover-view class="{{list[3].questionId==questionId?'active':'non-active'}}" id="{{list[3].questionId}}" bindtap='tapQuest'>4.{{list[3].content}}</cover-view>
+          <cover-view class="{{list[4].questionId==questionId?'active':'non-active'}}" id="{{list[4].questionId}}" bindtap='tapQuest'>5.{{list[4].content}}</cover-view>
+          <cover-view class="{{list[6].questionId==questionId?'active':'non-active'}}" id="{{list[6].questionId}}" bindtap='tapQuest'>7.{{list[6].content}}</cover-view>
+          <cover-view class="{{list[7].questionId==questionId?'active':'non-active'}}" id="{{list[7].questionId}}" bindtap='tapQuest'>8.{{list[7].content}}</cover-view>
+
           <cover-view class="btn-group">
             <cover-image class="btn-window" src="../../images/choose-question.png" bindtap='sendQuestions'></cover-image>
             <cover-image class="btn-window" src="../../images/send-answer.png" bindtap='sendAnswer'></cover-image>
             <cover-image class="btn-window" src="../../images/close-window.png" bindtap='closeQuestion'></cover-image>
           </cover-view>
+          <cover-view class="message">{{message}}</cover-view>
           <!-- <cover-view class="radio-cover">
             <radio-group class="group" bindchange="radioChange">
               <cover-view class="label-2" wx:for="{{list}}">

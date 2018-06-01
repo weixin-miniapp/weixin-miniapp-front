@@ -6,15 +6,9 @@ Page({
     questionId: '',
     correctAnswer: '',
     showModalStatus: false,
-    list:[],
-    q1: 'abc',
-    q2: 'bbc',
-    q3: '',
-    q4: '',
-    q5: '',
-    q6: '',
-    q7: '',
-    q8: '',
+    list: [],
+    activeQuestionId:'',
+    message:''
 
   },
   //！！！！先不获取lessonId
@@ -24,13 +18,19 @@ Page({
       //      lessonId: options.lessonId
     })
   },
-  tapQuest:function(e){
-    console.log(e)
+
+//问题列表点击事件
+  tapQuest: function (e) {
+  console.log(e)
+    this.setData({
+      questionId: e.currentTarget.id
+    })
   },
+
   //调出发送提问弹窗
   prepareQuestions: function () {
     var that = this
-    if (that.data.list.length==0) {
+    if (that.data.list.length == 0) {
       wx.request({
         url: 'https://www.sunlikeme.xyz/question/getQuestionForLesson',
         data: {
@@ -45,9 +45,9 @@ Page({
         success: function (result) {
           var list = that.data.list
           for (var i = 0; i < result.data.data.length; i++) {
-           
+
             list.push({
-              checked:false,
+              checked: false,
               content: result.data.data[i]["content"],
               questionId: result.data.data[i]["questionId"],
               answerTime: result.data.data[i]["answerTime"],
@@ -55,11 +55,11 @@ Page({
               isSingle: result.data.data[i]["isSingle"]
             });
           }
-            console.log(list)
-            that.setData({
-              list: list
-            })
-          
+          console.log(list)
+          that.setData({
+            list: list
+          })
+
 
         },
         fail: function () {
@@ -73,24 +73,7 @@ Page({
     })
   },
 
-  //获取选择的问题,将questionId设置为data值
-  radioChange: function (e) {
-    var answer
-    var checked = e.detail.value
-    console.log('radio发生change事件，携带value值为：', e.detail.value)
-    var changed = {}
-    for (var i = 0; i < this.data.list.length; i++) {
-      if (checked.indexOf(this.data.list[i].questionId) !== -1) {
-        changed['list[' + i + '].checked'] = true
-      } else {
-        changed['list[' + i + '].checked'] = false
-      }
-    }
-    this.setData(changed)
-    this.setData({
-      questionId: e.detail.value,
-    })
-  },
+ 
   //发送问题
   sendQuestions: function () {
     client.send('/app/question/sendQuestion', { lessonId: this.data.lessonId, questionId: this.data.questionId, userId: getApp().globalData.userId }, );
@@ -166,6 +149,7 @@ Page({
     * 生命周期函数--监听页面显示
     */
   onShow: function () {
+    var that=this
     var socketOpen = false
     var socketMsgQueue = []
     function sendSocketMessage(msg) {
@@ -222,14 +206,23 @@ Page({
       //发送问题，教师的回掉
       client.subscribe('/user/question/getQuestion', function (result) {
         console.log(result);
+        that.setData({
+          message:result.body
+        })
       });
       client.subscribe('/user/question/getAnswer', function (result) {
         //显示答案，，教师的回掉
         console.log(result);
+        that.setData({
+          message: result.body
+        })
       });
       client.subscribe('/user/question/getCloseWindow', function (result) {
         //关闭弹窗，教师的回掉
         console.log(result);
+        that.setData({
+          message: result.body
+        })
       });
 
     })

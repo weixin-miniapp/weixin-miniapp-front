@@ -4,12 +4,6 @@ Page({
     lessonId: '17fc460c6100490ba0679168d032acaa',
     showModalStatus:false,
     questionId:'',
-    items: [
-      { name: 'USA', value: '美国' },
-      { name: 'CHN', value: '中国', checked: 'true' },
-      { name: 'BRA', value: '巴西' },
-      { name: 'JPN', value: '日本' },
-    ]
   },
   onLoad: function (options) {
     var that = this;
@@ -93,23 +87,7 @@ Page({
       },
       method: "GET",
       success: function (result) {
-        console.log(result);
-        // for (var i = 0; i < result.data.data.length; i++) {
-        //   var list = that.data.list
-        //   list.push({
-        //     checked: false,
-        //     content: result.data.data[i]["content"],
-        //     questionId: result.data.data[i]["questionId"],
-        //     answerTime: result.data.data[i]["answerTime"],
-        //     correctAnwser: result.data.data[i]["correctAnswer"],
-        //     isSingle: result.data.data[i]["isSingle"]
-        //   });
-
-        //   console.log(list)
-        //   that.setData({
-        //     list: list
-        //   })
-        // }
+        console.log(result)
 
       },
       fail: function () {
@@ -176,7 +154,6 @@ Page({
       console.log('Connected: ' + frame);
       //获取问题，学生的回掉
       client.subscribe('/user/question/getQuestion', function (result) {
-
         console.log(result);
       });
       client.subscribe('/user/question/getAnswer', function (result) {

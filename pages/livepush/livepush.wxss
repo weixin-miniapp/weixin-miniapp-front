@@ -20,7 +20,6 @@ live-pusher {
   width: 600rpx;  
   height:700rpx;
   position: fixed;  
-  overflow:scroll;
   /* top: 10%;   */
  
   background: #ffffff;
@@ -37,4 +36,14 @@ live-pusher {
   height:100rpx;
   margin: 10rpx;
   flex:1;
+  color:blanchedalmond;
+}
+.active{
+color:red;
+margin:10rpx 10rpx 5px 30rpx;
+}
+.non-active{
+color:black;
+margin:10rpx 10rpx 5px 30rpx;
+
 }
