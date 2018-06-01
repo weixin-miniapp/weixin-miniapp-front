@@ -28,30 +28,13 @@ live-pusher {
   margin: 50rpx 25rpx 50rpx 25rpx;   
   border-radius: 3px;  
 } 
-.label-2__text {
-    display: inline-block;
-    vertical-align: middle;
+.btn-group{
+  display: flex;  
+  flex-direction: row;  
 }
-label-2{
-    margin-bottom: 15px;
-}
-.icon {
-    position: relative;
-    display: inline-block;
-    vertical-align: middle;
-    margin-right: 10px;
-    width: 18px;
-    height: 18px;
-    background: #fcfff4;
-    border-radius: 50px;
-}
-
-.icon-checked {
-    position: absolute;
-    left: 3px;
-    top: 3px;
-    width: 12px;
-    height: 12px;
-    background: #1aad19;
-    border-radius: 50%;
+.btn-window{
+  width:200rpx;
+  height:100rpx;
+  margin: 10rpx;
+  flex:1;
 }
