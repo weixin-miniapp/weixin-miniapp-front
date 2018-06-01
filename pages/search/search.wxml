@@ -14,17 +14,18 @@
       <view class="userinfo">
 
   </view>
+
   </view>
 
   <block wx:for="{{list}}" wx:key="list.lessonId">
-    <view class="list" data-id="{{list.lessonId}}">
+    <view class="list" data-id="{{item.lessonId}}">
       <view class="list-img">
-        <image class="video-img" mode="scaleToFill" src="{{list.header}}"></image>
+        <image class="video-img" mode="scaleToFill" src="{{item.header}}"></image>
       </view>
       <view class="list-detail">
-        <view class="list-title"><text>{{list.lessonName}}</text></view>
-        <view class="list-tag"><view class="state">{{list.state}}</view><view class="join"><text class="list-num">{{list.lessonName}}</text>人观看 </view></view>
-        <view class="list-info"><text>{{list.lessonName}}</text>|<text>{{list.lessonName}}</text></view>
+        <view class="list-title"><text>{{item.lessonName}}</text></view>
+        <view class="list-tag"><view class="state">{{item.state}}</view><view class="join"><text class="list-num">{{item.lessonName}}</text>人观看 </view></view>
+        <view class="list-info"><text>{{item.lessonName}}</text>|<text>{{item.lessonName}}</text></view>
       </view> 
     </view>
   </block>

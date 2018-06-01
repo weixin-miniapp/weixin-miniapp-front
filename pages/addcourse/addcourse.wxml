@@ -1,0 +1,26 @@
+ <view class="wa-item wa-item-thumbnail-left">
+      <text class="icon-right ion-chevron-right"></text>
+      <image class="item-img" bindtap="chooseimage" src="/images/+.jpg"></image>
+       <image class="item-img" bindtap="chooseimage" src="/images/+.jpg" src="{{tempFilePaths }}" mode="aspecFill"></image>
+      请上传课程封面图片
+    </view>
+    <view class="wa-input-item">
+    <text class="wa-input-label">课程名称：</text>
+    <input class="wa-input" placeholder="请填写课程名称" value="" bindinput='inputLessonName'/>
+  </view>
+  <view class="wa-input-item">
+    <text class="wa-input-label">任课老师：</text>
+    <input class="wa-input" placeholder="请填写任课老师名字" value="" bindinput='inputTeacher'/>
+  </view>
+  <view class="wa-input-item">
+    <text class="wa-input-label">开课时间：</text>
+    <input class="wa-input" placeholder="请填写开课时间" value="" bindinput='inputOnlineTime'/>
+  </view>
+    <view class="space">课程简介：</view>
+  <view class="padding">
+    <view class="wa-input-icon">
+      <text class="icon-left ion-search placeholder-icon"></text>
+      <input class="wa-input" placeholder="请填写课程简介" value="" bindtap='inputIntroduction'/>
+    </view>
+  </view>
+  <view><button class="wa-button-block" bindtap="addCourse">提交课程信息</button></view>

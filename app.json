@@ -9,7 +9,8 @@
     "pages/course/course",
     "pages/search/search",
     "pages/livepush/livepush",
-    "pages/livepull/livepull"
+    "pages/livepull/livepull",
+    "pages/addcourse/addcourse"
   ],
   "window": {
     "backgroundTextStyle": "light",

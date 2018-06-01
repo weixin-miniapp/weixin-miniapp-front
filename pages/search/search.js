@@ -7,13 +7,13 @@ Page({
     list:[],
     lessonId: '',
     header:'',
-    lessonName: '',
+    lessonName:'',
     introduction: '',
     status: '',
     onlineTime: '',
     offlineTime: '',
     multiparts: '',
-    teach: ''
+    teach:[]
   },
   searchLesson: function (e) {
     var that = this;
@@ -36,8 +36,9 @@ Page({
       success: function (result) {
         for (var i = 0; i < result.data.data.length; i++) {
           var list = that.data.list;
+          var teach = that.data.teach;
           list.push({
-            header: result.data.data[i]["header"],
+            header: 'https://www.sunlikeme.xyz'+ result.data.data[i]["header"],
             lessonId: result.data.data[i]["lessonId"],
             lessonName: result.data.data[i]["lessonName"],
             introduction: result.data.data[i]["introduction"],
@@ -46,6 +47,10 @@ Page({
             offlineTime: result.data.data[i]["offlineTime"],
             multiparts: result.data.data[i]["multiparts"],
             teach: result.data.data[i]["teach"]});
+            /*for (var j = 0; j < teach.length; j++) {
+              console.log(teach[j]);
+            }*/
+          //console.log(this.data.teach);
           that.setData({
             list: list
           })

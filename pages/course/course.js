@@ -1,4 +1,7 @@
 // pages/course/course.js
+var app = getApp()
+var util = require('../../utils/util.js')
+
 Page({
   data: {
     lists: [
@@ -50,18 +53,16 @@ Page({
     ],
   },
 
-
+  toAddCourse:function(e){
+    console.log('yeah');
+    wx.navigateTo({
+      url: '../addcourse/addcourse',
+    })
+  },
   onLoad: function (e) 
   {
-    if (!app.globalData.userInfo) {
-      wx.navigateTo({
-        url: '/pages/login/login',
-      })
-    }
-    this.scrollR(e);
+    
+
   },
 
-  scroll: function (e) {
-    this.scrollR(this.data.offset);
-  }
 })
