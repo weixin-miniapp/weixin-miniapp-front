@@ -1,3 +1,4 @@
+var client;
 Page({
 //questionId: 722bb1f21bcf47729a500787eff5f1bd
   data: {
@@ -8,12 +9,11 @@ Page({
   onLoad: function (options) {
     var that = this;
     that.setData({
-      lessonId: options.lessonId
+ //     lessonId: options.lessonId
     })
   },
   onReady(res) {
     this.ctx = wx.createLivePlayerContext('player')
-    this.ctx.exitFullScreen()
   },
   statechange(e) {
     console.log('live-player code:', e.detail.code)
