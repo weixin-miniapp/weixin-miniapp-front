@@ -1,6 +1,6 @@
 <view class="page-body">
   <view class="page-section tc">
-    <live-pusher id="pusher" url="rtmp://23921.livepush.myqcloud.com/live/23921_2437192d66?bizid=23921&txSecret=6b6ff27fb1f563e7bc0bf71c570481c9&txTime=5B0D78FF" mode="RTC" autopush bindstatechange="statechange" />
+    <live-pusher id="pusher" url="{{rmtp_url}}" mode="RTC" autopush bindstatechange="statechange" />
 
     <view class="btn-area">
       <button bindtap="sendQuestions" class="page-body-button" type="primary">发送问题</button>

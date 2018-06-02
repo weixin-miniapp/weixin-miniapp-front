@@ -7,15 +7,15 @@ Page({
     motto: 'Hello World',
 
     userInfo: {},
-    lessonId:null,
-    header:null,
-    lessonName:null,
-    introduction:null,
-    status:null,
-    onlineTime:null,
-    offlineTime:null,
-    multiparts:null,
-    teach:null,
+    lessonId: null,
+    header: null,
+    lessonName: null,
+    introduction: null,
+    status: null,
+    onlineTime: null,
+    offlineTime: null,
+    multiparts: null,
+    teach: null,
 
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
@@ -75,56 +75,79 @@ Page({
 
 
   },
-  goToSearch:function(e){
+  goToSearch: function (e) {
     wx.navigateTo({
       url: '/pages/search/search',
     })
   },
   //事件处理函数
-  bindViewTap: function() {
+  bindViewTap: function () {
     wx.navigateTo({
       url: '../logs/logs'
     })
   },
   onLoad: function () {
-    this.setData({
-            userInfo: app.globalData.userInfo,
-            hasUserInfo: true
+    var that=this;
+    that.setData({
+      userInfo: app.globalData.userInfo,
+      hasUserInfo: true
+    })
+    //未设置role,弹框设置role
+    if (app.globalData.userInfo.role == 2) {
+      wx.showActionSheet({
+        itemList: ['教师', '学生'],
+        success: function (res) {
+          console.log(res.tapIndex);
+          wx.request({
+            url: 'https://www.sunlikeme.xyz/user/selectRole',
+            data: {
+              'roleType': res.tapIndex,
+            },
+            header: {
+              "content-type": "application/x-www-form-urlencoded",
+              'unionId': getApp().globalData.userId
+            },
+            method: "POST",
+            success: function (result) {
+              console.log(result);
+              if (result.data.code == 200) {
+                app.globalData.userInfo.role = res.tapIndex;
+                that.setData({
+                  userInfo: app.globalData.userInfo,
+                });
+                wx.showToast({
+                  title: '成功',
+                  icon: 'success',
+                  duration: 2000
+                })
+              }
+              else wx.showModal({
+                title: '错误',
+                content: result.data.msg,
+                success: function (res) {
+                  if (res.confirm) {               
+                  } else if (res.cancel) {                
+                  }
+                }
+              })
+            }
+          });
+        },
+        fail: function (res) {
+          console.log(res.errMsg);
+          wx.showModal({
+            title: '错误',
+            content: res.errMsg,
+            success: function (res) {
+              if (res.confirm) {
+              } else if (res.cancel) {
+              }
+            }
           })
+        }
+      })
+
     }
-    // if (app.globalData.userInfo) {
-    //   this.setData({
-    //     userInfo: app.globalData.userInfo,
-    //     hasUserInfo: true
-    //   })
-    // } else if (this.data.canIUse){
-    //   // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-    //   // 所以此处加入 callback 以防止这种情况
-    //   app.userInfoReadyCallback = res => {
-    //     this.setData({
-    //       userInfo: res.userInfo,
-    //       hasUserInfo: true
-    //     })
-    //   }
-    // } else {
-    //   // 在没有 open-type=getUserInfo 版本的兼容处理
-    //   wx.getUserInfo({
-    //     success: res => {
-    //       app.globalData.userInfo = res.userInfo
-    //       this.setData({
-    //         userInfo: res.userInfo,
-    //         hasUserInfo: true
-    //       })
-    //     }
-    //   })
-    // }
-  // },
-  // getUserInfo: function(e) {
-  //   console.log(e)
-  //   app.globalData.userInfo = e.detail.userInfo
-  //   this.setData({
-  //     userInfo: e.detail.userInfo,
-  //     hasUserInfo: true
-  //   })
-  // }
+  }
+
 })
