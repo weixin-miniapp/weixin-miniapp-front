@@ -2,20 +2,23 @@ var client;
 const app = getApp();
 Page({
   data: {
-    lessonId: '17fc460c6100490ba0679168d032acaa',
+    lessonId: '',
     questionId: '',
     correctAnswer: '',
     showModalStatus: false,
     list: [],
     activeQuestionId:'',
-    message:''
-
+    message:'',
+    rmtp_url: ''
   },
-  //！！！！先不获取lessonId
+
   onLoad: function (options) {
     var that = this;
     that.setData({
-      //      lessonId: options.lessonId
+     // lessonId: options.lessonId,
+      //rmtp_url: options.rmtp_url
+      lessonId: '17fc460c6100490ba0679168d032acaa',
+      rmtp_url:'rtmp://23921.livepush.myqcloud.com/live/23921_2437192d66?bizid=23921&txSecret=6b6ff27fb1f563e7bc0bf71c570481c9&txTime=5B0D78FF'
     })
   },
 
@@ -82,12 +85,87 @@ Page({
   //发送回答
   sendAnswer: function () {
     client.send('/app/question/sendAnswer', { lessonId: this.data.lessonId, questionId: this.data.questionId, userId: getApp().globalData.userId }, );
+
   },
   //结束答题
   closeQuestion: function () {
     client.send('/app/question/closeQuestion', { lessonId: this.data.lessonId, userId: getApp().globalData.userId }, '');
     this.setData({ showModalStatus: false })
   },
+  stopLive: function () {
+    wx.request({
+      url: 'https://www.sunlikeme.xyz/live/stopLive',
+      data: {
+        'lessonId': this.data.lessonId,
+      },
+      header: {
+        "content-type": "application/x-www-form-urlencoded",
+        'unionId': getApp().globalData.userId
+      },
+      method: "POST",
+      success: function (result) {
+        console.log(result);
+        if (result.data.code == 200) {
+          console.log('结束直播')
+        }
+        else
+          wx.showToast({
+            title: result.data.msg,
+            icon: 'none',
+            duration: 2000
+          });
+      },
+      fail: function () {
+        wx.showToast({
+          title: '网络连接失败',
+          icon: 'none',
+          duration: 2000
+        })
+        console.log('登陆失败，检查网络连接')
+      }
+    })
+  },
+  // startLive: function () {
+  //   wx.request({
+  //     url: 'https://www.sunlikeme.xyz/live/startLive',
+  //     data: {
+  //       'lessonId': this.data.lessonId,
+  //     },
+  //     header: {
+  //       "content-type": "application/x-www-form-urlencoded",
+  //       'unionId': getApp().globalData.userId
+  //     },
+  //     method: "POST",
+  //     success: function (result) {
+  //       console.log(result)
+  //       if (result.data.code == 200) {
+  //         //绑定直播url
+  //         var that = this;
+  //         that.setData({
+  //           rmtp_url: result.data.data
+  //         });
+  //         console.log('开始直播')
+  //       }
+  //       else {
+  //         console.log(result.data.msg)
+  //         wx.showToast({
+  //           title: result.data.msg,
+  //           icon: 'none',
+  //           duration: 5000
+  //         });
+  //         this.bindStop();
+  //       }
+  //     },
+  //     fail: function () {
+  //       wx.showToast({
+  //         title: '网络连接失败',
+  //         icon: 'none',
+  //         duration: 2000
+  //       })
+  //       console.log('登陆失败，检查网络连接')
+  //     }
+  //   });
+  // },
   onReady(res) {
     this.ctx = wx.createLivePusherContext('pusher')
   },
@@ -150,6 +228,7 @@ Page({
     */
   onShow: function () {
     var that=this
+    // this.startLive();
     var socketOpen = false
     var socketMsgQueue = []
     function sendSocketMessage(msg) {
@@ -232,9 +311,18 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
+    this.stopLive();
     if (client != null) {
       client.disconnect();
     }
     console.log('断开socket链接');
+  },
+  onUnload: function () {
+    // 生命周期函数--监听页面卸载
+    this.stopLive();
+    if (client != null) {
+      client.disconnect();
+    }
+    console.log("test onUnload");
   },
 })

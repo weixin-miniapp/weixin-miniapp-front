@@ -7,15 +7,15 @@ Page({
     motto: 'Hello World',
 
     userInfo: {},
-    lessonId:null,
-    header:null,
-    lessonName:null,
-    introduction:null,
-    status:null,
-    onlineTime:null,
-    offlineTime:null,
-    multiparts:null,
-    teach:null,
+    lessonId: null,
+    header: null,
+    lessonName: null,
+    introduction: null,
+    status: null,
+    onlineTime: null,
+    offlineTime: null,
+    multiparts: null,
+    teach: null,
 
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
@@ -75,21 +75,78 @@ Page({
 
 
   },
-  goToSearch:function(e){
+  goToSearch: function (e) {
     wx.navigateTo({
       url: '/pages/search/search',
     })
   },
   //事件处理函数
-  bindViewTap: function() {
+  bindViewTap: function () {
     wx.navigateTo({
       url: '../logs/logs'
     })
   },
   onLoad: function () {
-    this.setData({
-            userInfo: app.globalData.userInfo,
-            hasUserInfo: true
+    var that=this;
+    that.setData({
+      userInfo: app.globalData.userInfo,
+      hasUserInfo: true
+    })
+    //未设置role,弹框设置role
+    if (app.globalData.userInfo.role == 2) {
+      wx.showActionSheet({
+        itemList: ['教师', '学生'],
+        success: function (res) {
+          console.log(res.tapIndex);
+          wx.request({
+            url: 'https://www.sunlikeme.xyz/user/selectRole',
+            data: {
+              'roleType': res.tapIndex,
+            },
+            header: {
+              "content-type": "application/x-www-form-urlencoded",
+              'unionId': getApp().globalData.userId
+            },
+            method: "POST",
+            success: function (result) {
+              console.log(result);
+              if (result.data.code == 200) {
+                app.globalData.userInfo.role = res.tapIndex;
+                that.setData({
+                  userInfo: app.globalData.userInfo,
+                });
+                wx.showToast({
+                  title: '成功',
+                  icon: 'success',
+                  duration: 2000
+                })
+              }
+              else wx.showModal({
+                title: '错误',
+                content: result.data.msg,
+                success: function (res) {
+                  if (res.confirm) {               
+                  } else if (res.cancel) {                
+                  }
+                }
+              })
+            }
+          });
+        },
+        fail: function (res) {
+          console.log(res.errMsg);
+          wx.showModal({
+            title: '错误',
+            content: res.errMsg,
+            success: function (res) {
+              if (res.confirm) {
+              } else if (res.cancel) {
+              }
+            }
           })
+        }
+      })
+
     }
+  }
 })

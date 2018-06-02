@@ -40,7 +40,7 @@
         "selectedIconPath": "images/resources/tab_course1.png"
       },
       {
-        "pagePath": "pages/livepull/livepull",
+        "pagePath": "pages/livepush/livepush",
         "text": "直播",
         "iconPath": "images/resources/tab_course1.png",
         "selectedIconPath": "images/resources/tab_course1.png"

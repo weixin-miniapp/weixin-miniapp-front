@@ -1,17 +1,55 @@
 var client;
 Page({
+  //lessonId: '17fc460c6100490ba0679168d032acaa'
 //questionId: 722bb1f21bcf47729a500787eff5f1bd
   data: {
+    // lessonId:'',
+    // rmtp_url: '',
     lessonId: '17fc460c6100490ba0679168d032acaa',
+    rmtp_url: 'rtmp://23921.livepush.myqcloud.com/live/23921_2437192d66?bizid=23921&txSecret=6b6ff27fb1f563e7bc0bf71c570481c9&txTime=5B0D78FF',
     showModalStatus:false,
     questionId:'',
+    
   },
   onLoad: function (options) {
     var that = this;
     that.setData({
- //     lessonId: options.lessonId
-    })
+     // lessonId: options.lessonId,
+    //  rmtp_url: options.rmtp_url
+    });
+    // watchLive();
   },
+  // watchLive: function(){
+  //   wx.request({
+  //     url: 'https://www.sunlikeme.xyz/live/watchLive',
+  //     data: {
+  //       'lessonId': this.data.lessonId,
+  //     },
+  //     header: {
+  //       "content-type": "application/x-www-form-urlencoded",
+  //       'unionId': getApp().globalData.userId
+  //     },
+  //     method: "POST",
+  //     success: function (result) {
+  //       if (result.data.code == 200) {
+  //         //绑定直播url
+  //         var that = this;
+  //         that.setData({
+  //           rmtp_url: result.data.data
+  //         });
+  //         console.log('开始观看直播')
+  //       }
+  //       else {
+  //       console.log(result.data.msg)
+  //         wx.showToast({
+  //         title: result.data.msg,
+  //         icon: 'none',
+  //         duration: 5000
+  //       });
+  //     }
+  //     }
+  //   });
+  // },
   onReady(res) {
     this.ctx = wx.createLivePlayerContext('player')
   },
@@ -152,6 +190,7 @@ Page({
     client = Stomp.over(ws);
     client.connect({ userId: getApp().globalData.userId, lessonId: this.data.lessonId }, function (frame) {
       console.log('Connected: ' + frame);
+
       //获取问题，学生的回掉
       client.subscribe('/user/question/getQuestion', function (result) {
         console.log(result);
@@ -172,6 +211,12 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
+    if (client != null) {
+      client.disconnect();
+    }
+    console.log('断开socket链接');
+  },
+  onUnload: function () {
     if (client != null) {
       client.disconnect();
     }
