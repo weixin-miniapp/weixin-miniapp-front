@@ -10,6 +10,7 @@
           <cover-view id="{{list[2].questionId}}" class="{{list[2].questionId==questionId?'active':'non-active'}}" bindtap='tapQuest'>3.{{list[2].content}}</cover-view>
           <cover-view class="{{list[3].questionId==questionId?'active':'non-active'}}" id="{{list[3].questionId}}" bindtap='tapQuest'>4.{{list[3].content}}</cover-view>
           <cover-view class="{{list[4].questionId==questionId?'active':'non-active'}}" id="{{list[4].questionId}}" bindtap='tapQuest'>5.{{list[4].content}}</cover-view>
+          <cover-view class="{{list[5].questionId==questionId?'active':'non-active'}}" id="{{list[5].questionId}}" bindtap='tapQuest'>6.{{list[5].content}}</cover-view>
           <cover-view class="{{list[6].questionId==questionId?'active':'non-active'}}" id="{{list[6].questionId}}" bindtap='tapQuest'>7.{{list[6].content}}</cover-view>
           <cover-view class="{{list[7].questionId==questionId?'active':'non-active'}}" id="{{list[7].questionId}}" bindtap='tapQuest'>8.{{list[7].content}}</cover-view>
 
