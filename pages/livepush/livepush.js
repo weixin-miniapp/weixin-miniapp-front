@@ -1,19 +1,19 @@
 var client;
 Page({
   data: {
-    lessonId: '',
+    lessonId: '17fc460c6100490ba0679168d032acaa',
     rmtp_url: ''
   },
   onLoad: function (options) {
     var that = this;
     that.setData({
-      lessonId: options.lessonId,
+      // lessonId: options.lessonId,
       rmtp_url: options.rmtp_url
     })
   },
   //发送问题
   sendQuestions: function (questionId) {
-    client.send('/app/question/sendQuestion', { lessonId: this.data.lessonId, questionId: questionId, userId: getApp().globalData.userId }, );
+    client.send('/app/question/sendQuestion', { lessonId: this.data.lessonId, questionId: '008de9c1ab654e6b8bc08bb5935a9f92', userId: getApp().globalData.userId }, );
   },
   //发送回答
   sendAnswer: function (questionId) {

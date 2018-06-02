@@ -2,13 +2,13 @@ var client;
 Page({
 
   data: {
-    lessonId: '',
+    lessonId:'17fc460c6100490ba0679168d032acaa',
     rmtp_url: ''
   },
   onLoad: function (options) {
     var that = this;
     that.setData({
-      lessonId: options.lessonId,
+      // lessonId: options.lessonId,
       rmtp_url: options.rmtp_url
     });
     // watchLive();
