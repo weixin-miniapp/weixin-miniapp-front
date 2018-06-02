@@ -1,10 +1,11 @@
 <!--pages/course/course.wxml-->
-<view class="mobi_title">
+
+<scroll-view scroll-y="true" bindscroll="scroll">
+  <view class="mobi_title">
     <text class="mobi_icon"></text>
     <text>我的课程</text>
   </view>
-<button class='registerBtn' bindtap='sumbit' >添加课程</button>
-<scroll-view scroll-y="true" bindscroll="scroll">
+<button class='registerBtn' bindtap='toAddCourse' >添加课程</button>
   <block wx:for-items="{{lists}}" wx:for-item="list" wx:key="list.id">
     <view class="list" data-id="{{list.id}}">
       <view class="list-img">

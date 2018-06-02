@@ -1,3 +1,4 @@
+var client;
 Page({
 
   data: {
