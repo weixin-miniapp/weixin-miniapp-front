@@ -1,0 +1,25 @@
+<!--pages/coursedescription/coursedescription.wxml-->
+    <view class="wa-item wa-item-thumbnail-left">
+      <text class="icon-right ion-chevron-right"></text>
+      <image class="item-img-con" src="{{header}}"></image>
+     <view class="text-content">{{lessonName}}</view>
+     <view class="text-content-item">任课老师：</view>
+     <text >{{teacherName}}</text>
+     <view class="text-content-item">开课时间：</view>
+     <text></text>
+     <view><button class="wa-button-con" bindtap="gotosetques">设置题目</button></view>
+     <view><button class="wa-button-con" bindtap="gotolive">开始直播</button></view>
+    </view>
+    <view><button class="wa-button-con" bindtap="gotosetques">设置题目</button></view>
+     <view><button class="wa-button-con" bindtap="gotolive">开始直播</button></view>
+     <view class="wa-item-content">课程简介:</view>
+     <view class="wa-item-con">{{introduction}}</view>
+     <view class="wa-item-content">参加该课程的学生:</view>
+<view class="shelf-nav">
+ <view class="shelf-nav-item" wx:for="{{ shelfNavList }}">
+   <navigator url="../list/list? id={{ item.id }}">
+   <image src="{{ item.cover_image }}" class="shelf-nav-item__image">  </image>
+   <text>{{ item.name }}</text>
+   </navigator>
+ </view>
+</view>

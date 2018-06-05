@@ -23,10 +23,6 @@ Page({
 
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-
-
-
-
     imgUrls: [
       'http://i0.hdslb.com/bfs/archive/9bab17a99758cc7a72531d15d2d5a85d73b78ded.jpg',
       'http://i0.hdslb.com/bfs/archive/57d8001838ff81c64bef2682070e53efbe2736b7.jpg',
@@ -42,8 +38,6 @@ Page({
     interval: 5000,
     // 滑动动画时长
     duration: 1000
-
-
   }, 
   goToSearch:function(e){
     wx.navigateTo({
@@ -57,8 +51,12 @@ Page({
     })
   },
   toIntroduction:function(e){
+    wx.setStorage({
+      key: "lessonId",
+      data: e.currentTarget.id
+    })
     wx.navigateTo({
-      url: '',
+      url: '/pages/coursedescirption/coursedescirption'
     })
   },
   onLoad: function () {
@@ -114,7 +112,7 @@ Page({
         console.log(that.data.list);
       },
       fail: function () {
-        console.log('登陆失败，检查网络连接')
+        console.log('获取课程失败，检查网络连接')
       }
     }),
     this.setData({

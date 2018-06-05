@@ -47,9 +47,9 @@
       <view class="content-wrapper">
         <block wx:for="{{list}}">
           <view class="content-list">
-        <navigator class="item">
+        <view class="item">
           <view class="top">
-            <view class="cover-img" bindtap='toIntroduction' 
+            <view class="cover-img" id="{{item.lessonId}}" bindtap='toIntroduction' 
             style="opacity: 1; background-image: url({{item.header}});">
             </view>
           </view>
@@ -59,11 +59,11 @@
               </view>
               <view class="user">
                   <view class="name text-overflow">{{item.teacherName}}</view>
-                  <view class="desp text-overflow">{{item.introduction}}</view>
+                  <view data-name="{{item.lessonName}}" class="desp text-overflow">{{item.lessonName}}</view>
               </view>
               <view class="online text-overflow">{{statusToString}}</view>
           </view>
-        </navigator>
+        </view>
       </view>>
         </block>
       </view>

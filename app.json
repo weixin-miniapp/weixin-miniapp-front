@@ -10,7 +10,8 @@
     "pages/search/search",
     "pages/livepush/livepush",
     "pages/livepull/livepull",
-    "pages/addcourse/addcourse"
+    "pages/addcourse/addcourse",
+    "pages/coursedescirption/coursedescirption"
   ],
   "window": {
     "backgroundTextStyle": "light",
