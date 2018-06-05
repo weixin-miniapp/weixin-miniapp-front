@@ -37,14 +37,17 @@ Page({
                       success: function (result) {
 
                         var userId = result.data.data.id;
+                        console.log(userId)
                         wx.setStorageSync("userId", userId);
                         app.globalData.userId = userId;
                         app.globalData.userInfo = userRes.userInfo;
+                        app.globalData.userInfo.role = result.data.data.role;
                         wx.switchTab({
                           url: '../index/index'
                         });  
                       },
                       fail: function () {
+                        
                         console.log('登陆失败，检查网络连接')
                       }
                     })

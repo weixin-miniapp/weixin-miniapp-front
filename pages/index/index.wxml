@@ -49,7 +49,7 @@
           <view class="content-list">
         <navigator class="item">
           <view class="top">
-            <view class="cover-img" 
+            <view class="cover-img" bindtap='toIntroduction' 
             style="opacity: 1; background-image: url({{item.header}});">
             </view>
           </view>

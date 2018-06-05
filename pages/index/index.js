@@ -24,41 +24,7 @@ Page({
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
 
-    // 正在直播
-    liveList: [
-      {
-        coverImg: 'http://i0.hdslb.com/bfs/live/96025d17ed05961230a7d1401ca1fe3b79cc12db.jpg',
-        avatarImg: 'http://i2.hdslb.com/bfs/face/c55b2eae13646925187514c6f19e19293294d0c5.jpg',
-        name: '尤樱',
-        desp: '你女朋友在直播你不来看看吗？',
-        online: '877',
-        avid: 'av5'
-      },
-      {
-        coverImg: 'http://i0.hdslb.com/bfs/live/a1678768dd9c7023af7ab0f3de2a2df2c525e741.jpg',
-        avatarImg: 'http://i0.hdslb.com/bfs/face/d1bec5ec111987537ecf3e7f43a8b3678ed3c5c3.jpg',
-        name: '我是小麦伊哦哦',
-        desp: '告别:我爱你们',
-        online: '877',
-        avid: 'av6'
-      },
-      {
-        coverImg: 'http://i0.hdslb.com/bfs/live/89047f3faee35d0cb095d7dfb01ec4d3a8ec4434.jpg',
-        avatarImg: 'http://i0.hdslb.com/bfs/face/1e31ac069058528e26b9be60b26d86c9c9a99f62.jpg',
-        name: '坂本叔',
-        desp: '【坂本】非洲黑客',
-        online: '877',
-        avid: 'av7'
-      },
-      {
-        coverImg: 'http://i0.hdslb.com/bfs/live/24dbcc68325ff5fb3d235af97ad075dc5087733a.jpg',
-        avatarImg: 'http://i2.hdslb.com/bfs/face/c55b2eae13646925187514c6f19e19293294d0c5.jpg',
-        name: 'miriちゃん',
-        desp: '日语点歌姬',
-        online: '877',
-        avid: 'av8'
-      }
-    ],
+
 
 
     imgUrls: [
@@ -88,6 +54,11 @@ Page({
   bindViewTap: function() {
     wx.navigateTo({
       url: '../logs/logs'
+    })
+  },
+  toIntroduction:function(e){
+    wx.navigateTo({
+      url: '',
     })
   },
   onLoad: function () {
