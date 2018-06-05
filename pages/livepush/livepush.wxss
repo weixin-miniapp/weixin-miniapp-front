@@ -16,17 +16,7 @@ live-pusher {
  }
  
  
-.cover-view{
-  width: 600rpx;  
-  height:700rpx;
-  position: fixed;  
-  /* top: 10%;   */
- 
-  background: #ffffff;
-  opacity: 0.8;
-  margin: 50rpx 25rpx 50rpx 25rpx;   
-  border-radius: 3px;  
-} 
+
 .btn-group{
   display: flex;  
   flex-direction: row;  
@@ -45,5 +35,4 @@ margin:10rpx 10rpx 5px 30rpx;
 .non-active{
 color:black;
 margin:10rpx 10rpx 5px 30rpx;
-
 }

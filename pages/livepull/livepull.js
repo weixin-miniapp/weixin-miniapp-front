@@ -1,21 +1,21 @@
 var client;
+const app = getApp();
 Page({
-  //lessonId: '17fc460c6100490ba0679168d032acaa'
-//questionId: 722bb1f21bcf47729a500787eff5f1bd
   data: {
     // lessonId:'',
     // rmtp_url: '',
-    lessonId: '17fc460c6100490ba0679168d032acaa',
+    lessonId: '7e56beb7be8741178f3cde786f4f0421',
     rmtp_url: 'rtmp://23921.livepush.myqcloud.com/live/23921_2437192d66?bizid=23921&txSecret=6b6ff27fb1f563e7bc0bf71c570481c9&txTime=5B0D78FF',
-    showModalStatus:false,
-    questionId:'',
-    
+    showModalStatus: false,
+    detail: '',
+    currentOpt: [false, false, false, false],
+    questionId: null
   },
   onLoad: function (options) {
     var that = this;
     that.setData({
-     // lessonId: options.lessonId,
-    //  rmtp_url: options.rmtp_url
+      // lessonId: options.lessonId,
+      //  rmtp_url: options.rmtp_url
     });
     // watchLive();
   },
@@ -109,13 +109,28 @@ Page({
       }
     })
   },
-
-  //回答课堂问题
-  respondQuestion(){
+  //点击选项事件；更改颜色，保存选项
+  tapOption: function (e) {
+    console.log(e);
+    var id = parseInt(e.currentTarget.id) - 1;
+    var option = 'currentOpt[' + id + ']'
+    this.setData({ [option]: this.data.currentOpt[id] == true ? false : true })
+    console.log(this.data.currentOpt)
+  },
+  //提交答案点击事件
+  tapAnswer: function (e) {
+    var that = this;
+    var answer = '';
+    for (var i = 1; i <= 4; i++)
+      if (that.data.currentOpt[i - 1])
+        answer = answer + i + ','
+    if (answer.length > 1)
+      answer = answer.substring(0, answer.length - 1);
+    console.log(answer)
     wx.request({
       url: 'https://www.sunlikeme.xyz/question/answerQuestion',
       data: {
-        'answer':'',
+        'answer': answer,
         'unionId': app.globalData.userId,
         'questionId': that.data.questionId,
       },
@@ -123,20 +138,36 @@ Page({
         "content-type": "application/x-www-form-urlencoded",
         'unionId': app.globalData.userId
       },
-      method: "GET",
+      method: "POST",
       success: function (result) {
         console.log(result)
-
+        wx.showModal({
+          title: '已提交',
+          content: result.data.msg,
+        })
       },
       fail: function () {
-        console.log('获取问题失败')
+        console.log('提交答案失败')
+        wx.showToast({
+          title: '提交答案失败',
+        })
       }
     })
   },
-   /**
-    * 生命周期函数--监听页面显示
-    */
+  //关闭问题弹窗
+  tapClose: function (e) {
+    this.setData(
+      {
+        showModalStatus: false,
+        currentOpt: [false, false, false, false]
+      }
+    )
+  },
+  /**
+   * 生命周期函数--监听页面显示
+   */
   onShow: function () {
+    var that = this;
     var socketOpen = false
     var socketMsgQueue = []
     function sendSocketMessage(msg) {
@@ -193,19 +224,67 @@ Page({
 
       //获取问题，学生的回掉
       client.subscribe('/user/question/getQuestion', function (result) {
-        console.log(result);
+        console.log(result.body);
+        var res = JSON.parse(result.body);
+        var detail;
+
+        detail = {
+          "content": res.content,
+          "choicea": res.choices[0]["content"],
+          "choiceb": res.choices[1]["content"],
+          "choicec": res.choices[2]["content"],
+          "choiced": res.choices[3]["content"],
+        };
+        console.log(detail);
+        setTimeout(function () {
+          that.setData({
+            showModalStatus: false,
+            detail: '',
+            questionId: ''
+          })
+        }.bind(this), res.answerTime * 1000);
+        that.setData({
+          showModalStatus: true,
+          detail: detail,
+          questionId: res.questionId
+        });
       });
+
       client.subscribe('/user/question/getAnswer', function (result) {
         //显示答案，，学生的回掉
         console.log(result);
+        var res = JSON.parse(result.body);
+        console.log(res);
+        var answer = '';
+        for (var i = 1; i <= 4; i++)
+          if (that.data.currentOpt[i - 1])
+            answer = answer + i + ','
+        if (answer.length > 1)
+          answer = answer.substring(0, answer.length - 1);
+        console.log(answer)
+      if (answer == res)
+        wx.showToast({
+          title: '回答正确！',
+          duration: 2000
+        })
+      else
+        wx.showModal({
+          title: '回答错误！',
+          content: '正确答案：'+res,
+        })
       });
+
       client.subscribe('/user/question/getCloseWindow', function (result) {
         //关闭弹窗，学生的回掉
         console.log(result);
-      });
-
+        that.setData({
+          showModalStatus: false,
+          currentOpt: [false, false, false, false]
+        })
+      })
     })
   },
+
 
   /**
    * 生命周期函数--监听页面隐藏
