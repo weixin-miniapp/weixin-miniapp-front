@@ -163,9 +163,9 @@ startLive: function () {
       }
     })
   },
-  gotosetques: function () {
+  setquestion: function () {
     wx.navigateTo({
-      url: '../addquestion/addquestion',
+      url: '../addquestion/addquestion?lessonId='+this.data.lessonId,
     })
   }
 })

@@ -11,7 +11,8 @@
     "pages/livepush/livepush",
     "pages/livepull/livepull",
     "pages/addcourse/addcourse",
-    "pages/coursedescirption/coursedescirption"
+    "pages/coursedescirption/coursedescirption",
+    "pages/addquestion/addquestion"
   ],
   "window": {
     "backgroundTextStyle": "light",
