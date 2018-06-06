@@ -14,7 +14,9 @@ Page({
     statusToString: '',
     teacherName: null,
     teacherInfo: null,
-    study:[],
+    studentName:null,
+    studentInfo:null,
+    studentList:[],
     comments:[],
     question:null
   },
@@ -50,7 +52,19 @@ Page({
               status: result.data.data.status,
               onlineTime: result.data.data.onlineTime,
               offlineTime: result.data.data.offlineTime,
-              multiparts: result.data.data.multiparts
+              multiparts: result.data.data.multiparts,
+              teacherName: result.data.data.teach[0]["nickName"]
+            })
+            for (var i=0;i<result.data.data.study.length;i++){
+              var studentList = that.data.studentList;
+              studentList.push({
+                studentName:result.data.data.study[i]["nickName"],
+                studentInfo:result.data.data.study[i]["portrait"]
+              })
+            }
+            console.log(that.data.studentList)
+            that.setData({
+              studentList: studentList,
             })
           },
           fail: function () {

@@ -88,7 +88,36 @@ page .wa-dark {
   margin: -1px 0;  
   font-size: 18px;
   display: block;
-  color: #444;
+  color: #576b95;
+  padding:10px;
+  height: 45px;
+  box-sizing: border-box;
+  position:relative;
+  background-color: #fff;
+  white-space:pre-line;
+}
+.wa-item-1{
+  width: 100%;
+  border: 1px solid #ddd;
+  margin: -1px 0;  
+  font-size: 18px;
+  display: block;
+  color: #576b95;
+  padding:10px;
+  height: 70px;
+  box-sizing: border-box;
+  position:relative;
+  background-color: #fff;
+  white-space:pre-line;
+}
+
+.wa-item-2{
+  width: 100%;
+  border: 1px solid #ddd;
+  margin: -1px 0;  
+  font-size: 18px;
+  display: block;
+  color: #576b95;
   padding:10px;
   height: 45px;
   box-sizing: border-box;
@@ -96,15 +125,15 @@ page .wa-dark {
   background-color: #fff;
 }
 .wa-item-ava{
-  padding-left:60px;
-  min-height: 60px;
+  padding-left:50px;
+  min-height: 30px;
 }
 .wa-item-ava .item-img{
   position:absolute;
-  top:10px;
+  top:13px;
   left: 10px;
-  width: 40px;
-  height: 40px;
+  width: 18px;
+  height: 18px;
 }
 .wa-item-ava .item-img-round{
   position:absolute;
@@ -116,7 +145,7 @@ page .wa-dark {
 }
 .wa-item-thumbnail-left{
   padding-left:120px;
-  min-height: 140px;
+  min-height: 125px;
 }
 .wa-item-thumbnail-left .item-img{
   position:absolute;
@@ -430,7 +459,7 @@ page .wa-dark {
     color: #999;
   }
   .wa-item-content{
-  width: 100%;
+    width: 150%;
   border: 1px solid #ddd;
   margin: -1px 0;  
   font-size: 18px;
@@ -443,19 +472,26 @@ page .wa-dark {
   background-color: #fff;
   }
 .wa-item-con{
-  width: 100%;
-  border: 1px solid #ddd;
+  width: 180%;
   margin: -1px 0;  
   font-size: 15px;
-  display: block;
   color: #444;
   padding:10px;
   height: 250rpx;
-  box-sizing: border-box;
-  position:relative;
   background-color: #fff;
   }
   .wa-button-con{
+    width:65%;
+    align-items: center;
+    background-color: #576b95;
+    color: #fff;
+    float: right;
+    font-size: 30rpx;
+    margin-right: 20rpx;
+    margin-top: 50rpx;
+}
+
+  .wa-button-con-1{
     width:35%;
     align-items: center;
     background-color: #576b95;
@@ -463,13 +499,24 @@ page .wa-dark {
     float: right;
     font-size: 28rpx;
     margin-right: 20rpx;
-    margin-top: 15rpx;
+    margin-top: 50rpx;
 }
-
 .item-img-con{
   position:absolute;
   top:10px;
   left: 0px;
-  width: 125px;
-  height: 125px;
+  width: 115px;
+  height: 115px;
+}
+
+  .wa-but-con{
+    width:43%;
+    align-items: center;
+    background-color: none;
+    border: none;
+    color: #999;
+    float: right;
+    font-size: 25rpx;
+    margin-right: 15rpx;
+    margin-top: 10rpx;
 }
