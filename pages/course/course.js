@@ -25,6 +25,16 @@ Page({
       url: '../addcourse/addcourse',
     })
   },
+  toIntroduction: function (e) {
+    wx.setStorage({
+      key: "lessonId",
+      data: e.currentTarget.id
+    })
+    wx.navigateTo({
+      url: '/pages/coursedescirption/coursedescirption'
+    })
+  },
+  
   onLoad: function (e) 
   {
     var that = this;

@@ -61,6 +61,50 @@ Page({
   },
   onLoad: function () {
     var that = this;
+    //未设置role,弹框设置role
+    if (app.globalData.userInfo.role == 2) {
+      wx.showActionSheet({
+        itemList: ['教师', '学生'],
+        success: function (res) {
+          console.log(res.tapIndex);
+          wx.request({
+            url: 'https://www.sunlikeme.xyz/user/selectRole',
+            data: {
+              'roleType': res.tapIndex,
+            },
+            header: {
+              "content-type": "application/x-www-form-urlencoded",
+              'unionId': getApp().globalData.userId
+            },
+            method: "POST",
+            success: function (result) {
+              console.log(result);
+              if (result.data.code == 200) {
+                app.globalData.userInfo.role = res.tapIndex;
+                that.setData({
+                  userInfo: app.globalData.userInfo,
+                });
+                wx.showToast({
+                  title: '成功',
+                  icon: 'success',
+                  duration: 2000
+                })
+              }
+              else wx.showModal({
+                title: '错误',
+                content: result.data.msg,
+                success: function (res) {
+                  if (res.confirm) {
+                  } else if (res.cancel) {
+                  }
+                }
+              })
+            }
+          });
+        }
+        });
+      }
+  
     wx.request({
       url: 'https://www.sunlikeme.xyz/lesson/list',
       data: {

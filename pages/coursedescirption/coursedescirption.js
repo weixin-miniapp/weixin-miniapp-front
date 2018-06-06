@@ -22,7 +22,96 @@ Page({
   },
   gotolive: function () {
     //开始直播按钮
+    //0为老师
+    if (getApp().globalData.userInfo.role ==0)
+        this.startLive();
+    else if (getApp().globalData.userInfo.role == 1)
+      this.watchLive();
+      else {
+      wx.showToast({
+        title: "你没有权限进入直播，（未选择角色）",
+        icon: 'none',
+        duration: 5000
+      });
+      }
   },
+ watchLive: function(){
+   var that = this;
+    wx.request({
+      url: 'https://www.sunlikeme.xyz/live/watchLive',
+      data: {
+        'lessonId': this.data.lessonId,
+      },
+      header: {
+        "content-type": "application/x-www-form-urlencoded",
+        'unionId': getApp().globalData.userId
+      },
+      method: "POST",
+      success: function (result) {
+        if (result.data.code == 200) {
+          //绑定直播url
+          console.log('开始观看直播')
+          wx.navigateTo({
+            url: '../livepull/livepull?lessonId=' + that.data.lessonId + "&rmtp_url=" + encodeURIComponent(result.data.data),
+          });
+
+          
+        }
+        else {
+        console.log(result.data.msg)
+          wx.showToast({
+          title: result.data.msg,
+          icon: 'none',
+          duration: 5000
+        });
+      }
+      }
+    });
+  },
+
+
+startLive: function () {
+  var that = this;
+    wx.request({
+      url: 'https://www.sunlikeme.xyz/live/startLive',
+      data: {
+        'lessonId': this.data.lessonId,
+      },
+      header: {
+        "content-type": "application/x-www-form-urlencoded",
+        'unionId': getApp().globalData.userId
+      },
+      method: "POST",
+      success: function (result) {
+        console.log(result);
+        console.log('开始直播');
+        if (result.data.code == 200) {
+          //绑定直播url
+          wx.navigateTo({
+            url: '../livepush/livepush?lessonId=' + that.data.lessonId +"&rmtp_url="+encodeURIComponent(result.data.data),
+          });
+          
+        }
+        else {
+          console.log(result.data.msg)
+          wx.showToast({
+            title: result.data.msg,
+            icon: 'none',
+            duration: 5000
+          });
+        }
+      },
+      fail: function () {
+        wx.showToast({
+          title: '网络连接失败',
+          icon: 'none',
+          duration: 2000
+        })
+        console.log('登陆失败，检查网络连接')
+      }
+    });
+  },
+
   onLoad: function (options) {
     var that = this;
     wx.getStorage({

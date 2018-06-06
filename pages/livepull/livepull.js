@@ -2,10 +2,10 @@ var client;
 const app = getApp();
 Page({
   data: {
-    // lessonId:'',
-    // rmtp_url: '',
-    lessonId: '7e56beb7be8741178f3cde786f4f0421',
-    rmtp_url: 'rtmp://23921.livepush.myqcloud.com/live/23921_2437192d66?bizid=23921&txSecret=6b6ff27fb1f563e7bc0bf71c570481c9&txTime=5B0D78FF',
+     lessonId:'',
+     rmtp_url: '',
+    //lessonId: '7e56beb7be8741178f3cde786f4f0421',
+    //rmtp_url: 'rtmp://23921.livepush.myqcloud.com/live/23921_2437192d66?bizid=23921&txSecret=6b6ff27fb1f563e7bc0bf71c570481c9&txTime=5B0D78FF',
     showModalStatus: false,
     detail: '',
     currentOpt: [false, false, false, false],
@@ -14,8 +14,8 @@ Page({
   onLoad: function (options) {
     var that = this;
     that.setData({
-      // lessonId: options.lessonId,
-      //  rmtp_url: options.rmtp_url
+      lessonId: options.lessonId,
+      rmtp_url: decodeURIComponent(options.rmtp_url)
     });
     // watchLive();
   },

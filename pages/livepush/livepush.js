@@ -2,8 +2,7 @@ var client;
 const app = getApp();
 Page({
   data: {
-    lessonId: '',
-    questionId: '',
+    lessonId: '17fc460c6100490ba0679168d032acaa',
     correctAnswer: '',
     showModalStatus: false,
     list: [],
@@ -14,11 +13,14 @@ Page({
   onLoad: function (options) {
     var that = this;
     that.setData({
-     // lessonId: options.lessonId,
+      // lessonId: options.lessonId,
+      rmtp_url: decodeURIComponent(options.rmtp_url),
+      lessonId: options.lessonId,
       //rmtp_url: options.rmtp_url
-      lessonId: '7e56beb7be8741178f3cde786f4f0421',
-      rmtp_url:'rtmp://23921.livepush.myqcloud.com/live/23921_2437192d66?bizid=23921&txSecret=6b6ff27fb1f563e7bc0bf71c570481c9&txTime=5B0D78FF'
+      //lessonId: '7e56beb7be8741178f3cde786f4f0421',
+      //rmtp_url:'rtmp://23921.livepush.myqcloud.com/live/23921_2437192d66?bizid=23921&txSecret=6b6ff27fb1f563e7bc0bf71c570481c9&txTime=5B0D78FF'
     })
+    console.log(this.data.rmtp_url);
   },
 
 //问题列表点击事件
@@ -80,9 +82,8 @@ Page({
 
  
   //发送问题
-  sendQuestions: function () {
-    client.send('/app/question/sendQuestion', { lessonId: this.data.lessonId, questionId: this.data.questionId, userId: getApp().globalData.userId }, );
-
+  sendQuestions: function (questionId) {
+    client.send('/app/question/sendQuestion', { lessonId: this.data.lessonId, questionId: '008de9c1ab654e6b8bc08bb5935a9f92', userId: getApp().globalData.userId }, );
   },
   //发送回答
   sendAnswer: function () {
