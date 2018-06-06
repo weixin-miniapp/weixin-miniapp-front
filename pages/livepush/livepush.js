@@ -7,7 +7,6 @@ Page({
     showModalStatus: false,
     list: [],
     activeQuestionId:'',
-    message:'',
     rmtp_url: ''
   },
 
@@ -15,8 +14,13 @@ Page({
     var that = this;
     that.setData({
       // lessonId: options.lessonId,
-      rmtp_url: options.rmtp_url
+      rmtp_url: decodeURIComponent(options.rmtp_url),
+      lessonId: options.lessonId,
+      //rmtp_url: options.rmtp_url
+      //lessonId: '7e56beb7be8741178f3cde786f4f0421',
+      //rmtp_url:'rtmp://23921.livepush.myqcloud.com/live/23921_2437192d66?bizid=23921&txSecret=6b6ff27fb1f563e7bc0bf71c570481c9&txTime=5B0D78FF'
     })
+    console.log(this.data.rmtp_url);
   },
 
 //问题列表点击事件
@@ -26,6 +30,8 @@ Page({
       questionId: e.currentTarget.id
     })
   },
+
+
 
   //调出发送提问弹窗
   prepareQuestions: function () {
@@ -44,8 +50,9 @@ Page({
         method: "GET",
         success: function (result) {
           var list = that.data.list
-          for (var i = 0; i < result.data.data.length; i++) {
+          console.log(result)
 
+          for (var i = 0; i < result.data.data.length; i++) {
             list.push({
               checked: false,
               content: result.data.data[i]["content"],
@@ -281,22 +288,25 @@ Page({
       //发送问题，教师的回掉
       client.subscribe('/user/question/getQuestion', function (result) {
         console.log(result);
-        that.setData({
-          message:result.body
+        wx.showToast({
+          title: result.body,
+          duration:1000
         })
       });
       client.subscribe('/user/question/getAnswer', function (result) {
         //显示答案，，教师的回掉
         console.log(result);
-        that.setData({
-          message: result.body
+        wx.showToast({
+          title: result.body,
+          duration: 1000
         })
       });
       client.subscribe('/user/question/getCloseWindow', function (result) {
         //关闭弹窗，教师的回掉
         console.log(result);
-        that.setData({
-          message: result.body
+        wx.showToast({
+          title: result.data.body,
+          duration: 1000
         })
       });
 

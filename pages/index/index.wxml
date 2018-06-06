@@ -37,17 +37,34 @@
       <navigator class="header">
         <view class="left">
           <view class="bilibili-index-sprite bilibili-index-live"></view>
-          <text>正在直播</text>
+          <text>推荐课程</text>
         </view>
         <view class="right">
-          <text>查看更多直播</text>
+          <text>查看更多课程</text>
           <view class="bilibili-index-sprite bilibili-index-arrow"></view>
         </view>
       </navigator>
       <view class="content-wrapper">
-        <block wx:for="{{liveList}}" wx:key="avid">
-          <!-- 使用正在直播模板，传入当前循环对象item -->
-          <template is="jiefItem2" data="{{...item}}" />
+        <block wx:for="{{list}}">
+          <view class="content-list">
+        <view class="item">
+          <view class="top">
+            <view class="cover-img" id="{{item.lessonId}}" bindtap='toIntroduction' 
+            style="opacity: 1; background-image: url({{item.header}});">
+            </view>
+          </view>
+          <view class="info">
+              <view class="avatar">
+                 <image mode="scaleToFill" src="{{item.teacherInfo}}"></image>
+              </view>
+              <view class="user">
+                  <view class="name text-overflow">{{item.teacherName}}</view>
+                  <view data-name="{{item.lessonName}}" class="desp text-overflow">{{item.lessonName}}</view>
+              </view>
+              <view class="online text-overflow">{{statusToString}}</view>
+          </view>
+        </view>
+      </view>>
         </block>
       </view>
     </view>

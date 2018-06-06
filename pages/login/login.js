@@ -37,6 +37,7 @@ Page({
                       success: function (result) {
 
                         var userId = result.data.data.id;
+                        console.log(userId)
                         wx.setStorageSync("userId", userId);
                         app.globalData.userId = userId;
                         app.globalData.userInfo = userRes.userInfo;

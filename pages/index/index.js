@@ -7,56 +7,22 @@ Page({
     motto: 'Hello World',
 
     userInfo: {},
-    lessonId: null,
-    header: null,
-    lessonName: null,
-    introduction: null,
-    status: null,
-    onlineTime: null,
-    offlineTime: null,
-    multiparts: null,
-    teach: null,
+    lessonId:null,
+    header:null,
+    lessonName:null,
+    introduction:null,
+    status:null,
+    onlineTime:null,
+    offlineTime:null,
+    multiparts:null,
+    teach:[],
+    statusToString:'',
+    teacherName:null,
+    teacherInfo:null,
+    list:[],
 
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-
-    // 正在直播
-    liveList: [
-      {
-        coverImg: 'http://i0.hdslb.com/bfs/live/96025d17ed05961230a7d1401ca1fe3b79cc12db.jpg',
-        avatarImg: 'http://i2.hdslb.com/bfs/face/c55b2eae13646925187514c6f19e19293294d0c5.jpg',
-        name: '尤樱',
-        desp: '你女朋友在直播你不来看看吗？',
-        online: '877',
-        avid: 'av5'
-      },
-      {
-        coverImg: 'http://i0.hdslb.com/bfs/live/a1678768dd9c7023af7ab0f3de2a2df2c525e741.jpg',
-        avatarImg: 'http://i0.hdslb.com/bfs/face/d1bec5ec111987537ecf3e7f43a8b3678ed3c5c3.jpg',
-        name: '我是小麦伊哦哦',
-        desp: '告别:我爱你们',
-        online: '877',
-        avid: 'av6'
-      },
-      {
-        coverImg: 'http://i0.hdslb.com/bfs/live/89047f3faee35d0cb095d7dfb01ec4d3a8ec4434.jpg',
-        avatarImg: 'http://i0.hdslb.com/bfs/face/1e31ac069058528e26b9be60b26d86c9c9a99f62.jpg',
-        name: '坂本叔',
-        desp: '【坂本】非洲黑客',
-        online: '877',
-        avid: 'av7'
-      },
-      {
-        coverImg: 'http://i0.hdslb.com/bfs/live/24dbcc68325ff5fb3d235af97ad075dc5087733a.jpg',
-        avatarImg: 'http://i2.hdslb.com/bfs/face/c55b2eae13646925187514c6f19e19293294d0c5.jpg',
-        name: 'miriちゃん',
-        desp: '日语点歌姬',
-        online: '877',
-        avid: 'av8'
-      }
-    ],
-
-
     imgUrls: [
       'http://i0.hdslb.com/bfs/archive/9bab17a99758cc7a72531d15d2d5a85d73b78ded.jpg',
       'http://i0.hdslb.com/bfs/archive/57d8001838ff81c64bef2682070e53efbe2736b7.jpg',
@@ -72,26 +38,29 @@ Page({
     interval: 5000,
     // 滑动动画时长
     duration: 1000
-
-
-  },
-  goToSearch: function (e) {
+  }, 
+  goToSearch:function(e){
     wx.navigateTo({
       url: '/pages/search/search',
     })
   },
   //事件处理函数
-  bindViewTap: function () {
+  bindViewTap: function() {
     wx.navigateTo({
       url: '../logs/logs'
     })
   },
-  onLoad: function () {
-    var that=this;
-    that.setData({
-      userInfo: app.globalData.userInfo,
-      hasUserInfo: true
+  toIntroduction:function(e){
+    wx.setStorage({
+      key: "lessonId",
+      data: e.currentTarget.id
     })
+    wx.navigateTo({
+      url: '/pages/coursedescirption/coursedescirption'
+    })
+  },
+  onLoad: function () {
+    var that = this;
     //未设置role,弹框设置role
     if (app.globalData.userInfo.role == 2) {
       wx.showActionSheet({
@@ -125,28 +94,74 @@ Page({
                 title: '错误',
                 content: result.data.msg,
                 success: function (res) {
-                  if (res.confirm) {               
-                  } else if (res.cancel) {                
+                  if (res.confirm) {
+                  } else if (res.cancel) {
                   }
                 }
               })
             }
           });
-        },
-        fail: function (res) {
-          console.log(res.errMsg);
-          wx.showModal({
-            title: '错误',
-            content: res.errMsg,
-            success: function (res) {
-              if (res.confirm) {
-              } else if (res.cancel) {
-              }
-            }
-          })
         }
-      })
-
-    }
-  }
+        });
+      }
+  
+    wx.request({
+      url: 'https://www.sunlikeme.xyz/lesson/list',
+      data: {
+        'unionId': app.globalData.userId,
+        'pageSize': 4,
+        'showOnlyMine': 0,
+        'lessonName':"语文"
+      },
+      header: {
+        "content-type": "application/x-www-form-urlencoded",
+        'unionId': app.globalData.userId
+      },
+      method: "GET",
+      success: function (result) {
+        for (var i = 0; i < result.data.data.length; i++) {
+          var list = that.data.list;
+          var teach = that.data.teach;
+          list.push({
+            header: 'https://www.sunlikeme.xyz' + result.data.data[i]["header"],
+            lessonId: result.data.data[i]["lessonId"],
+            lessonName: result.data.data[i]["lessonName"],
+            introduction: result.data.data[i]["introduction"],
+            status: result.data.data[i]["status"],
+            onlineTime: result.data.data[i]["onlineTime"],
+            offlineTime: result.data.data[i]["offlineTime"],
+            multiparts: result.data.data[i]["multiparts"],
+            teacherInfo: result.data.data[i]["teach"][0]["portrait"],
+            teacherName: result.data.data[i]["teach"][0]["nickName"],
+          });
+          that.setData({
+            list: list,
+          })
+          if (result.data.data[i]["status"] == 0) {
+            that.setData({
+              statusToString: '未开始'
+            })
+          }
+          else if (result.data.data[i]["status"] == 1) {
+            that.setData({
+              statusToString: '直播中'
+            })
+          }
+          else if (result.data.data[i]["status"] == 2) {
+            that.setData({
+              statusToString: '已结束'
+            })
+          }
+        }
+        console.log(that.data.list);
+      },
+      fail: function () {
+        console.log('获取课程失败，检查网络连接')
+      }
+    }),
+    this.setData({
+            userInfo: app.globalData.userInfo,
+            hasUserInfo: true
+          })
+    }  
 })

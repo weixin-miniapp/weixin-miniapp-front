@@ -4,53 +4,19 @@ var util = require('../../utils/util.js')
 
 Page({
   data: {
-    lists: [
-      {
-        'id': '1',
-        'image': 'http://img1.huiyijingling.cn/UploadImage/Meet/20161010/4ntia7d5/636117184529372567.png',
-        'title': '对话产品总监 | 深圳·北京PM大会 【深度对话小米/京东/1号店/百度等产品总监】',
-        'num': '304',
-        'state': '进行中',
-        'time': '10月09日 17:59',
-        'address': '深圳市·南山区'
-      },
-      {
-        'id': '1',
-        'image': 'http://img1.huiyijingling.cn/UploadImage/Meet/20161010/4ntia7d5/636117184835348263.png',
-        'title': 'AI WORLD 2016世界人工智能大会',
-        'num': '380',
-        'state': '已结束',
-        'time': '10月09日 17:39',
-        'address': '北京市·朝阳区'
-      },
-      {
-        'id': '1',
-        'image': 'http://img1.huiyijingling.cn/UploadImage/Meet/20161010/4ntia7d5/636117186019220383.png',
-        'title': 'H100太空商业大会',
-        'num': '500',
-        'state': '进行中',
-        'time': '10月09日 17:31',
-        'address': '大连市'
-      },
-      {
-        'id': '1',
-        'image': 'http://img1.huiyijingling.cn/UploadImage/Meet/20161010/4ntia7d5/636117185105463337.png',
-        'title': '【报名】年度盛事，大咖云集！2016凤凰国际论坛邀您“与世界对话”',
-        'num': '150',
-        'state': '已结束',
-        'time': '10月09日 17:21',
-        'address': '北京市·朝阳区'
-      },
-      {
-        'id': '1',
-        'image': 'http://img1.huiyijingling.cn/UploadImage/Meet/20161010/4ntia7d5/636117185186696080.png',
-        'title': '新质生活 · 品质时代 2016消费升级创新大会',
-        'num': '217',
-        'state': '进行中',
-        'time': '10月09日 16:59',
-        'address': '北京市·朝阳区'
-      }
-    ],
+    lessonId: null,
+    header: null,
+    lessonName: null,
+    introduction: null,
+    status: null,
+    onlineTime: null,
+    offlineTime: null,
+    multiparts: null,
+    teach:[],
+    statusToString: '',
+    teacherName: null,
+    teacherInfo: null,
+    list:[]
   },
 
   toAddCourse:function(e){
@@ -59,10 +25,72 @@ Page({
       url: '../addcourse/addcourse',
     })
   },
+  toIntroduction: function (e) {
+    wx.setStorage({
+      key: "lessonId",
+      data: e.currentTarget.id
+    })
+    wx.navigateTo({
+      url: '/pages/coursedescirption/coursedescirption'
+    })
+  },
+  
   onLoad: function (e) 
   {
-    
-
+    var that = this;
+    wx.request({
+      url: 'https://www.sunlikeme.xyz/lesson/list',
+      data: {
+        'unionId': app.globalData.userId,
+        'pageSize': 20,
+        'showOnlyMine': 1,
+      },
+      header: {
+        "content-type": "application/x-www-form-urlencoded",
+        'unionId': app.globalData.userId
+      },
+      method: "GET",
+      success: function (result) {
+        for (var i = 0; i < result.data.data.length; i++) {
+          var list = that.data.list;
+          var teach = that.data.teach;
+          list.push({
+            header: 'https://www.sunlikeme.xyz' + result.data.data[i]["header"],
+            lessonId: result.data.data[i]["lessonId"],
+            lessonName: result.data.data[i]["lessonName"],
+            introduction: result.data.data[i]["introduction"],
+            status: result.data.data[i]["status"],
+            onlineTime: result.data.data[i]["onlineTime"],
+            offlineTime: result.data.data[i]["offlineTime"],
+            multiparts: result.data.data[i]["multiparts"],
+            teacherInfo: result.data.data[i]["teach"][0]["portrait"],
+            teacherName: result.data.data[i]["teach"][0]["nickName"],
+          });
+          that.setData({
+            list: list,
+          })
+          if (result.data.data[i]["status"] == 0) {
+            that.setData({
+              statusToString: '未开始'
+            })
+          }
+          else if (result.data.data[i]["status"] == 1) {
+            that.setData({
+              statusToString: '直播中'
+            })
+          }
+          else if (result.data.data[i]["status"] == 2) {
+            that.setData({
+              statusToString: '已结束'
+            })
+          }
+        }
+        console.log(that.data.list);
+      },
+      fail: function () {
+        console.log('获取课程失败，检查网络连接')
+      }
+    })
   },
 
 })

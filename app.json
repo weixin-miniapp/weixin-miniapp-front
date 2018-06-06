@@ -10,7 +10,8 @@
     "pages/search/search",
     "pages/livepush/livepush",
     "pages/livepull/livepull",
-    "pages/addcourse/addcourse"
+    "pages/addcourse/addcourse",
+    "pages/coursedescirption/coursedescirption"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -38,19 +39,8 @@
         "text": "个人",
         "iconPath": "images/resources/tab_course1.png",
         "selectedIconPath": "images/resources/tab_course1.png"
-      },
-      {
-        "pagePath": "pages/livepush/livepush",
-        "text": "直播",
-        "iconPath": "images/resources/tab_course1.png",
-        "selectedIconPath": "images/resources/tab_course1.png"
-      },
-      {
-        "pagePath": "pages/livepull/livepull",
-        "text": "看直播",
-        "iconPath": "images/resources/tab_course1.png",
-        "selectedIconPath": "images/resources/tab_course1.png"
       }
+    
     ]
   }
 }
