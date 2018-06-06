@@ -1,9 +1,12 @@
 var client;
 Page({
-
+  //lessonId: '17fc460c6100490ba0679168d032acaa'
+//questionId: 722bb1f21bcf47729a500787eff5f1bd
   data: {
     lessonId:'17fc460c6100490ba0679168d032acaa',
-    rmtp_url: ''
+    rmtp_url: '',
+    showModalStatus:false,
+    questionId:''
   },
   onLoad: function (options) {
     var that = this;
@@ -104,6 +107,29 @@ Page({
     })
   },
 
+  //回答课堂问题
+  respondQuestion(){
+    wx.request({
+      url: 'https://www.sunlikeme.xyz/question/answerQuestion',
+      data: {
+        'answer':'',
+        'unionId': app.globalData.userId,
+        'questionId': that.data.questionId,
+      },
+      header: {
+        "content-type": "application/x-www-form-urlencoded",
+        'unionId': app.globalData.userId
+      },
+      method: "GET",
+      success: function (result) {
+        console.log(result)
+
+      },
+      fail: function () {
+        console.log('获取问题失败')
+      }
+    })
+  },
    /**
     * 生命周期函数--监听页面显示
     */
@@ -161,9 +187,9 @@ Page({
     client = Stomp.over(ws);
     client.connect({ userId: getApp().globalData.userId, lessonId: this.data.lessonId }, function (frame) {
       console.log('Connected: ' + frame);
-      //发送问题，学生的回掉
-      client.subscribe('/user/question/getQuestion', function (result) {
 
+      //获取问题，学生的回掉
+      client.subscribe('/user/question/getQuestion', function (result) {
         console.log(result);
       });
       client.subscribe('/user/question/getAnswer', function (result) {

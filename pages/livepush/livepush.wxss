@@ -1,9 +1,49 @@
 .page-body-button {
   margin-bottom: 30rpx;
+  size:mini;
 }
-
+.buttonModal{
+  margin-left: 15rpx;
+  color: #f0d264;
+  font-size: 14px;
+  display: inline-block;
+  
+}
 live-pusher {
   margin: 0 auto;
-  width: 300px;
-  height: 225px;
+  width: 650rpx;
+  height: 800rpx;
+ }
+ 
+ 
+.cover-view{
+  width: 600rpx;  
+  height:700rpx;
+  position: fixed;  
+  /* top: 10%;   */
+ 
+  background: #ffffff;
+  opacity: 0.8;
+  margin: 50rpx 25rpx 50rpx 25rpx;   
+  border-radius: 3px;  
+} 
+.btn-group{
+  display: flex;  
+  flex-direction: row;  
+}
+.btn-window{
+  width:200rpx;
+  height:100rpx;
+  margin: 10rpx;
+  flex:1;
+  color:blanchedalmond;
+}
+.active{
+color:red;
+margin:10rpx 10rpx 5px 30rpx;
+}
+.non-active{
+color:black;
+margin:10rpx 10rpx 5px 30rpx;
+
 }

@@ -1,9 +1,16 @@
 var client;
+const app = getApp();
 Page({
   data: {
     lessonId: '17fc460c6100490ba0679168d032acaa',
+    correctAnswer: '',
+    showModalStatus: false,
+    list: [],
+    activeQuestionId:'',
+    message:'',
     rmtp_url: ''
   },
+
   onLoad: function (options) {
     var that = this;
     that.setData({
@@ -11,17 +18,75 @@ Page({
       rmtp_url: options.rmtp_url
     })
   },
+
+//问题列表点击事件
+  tapQuest: function (e) {
+  console.log(e)
+    this.setData({
+      questionId: e.currentTarget.id
+    })
+  },
+
+  //调出发送提问弹窗
+  prepareQuestions: function () {
+    var that = this
+    if (that.data.list.length == 0) {
+      wx.request({
+        url: 'https://www.sunlikeme.xyz/question/getQuestionForLesson',
+        data: {
+          'unionId': app.globalData.userId,
+          'lessonId': that.data.lessonId,
+        },
+        header: {
+          "content-type": "application/x-www-form-urlencoded",
+          'unionId': app.globalData.userId
+        },
+        method: "GET",
+        success: function (result) {
+          var list = that.data.list
+          for (var i = 0; i < result.data.data.length; i++) {
+
+            list.push({
+              checked: false,
+              content: result.data.data[i]["content"],
+              questionId: result.data.data[i]["questionId"],
+              answerTime: result.data.data[i]["answerTime"],
+              correctAnwser: result.data.data[i]["correctAnswer"],
+              isSingle: result.data.data[i]["isSingle"]
+            });
+          }
+          console.log(list)
+          that.setData({
+            list: list
+          })
+
+
+        },
+        fail: function () {
+          console.log('获取问题失败')
+        }
+      })
+    }
+
+    this.setData({
+      showModalStatus: true
+    })
+  },
+
+ 
   //发送问题
   sendQuestions: function (questionId) {
     client.send('/app/question/sendQuestion', { lessonId: this.data.lessonId, questionId: '008de9c1ab654e6b8bc08bb5935a9f92', userId: getApp().globalData.userId }, );
   },
   //发送回答
-  sendAnswer: function (questionId) {
-    client.send('/app/question/sendAnswer', { lessonId: this.data.lessonId, questionId: questionId, userId: getApp().globalData.userId }, );
+  sendAnswer: function () {
+    client.send('/app/question/sendAnswer', { lessonId: this.data.lessonId, questionId: this.data.questionId, userId: getApp().globalData.userId }, );
+
   },
   //结束答题
   closeQuestion: function () {
     client.send('/app/question/closeQuestion', { lessonId: this.data.lessonId, userId: getApp().globalData.userId }, '');
+    this.setData({ showModalStatus: false })
   },
   stopLive: function () {
     wx.request({
@@ -158,6 +223,7 @@ Page({
     * 生命周期函数--监听页面显示
     */
   onShow: function () {
+    var that=this
     // this.startLive();
     var socketOpen = false
     var socketMsgQueue = []
@@ -214,16 +280,24 @@ Page({
       console.log('Connected: ' + frame);
       //发送问题，教师的回掉
       client.subscribe('/user/question/getQuestion', function (result) {
-
         console.log(result);
+        that.setData({
+          message:result.body
+        })
       });
       client.subscribe('/user/question/getAnswer', function (result) {
         //显示答案，，教师的回掉
         console.log(result);
+        that.setData({
+          message: result.body
+        })
       });
       client.subscribe('/user/question/getCloseWindow', function (result) {
         //关闭弹窗，教师的回掉
         console.log(result);
+        that.setData({
+          message: result.body
+        })
       });
 
     })
