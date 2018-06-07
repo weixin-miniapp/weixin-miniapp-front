@@ -18,7 +18,8 @@ Page({
     studentInfo:null,
     studentList:[],
     comments:[],
-    question:null
+    question:null,
+    distinction:'进入课程'
   },
   toComments:function(e){
     wx.navigateTo({
@@ -34,7 +35,7 @@ Page({
       this.watchLive();
       else {
       wx.showToast({
-        title: "你没有权限进入直播，（未选择角色）",
+        title: "直播未开始",
         icon: 'none',
         duration: 5000
       });
@@ -118,6 +119,11 @@ startLive: function () {
   },
 
   onLoad: function (options) {
+    if (app.globalData.role==0){
+      setData({
+        distinction:'开始直播'
+      })
+    }
     var that = this;
     wx.getStorage({
       key: 'lessonId',
@@ -168,9 +174,9 @@ startLive: function () {
       }
     })
   },
-  gotosetques: function () {
+  setquestion: function () {
     wx.navigateTo({
-      url: '../addquestion/addquestion',
+      url: '../addquestion/addquestion?lessonId='+this.data.lessonId,
     })
   }
 })

@@ -111,7 +111,6 @@ Page({
         'unionId': app.globalData.userId,
         'pageSize': 4,
         'showOnlyMine': 0,
-        'lessonName':"语文"
       },
       header: {
         "content-type": "application/x-www-form-urlencoded",
@@ -121,7 +120,21 @@ Page({
       success: function (result) {
         for (var i = 0; i < result.data.data.length; i++) {
           var list = that.data.list;
-          var teach = that.data.teach;
+          var statusToString;
+          if (result.data.data[i]["status"] == 0) {
+           
+              statusToString='未开始';
+            
+          }
+          else if (result.data.data[i]["status"] == 1) {
+            
+              statusToString= '直播中';
+          }
+          else if (result.data.data[i]["status"] == 2) {
+            
+              statusToString='已结束';
+            
+          }
           list.push({
             header: 'https://www.sunlikeme.xyz' + result.data.data[i]["header"],
             lessonId: result.data.data[i]["lessonId"],
@@ -133,25 +146,12 @@ Page({
             multiparts: result.data.data[i]["multiparts"],
             teacherInfo: result.data.data[i]["teach"][0]["portrait"],
             teacherName: result.data.data[i]["teach"][0]["nickName"],
+            statusToString: statusToString
           });
           that.setData({
             list: list,
           })
-          if (result.data.data[i]["status"] == 0) {
-            that.setData({
-              statusToString: '未开始'
-            })
-          }
-          else if (result.data.data[i]["status"] == 1) {
-            that.setData({
-              statusToString: '直播中'
-            })
-          }
-          else if (result.data.data[i]["status"] == 2) {
-            that.setData({
-              statusToString: '已结束'
-            })
-          }
+        
         }
         console.log(that.data.list);
       },

@@ -1,0 +1,50 @@
+<!--pages/addquestion/addquestion.wxml-->
+<form bindsubmit="formSubmit" bindreset="formReset">
+  <view class="space">设置题目：</view>
+  <view class="padding">
+    <view class="wa-input-icon">
+      <text class="icon-left ion-search placeholder-icon"></text>
+      <input class="wa-input" name="content" placeholder="请输入题干内容" value="" />
+    </view>
+  </view>
+  <view class="space">设置选项与正确答案:</view>
+  <view class="radio-group" >
+    <radio-group class="radio-group" name="radioSingle">
+       <label class="radio-item"><radio value="true"/>单选</label>
+      <label class="radio-item"><radio value="false"/>多选</label>
+    </radio-group>
+  </view>
+  <view class="checkbox-item">
+   <checkbox-group name="correctAnswer">
+      <label class="checkbox-item"><checkbox value="1"/>A</label>
+      <label class="checkbox-item"><checkbox value="2"/>B</label>
+      <label class="checkbox-item"><checkbox value="3"/>C</label>
+      <label class="checkbox-item"><checkbox value="4"/>D</label>
+    </checkbox-group>
+  </view>
+
+  <view class="wa-input-item">
+    <text class="wa-input-label">A：</text>
+    <input class="wa-input" name="choicea" placeholder="请输入A选项内容" value="" />
+  </view>
+  <view class="wa-input-item">
+    <text class="wa-input-label">B:</text>
+    <input class="wa-input" name="choiceb" placeholder="请输入B选项内容" value="" />
+  </view>
+  <view class="wa-input-item">
+    <text class="wa-input-label">C:</text>
+    <input class="wa-input" name="choicec" placeholder="请输入C选项内容" value="" />
+  </view>
+  <view class="wa-input-item">
+    <text class="wa-input-label">D:</text>
+    <input class="wa-input" name="choiced" placeholder="请输入D选项内容" value="" />
+  </view>
+  <view class="space">答题时间：</view>
+  <input class="wa-input" name="answerTime" placeholder="请输入答题时间" value="120" />
+
+  <view>
+    <button class="wa-button-block" formType="submit">提交题目信息</button>
+    <button class="wa-button-block" formType="reset">清空</button>
+
+  </view>
+</form>
