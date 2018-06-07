@@ -18,7 +18,13 @@ Page({
     studentInfo:null,
     studentList:[],
     comments:[],
-    question:null
+    question:null,
+    distinction:'进入课程'
+  },
+  toComments:function(e){
+    wx.navigateTo({
+      url: '/pages/comments/comments'
+    })
   },
   gotolive: function () {
     //开始直播按钮
@@ -29,7 +35,7 @@ Page({
       this.watchLive();
       else {
       wx.showToast({
-        title: "你没有权限进入直播，（未选择角色）",
+        title: "直播未开始",
         icon: 'none',
         duration: 5000
       });
@@ -40,7 +46,7 @@ Page({
     wx.request({
       url: 'https://www.sunlikeme.xyz/live/watchLive',
       data: {
-        'lessonId': this.data.lessonId,
+        'lessonId': that.data.lessonId,
       },
       header: {
         "content-type": "application/x-www-form-urlencoded",
@@ -113,6 +119,11 @@ startLive: function () {
   },
 
   onLoad: function (options) {
+    if (app.globalData.role==0){
+      setData({
+        distinction:'开始直播'
+      })
+    }
     var that = this;
     wx.getStorage({
       key: 'lessonId',

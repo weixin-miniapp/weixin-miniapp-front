@@ -3,8 +3,13 @@ var dateTimePicker = require('../../utils/dateTimePicker.js');
 var app = getApp()
 Page({
   data: {
-    date: '2018-10-01',
-    time: '12:00',
+    year:null,
+    month:null,
+    date:null,
+    hour:null,
+    minute:null,
+    second:null,
+    time:null,
     dateTimeArray: null,
     dateTime: null,
     dateTimeArray1: null,
@@ -32,17 +37,48 @@ Page({
       dateTime1: obj1.dateTime
     });
   },
-  changeDate(e) {
-    this.setData({ date: e.detail.value });
-  },
-  changeTime(e) {
-    this.setData({ time: e.detail.value });
-  },
   changeDateTime(e) {
-    this.setData({ dateTime: e.detail.value });
+    this.setData({ 
+      dateTime: e.detail.value,
+      year: '20'+this.data.dateTime[0],
+      month: this.data.dateTime[1] + 1,
+      date: this.data.dateTime[2] + 1,
+      hour: this.data.dateTime[3] + 1,
+      minute: this.data.dateTime[4] + 1,
+      second: this.data.dateTime[5] +1
+    });
+    if (this.data.dateTime[1] + 1 < 10) {
+      this.setData({
+        month: '0' + (this.data.dateTime[1]+1)
+      })
+    }
+    if (this.data.dateTime[2] + 1 < 10) {
+      this.setData({
+        date: '0' + (this.data.dateTime[2] + 1)
+      })
+    }
+    if (this.data.dateTime[3] + 1 < 10) {
+      this.setData({
+        hour : '0' + (this.data.dateTime[3])
+      })
+    }
+    if (this.data.dateTime[4] + 1 < 10) {
+      this.setData({
+        minute: '0' + (this.data.dateTime[4])
+      })
+    }
+    if (this.data.dateTime[5] + 1 < 10) {
+      this.setData({
+        second: '0' + (this.data.dateTime[5])
+      })
+    }
+    this.setData({
+      time: this.data.year + '-' + this.data.month + '-' + this.data.date + ' ' + this.data.hour + ':' + this.data.minute + ':' + this.data.second
+    })
   },
   changeDateTime1(e) {
     this.setData({ dateTime1: e.detail.value });
+    console.log(e.detail.value)
   },
   changeDateTimeColumn(e) {
     var arr = this.data.dateTime, dateArr = this.data.dateTimeArray;
@@ -53,17 +89,6 @@ Page({
     this.setData({
       dateTimeArray: dateArr,
       dateTime: arr
-    });
-  },
-  changeDateTimeColumn1(e) {
-    var arr = this.data.dateTime1, dateArr = this.data.dateTimeArray1;
-
-    arr[e.detail.column] = e.detail.value;
-    dateArr[2] = dateTimePicker.getMonthDay(dateArr[0][arr[0]], dateArr[1][arr[1]]);
-
-    this.setData({
-      dateTimeArray1: dateArr,
-      dateTime1: arr
     });
   },
   chooseimage: function () {
@@ -90,11 +115,6 @@ Page({
       teacherName: e.detail.value
     })
   },
-  inputOnlineTime: function (e) {
-    this.setData({
-      onlineTime:e.detail.value
-    })
-  },
   inputIntroduction: function (e) {
     this.setData({
       introduction: e.detail.value
@@ -102,8 +122,6 @@ Page({
   },
   addCourse:function(e){
     var that = this;
-    console.log(this.data.tempFilePaths),
-    console.log(app.globalData.userId),
     wx.uploadFile({
       url: 'https://www.sunlikeme.xyz/lesson/create',
       filePath: this.data.tempFilePaths[0],
@@ -111,7 +129,7 @@ Page({
       formData: {
         'lessonName': this.data.lessonName,
         'introduction': this.data.introduction,
-        'onlineTime': this.data.onlineTime,
+        'onlineTime': this.data.time,
         'unionId':app.globalData.userId
       },
       header: {

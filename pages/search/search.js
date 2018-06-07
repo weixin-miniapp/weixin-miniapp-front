@@ -14,9 +14,16 @@ Page({
     offlineTime: '',
     multiparts: '',
     statusToString:'',
-    teach:[],
-    teacherName:''
   },
+  toIntroduction: function (e) {
+    wx.setStorage({
+      key: "lessonId",
+      data: e.currentTarget.dataset.id
+    });
+    wx.navigateTo({
+      url: '/pages/coursedescirption/coursedescirption'
+    })
+    },
   searchLesson: function (e) {
     var that = this;
     this.setData({
@@ -36,9 +43,18 @@ Page({
       },
       method: "GET",
       success: function (result) {
+        var list = [];
         for (var i = 0; i < result.data.data.length; i++) {
-          var list = that.data.list;
-          var teach = that.data.teach;
+          var status;
+          if (result.data.data[i]["status"] == 0) {
+            status= '未开始' 
+          }
+          else if (result.data.data[i]["status"] == 1) {
+            status= '直播中' 
+          }
+          else if (result.data.data[i]["status"] == 2) {
+            status= '已结束' 
+          }
           list.push({
             header: 'https://www.sunlikeme.xyz'+ result.data.data[i]["header"],
             lessonId: result.data.data[i]["lessonId"],
@@ -47,33 +63,21 @@ Page({
             status: result.data.data[i]["status"],
             onlineTime: result.data.data[i]["onlineTime"],
             offlineTime: result.data.data[i]["offlineTime"],
-            multiparts: result.data.data[i]["multiparts"]});
-          that.setData({
-            list: list,
-            teacherName: result.data.data[i]["teach"][0]["nickName"]
-          })
+            multiparts: result.data.data[i]["multiparts"],
+            teacherName: result.data.data[i]["teach"][0]["nickName"],
+            statusToString: status
+            });
+           
           /*for (var j = 0; j < result.data.data[i]["teach"].length; j++) {
             teach.push({
               teacherName:result.data.data[i]["teach"][j]["nickName"]
             })
           }*/
-          console.log(result.data.data[i]["teach"].length);
-          if (result.data.data[i]["status"]==0){
-            that.setData({
-              statusToString:'未开始'
-            })
-          }
-          else if (result.data.data[i]["status"]==1) {
-            that.setData({
-              statusToString: '直播中'
-            })
-          }
-          else if (result.data.data[i]["status"]==2) {
-            that.setData({
-              statusToString: '已结束'
-            })
-          }
+        
         }
+        that.setData({
+          list: list,
+        })
         console.log(that.data.list);
       },
       fail: function () {

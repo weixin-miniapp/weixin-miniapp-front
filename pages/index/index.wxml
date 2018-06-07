@@ -61,7 +61,7 @@
                   <view class="name text-overflow">{{item.teacherName}}</view>
                   <view data-name="{{item.lessonName}}" class="desp text-overflow">{{item.lessonName}}</view>
               </view>
-              <view class="online text-overflow">{{statusToString}}</view>
+              <view class="online text-overflow">{{item.statusToString}}</view>
           </view>
         </view>
       </view>>
