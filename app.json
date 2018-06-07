@@ -1,6 +1,5 @@
 {
-
-  "pages":[
+  "pages": [
     "pages/login/login",
     "pages/index/index",
     "pages/logs/logs",
@@ -11,7 +10,8 @@
     "pages/livepush/livepush",
     "pages/livepull/livepull",
     "pages/addcourse/addcourse",
-    "pages/coursedescirption/coursedescirption"
+    "pages/coursedescirption/coursedescirption",
+    "pages/comments/comments"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -40,9 +40,6 @@
         "iconPath": "images/resources/tab_course1.png",
         "selectedIconPath": "images/resources/tab_course1.png"
       }
-    
     ]
   }
 }
-
-

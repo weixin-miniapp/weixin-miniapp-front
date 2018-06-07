@@ -20,6 +20,11 @@ Page({
     comments:[],
     question:null
   },
+  toComments:function(e){
+    wx.navigateTo({
+      url: '/pages/comments/comments'
+    })
+  },
   gotolive: function () {
     //开始直播按钮
     //0为老师
@@ -40,7 +45,7 @@ Page({
     wx.request({
       url: 'https://www.sunlikeme.xyz/live/watchLive',
       data: {
-        'lessonId': this.data.lessonId,
+        'lessonId': that.data.lessonId,
       },
       header: {
         "content-type": "application/x-www-form-urlencoded",
