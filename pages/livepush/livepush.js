@@ -2,30 +2,27 @@ var client;
 const app = getApp();
 Page({
   data: {
-    lessonId: '17fc460c6100490ba0679168d032acaa',
+    lessonId: '',
     correctAnswer: '',
     showModalStatus: false,
     list: [],
-    activeQuestionId:'',
-    rmtp_url: ''
+    questionId: '',
+    rmtp_url: '',
+    tempFilePaths: ''
   },
 
   onLoad: function (options) {
     var that = this;
     that.setData({
-      // lessonId: options.lessonId,
       rmtp_url: decodeURIComponent(options.rmtp_url),
       lessonId: options.lessonId,
-      //rmtp_url: options.rmtp_url
-      //lessonId: '7e56beb7be8741178f3cde786f4f0421',
-      //rmtp_url:'rtmp://23921.livepush.myqcloud.com/live/23921_2437192d66?bizid=23921&txSecret=6b6ff27fb1f563e7bc0bf71c570481c9&txTime=5B0D78FF'
     })
     console.log(this.data.rmtp_url);
   },
 
-//问题列表点击事件
+  //问题列表点击事件
   tapQuest: function (e) {
-  console.log(e)
+    console.log(e)
     this.setData({
       questionId: e.currentTarget.id
     })
@@ -80,10 +77,10 @@ Page({
     })
   },
 
- 
+
   //发送问题
-  sendQuestions: function (questionId) {
-    client.send('/app/question/sendQuestion', { lessonId: this.data.lessonId, questionId: '008de9c1ab654e6b8bc08bb5935a9f92', userId: getApp().globalData.userId }, );
+  sendQuestions: function () {
+    client.send('/app/question/sendQuestion', { lessonId: this.data.lessonId, questionId: this.data.questionId, userId: getApp().globalData.userId }, );
   },
   //发送回答
   sendAnswer: function () {
@@ -95,6 +92,26 @@ Page({
     client.send('/app/question/closeQuestion', { lessonId: this.data.lessonId, userId: getApp().globalData.userId }, '');
     this.setData({ showModalStatus: false })
   },
+  //获取答题情况
+  getFeedback: function (e) {
+    var that=this;
+    wx.request({
+      url: 'https://www.sunlikeme.xyz/question/getTotalAnswer',
+      data: {
+        'unionId': app.globalData.userId,
+        'questionId': that.data.questionId,
+      },
+      header: {
+        "content-type": "application/x-www-form-urlencoded",
+        'unionId': app.globalData.userId
+      },
+      method: "POST",
+      success: function (result) {
+        console.log(result)
+        }
+    })
+  },
+  //停止直播
   stopLive: function () {
     wx.request({
       url: 'https://www.sunlikeme.xyz/live/stopLive',
@@ -128,47 +145,7 @@ Page({
       }
     })
   },
-  // startLive: function () {
-  //   wx.request({
-  //     url: 'https://www.sunlikeme.xyz/live/startLive',
-  //     data: {
-  //       'lessonId': this.data.lessonId,
-  //     },
-  //     header: {
-  //       "content-type": "application/x-www-form-urlencoded",
-  //       'unionId': getApp().globalData.userId
-  //     },
-  //     method: "POST",
-  //     success: function (result) {
-  //       console.log(result)
-  //       if (result.data.code == 200) {
-  //         //绑定直播url
-  //         var that = this;
-  //         that.setData({
-  //           rmtp_url: result.data.data
-  //         });
-  //         console.log('开始直播')
-  //       }
-  //       else {
-  //         console.log(result.data.msg)
-  //         wx.showToast({
-  //           title: result.data.msg,
-  //           icon: 'none',
-  //           duration: 5000
-  //         });
-  //         this.bindStop();
-  //       }
-  //     },
-  //     fail: function () {
-  //       wx.showToast({
-  //         title: '网络连接失败',
-  //         icon: 'none',
-  //         duration: 2000
-  //       })
-  //       console.log('登陆失败，检查网络连接')
-  //     }
-  //   });
-  // },
+
   onReady(res) {
     this.ctx = wx.createLivePusherContext('pusher')
   },
@@ -230,7 +207,7 @@ Page({
     * 生命周期函数--监听页面显示
     */
   onShow: function () {
-    var that=this
+    var that = this
     // this.startLive();
     var socketOpen = false
     var socketMsgQueue = []
@@ -290,7 +267,7 @@ Page({
         console.log(result);
         wx.showToast({
           title: result.body,
-          duration:1000
+          duration: 1000
         })
       });
       client.subscribe('/user/question/getAnswer', function (result) {
@@ -313,6 +290,60 @@ Page({
     })
   },
 
+  //选择本地图片
+  chooseimage: function () {
+    var _this = this;
+    wx.chooseImage({
+      count: 1, // 默认9  
+      sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有  
+      sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有  
+      success: function (res) {
+        // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片  
+        _this.setData({
+          tempFilePaths: res.tempFilePaths
+        })
+      }
+    })
+
+  },
+
+  //上传图片到服务器
+  bindUploadPhoto() {
+    var that = this
+    wx.uploadFile({
+      url: 'https://www.sunlikeme.xyz/lesson/uploadMedia',
+      filePath: this.data.tempFilePaths[0],
+      name: 'multiparts',
+      formData: {
+        'lessonId': this.data.lessonId,
+      },
+      header: {
+        "Content-Type": "multipart/form-data",
+        'unionId': app.globalData.userId
+      },
+      success: function (res) {
+        var data = JSON.parse(res.data)
+        console.log(data)
+        wx.showToast({
+          title: '上传图片成功',
+          icon: 'success',
+          duration: 1200
+        })
+        that.sendMultipart(data.data)
+      },
+      fail: function () {
+        console.log('创建失败，检查网络连接')
+      }
+    })
+
+
+  },
+
+  //socket发送图片
+  sendMultipart: function (url) {
+    console.log(JSON.stringify(url))
+    client.send('/app/question/sendMultipart', { lessonId: this.data.lessonId, userId: getApp().globalData.userId }, JSON.stringify(url));
+  },
   /**
    * 生命周期函数--监听页面隐藏
    */
