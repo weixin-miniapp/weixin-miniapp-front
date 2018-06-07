@@ -3,7 +3,7 @@
   <view class="page-section tc">
 
     <live-player id="player" src="{{rmtp_url}}" mode="RTC" autoplay bindstatechange="statechange" binderror="error">
-
+<cover-image class="class-image" wx:if="{{showImage}}" src="{{imageUrl}}"></cover-image>
       <cover-view class="cover-view" wx:if="{{showModalStatus}}">
         <cover-view class="content">{{detail.content}}</cover-view>
         <cover-view class="{{currentOpt[0]==true?'active':'non-active'}} " bindtap='tapOption' id="1">1. {{detail.choicea}}</cover-view>
@@ -23,6 +23,7 @@
       <button bindtap="bindStop" class="page-body-button" size="mini"type="default">停止</button>
       <button bindtap="bindResume" class="page-body-button"size="mini" type="default">恢复</button>
       <button bindtap="bindMute" class="page-body-button"size="mini" type="default">静音</button>
+        <button bindtap="closeImg" class="page-body-button"size="mini" type="default">关闭图片</button>
     </view>
   </view>
 </view>

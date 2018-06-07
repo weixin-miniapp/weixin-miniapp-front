@@ -1,6 +1,9 @@
-.page-body-button {
+
+.btn-area{
+  display:block;
+}
+.page-button {
   margin-bottom: 30rpx;
-  size:mini;
 }
 .buttonModal{
   margin-left: 15rpx;
@@ -17,10 +20,7 @@ live-pusher {
  
  
 
-.btn-group{
-  display: flex;  
-  flex-direction: row;  
-}
+
 .btn-window{
   width:200rpx;
   height:100rpx;
@@ -35,4 +35,10 @@ margin:10rpx 10rpx 5px 30rpx;
 .non-active{
 color:black;
 margin:10rpx 10rpx 5px 30rpx;
+}
+
+.item-img{
+  height: 40px;
+  width: 40px;
+  margin:10rpx;
 }
