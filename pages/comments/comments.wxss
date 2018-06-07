@@ -45,6 +45,7 @@
 }
 
 .wa-item-2{
+  height: 105px;
   width: 100%;
   border: 1px solid #ddd;
   margin: -1px 0;  
@@ -52,7 +53,6 @@
   display: block;
   color: #576b95;
   padding:10px;
-  height: 45px;
   box-sizing: border-box;
   position:relative;
   background-color: #fff;
