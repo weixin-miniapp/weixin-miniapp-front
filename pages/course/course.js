@@ -39,7 +39,7 @@ Page({
   onLoad: function (e) 
   {
     if(app.globalData.userInfo.role==0){
-      setData({
+      this.setData({
         showButton:true
       })
     }

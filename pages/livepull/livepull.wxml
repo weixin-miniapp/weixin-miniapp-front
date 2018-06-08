@@ -1,29 +1,52 @@
 <!--pages/main/main.wxml-->
 <view class="page-body">
   <view class="page-section tc">
-
-    <live-player id="player" src="{{rmtp_url}}" mode="RTC" autoplay bindstatechange="statechange" binderror="error">
-<cover-image class="class-image" wx:if="{{showImage}}" src="{{imageUrl}}"></cover-image>
+  <image class="class-image" wx:if="{{showImage}}" src="{{imageUrl}}" mode='widthFix'></image>
+    <live-player id="player" wx:if="{{!showImage}}"src="{{rmtp_url}}" mode="RTC" autoplay bindstatechange="statechange" binderror="error">
+    
       <cover-view class="cover-view" wx:if="{{showModalStatus}}">
         <cover-view class="content">{{detail.content}}</cover-view>
         <cover-view class="{{currentOpt[0]==true?'active':'non-active'}} " bindtap='tapOption' id="1">1. {{detail.choicea}}</cover-view>
         <cover-view class="{{currentOpt[1]==true? 'active': 'non-active'}}" bindtap='tapOption' id="2">2. {{detail.choiceb}}</cover-view>
         <cover-view class="{{currentOpt[2]==true?'active':'non-active'}}" bindtap='tapOption' id="3">3. {{detail.choicec}}</cover-view>
         <cover-view class="{{currentOpt[3]==true?'active':'non-active'}}" bindtap='tapOption' id="4">4. {{detail.choiced}}</cover-view>
-        <cover-view class="option-btn" bindtap='tapAnswer'>提交</cover-view>
 
-        <cover-view class="close-window-btn" bindtap='tapClose'>关闭弹窗</cover-view>
+        <cover-view class="btn-group">
+          <cover-view class="btn" bindtap='tapAnswer'>提交答案</cover-view>
+          <cover-view class="btn" bindtap='tapClose'>关闭弹窗</cover-view>
+        </cover-view>
       </cover-view>
 
     </live-player>
 
-    <view class="btn-area">
-      <button bindtap="bindPlay" class="page-body-button" size="mini" type="default">播放</button>
-      <button bindtap="bindPause" class="page-body-button" size="mini"type="default">暂停</button>
-      <button bindtap="bindStop" class="page-body-button" size="mini"type="default">停止</button>
-      <button bindtap="bindResume" class="page-body-button"size="mini" type="default">恢复</button>
-      <button bindtap="bindMute" class="page-body-button"size="mini" type="default">静音</button>
-        <button bindtap="closeImg" class="page-body-button"size="mini" type="default">关闭图片</button>
+    <view class="btn-group">
+      <view class="box" bindtap="bindPlay">
+        <image class="image-btn" mode='aspectFill' src="/images/play.png"></image>
+        <text class="image-text">播放</text>
+      </view>
+      <view class="box" bindtap="bindPause">
+        <image class="image-btn" mode='aspectFill' src="/images/pause.png"></image>
+        <text class="image-text">暂停</text>
+      </view>
+      <view class="box" bindtap="bindStop">
+        <image class="image-btn" mode='aspectFill' src="/images/stop.png"></image>
+        <text class="image-text">停止</text>
+      </view>
+    </view>
+    <view class="btn-group">
+      <view class="box" bindtap="bindResume">
+        <image class="image-btn" mode='aspectFill' src="/images/resume.png"></image>
+        <text class="image-text">恢复</text>
+      </view>
+      <view class="box" bindtap="bindMute">
+        <image class="image-btn" mode='aspectFill' src="/images/mute.png"></image>
+        <text class="image-text">静音</text>
+      </view>
+      <view class="box" bindtap="closeImg">
+        <image class="image-btn" mode='aspectFill' src="/images/picture.png"></image>
+        <text class="image-text">关闭图片</text>
+      </view>
+
     </view>
   </view>
 </view>

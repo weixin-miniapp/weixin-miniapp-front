@@ -5,6 +5,8 @@ Page({
     lessonId: '',
     correctAnswer: '',
     showModalStatus: false,
+    showLoading:false,
+    progress:null,
     list: [],
     questionId: '',
     rmtp_url: '',
@@ -108,6 +110,11 @@ Page({
       method: "POST",
       success: function (result) {
         console.log(result)
+        var data=result.data.data
+        wx.showModal({
+          title: '学生答题统计',
+          content: '未答题：'+data.nodone+' 答对：'+data.right+' 答错：'+data.wrong
+        })
         }
     })
   },
@@ -282,7 +289,7 @@ Page({
         //关闭弹窗，教师的回掉
         console.log(result);
         wx.showToast({
-          title: result.data.body,
+          title: result.body,
           duration: 1000
         })
       });
@@ -310,6 +317,9 @@ Page({
   //上传图片到服务器
   bindUploadPhoto() {
     var that = this
+    wx.showLoading({
+      title: '上传中',
+    })
     wx.uploadFile({
       url: 'https://www.sunlikeme.xyz/lesson/uploadMedia',
       filePath: this.data.tempFilePaths[0],
@@ -324,6 +334,7 @@ Page({
       success: function (res) {
         var data = JSON.parse(res.data)
         console.log(data)
+        wx.hideLoading()
         wx.showToast({
           title: '上传图片成功',
           icon: 'success',
@@ -332,7 +343,11 @@ Page({
         that.sendMultipart(data.data)
       },
       fail: function () {
-        console.log('创建失败，检查网络连接')
+        wx.hideLoading()
+        wx.showModal({
+          title: '上传失败',
+          content: '检查网络连接',
+        })
       }
     })
 
