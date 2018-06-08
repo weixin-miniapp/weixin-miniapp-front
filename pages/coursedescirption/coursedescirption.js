@@ -144,6 +144,7 @@ startLive: function () {
           },
           method: "GET",
           success: function (result) {
+            console.log(result.data.data.introduction)
             that.setData({
               header: 'https://www.sunlikeme.xyz' + result.data.data.header,
               lessonId: result.data.data.lessonId,

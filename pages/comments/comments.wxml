@@ -2,12 +2,12 @@
 <view>
 <view class="wa-item-4 wa-item-thumbnail-right">
       <image class="item-img" src="/images/pencil.jpg"></image>
-     <text>xxxx课程</text>课后留言
+     <text>{{lessonName}}</text>课后留言
     </view>
     <view class="padding">
     <view class="wa-input-icon">
       <text class="icon-left ion-search placeholder-icon"></text>
-      <input class="wa-input" bindinput='getComment' placeholder="请输入课堂留言" value=""/>
+      <input class="wa-input" bindinput='getComment' placeholder="请输入课堂留言" value="{{initialInput}}"/>
     </view>
   </view>
   <view class="wa-item-3">
@@ -17,9 +17,10 @@
       <image class="item-img-1" src="/images/book.jpg"></image>
      更多课程留言
     </view>
-<view class="wa-item-2 wa-item-ava">
-      <image class="item-img-round" src="/images/name.png"></image>
-      <text>JIMI</text>
+<view class="wa-item-2 wa-item-ava" wx:for="{{list}}">
+      <image class="item-img-round" src="{{item.userInfo}}"></image>
+      <text>{{item.userName}}</text>
+      <view class="space"><text>{{item.comment}}</text></view>
     </view>
-    <view class="space"><text>留言留言留言留言留言留言xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</text></view>
+    
     </view>
