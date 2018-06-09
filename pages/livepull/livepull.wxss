@@ -1,18 +1,43 @@
 /* pages/main/main.wxss */
+
 .page-body-button {
   margin-bottom: 30rpx;
 }
 
 live-player {
   width: 100%;
-  height: 225px;
+  height: 750rpx;
 }
 
-.active{
-color:red;
-margin:10rpx 10rpx 5px 30rpx;
+.class-image {
+  width: 100%;
 }
-.non-active{
-color:black;
-margin:10rpx 10rpx 5px 30rpx;
+
+.active {
+  color: red;
+  margin: 10rpx 10rpx 5px 30rpx;
+}
+
+.non-active {
+  color: black;
+  margin: 10rpx 10rpx 5px 30rpx;
+}
+
+.content {
+  line-height: 60rpx;
+  margin: 10rpx;
+  font-size: 40rpx;
+  word-wrap: break-word;
+  flex-wrap: warp;
+  white-space: pre-wrap;
+  color: #003366;
+}
+.btn {
+  font-size: 35rpx;
+  color: #fff;
+  background: #336699;
+  border-radius: 8rpx;
+  line-height: 44rpx;
+  margin-top: 18rpx;
+  padding: 6px 16px;
 }

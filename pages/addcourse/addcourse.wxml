@@ -9,10 +9,6 @@
     <input class="wa-input" placeholder="请填写课程名称" value="" bindinput='inputLessonName'/>
   </view>
   <view class="wa-input-item">
-    <text class="wa-input-label">任课老师：</text>
-    <input class="wa-input" placeholder="请填写任课老师名字" value="" bindinput='inputTeacher'/>
-  </view>
-  <view class="wa-input-item">
     <text class="wa-input-label">开课时间：</text>
     <view class="tui-picker-content">
 <picker mode="multiSelector" value="{{dateTime}}" bindchange="changeDateTime" bindcolumnchange="changeDateTimeColumn" range="{{dateTimeArray}}">

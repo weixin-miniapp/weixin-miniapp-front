@@ -15,5 +15,30 @@ const formatNumber = n => {
 }
 
 module.exports = {
-  formatTime: formatTime
+  formatTime: formatTime,
+  parseTime: parseTime,
+  formatDate: formatDate
+}
+
+function formatDate(date) {
+  var dates = date.split("/");
+  if (dates.length == 3) {
+    if (dates[1].length == 1) {
+      dates[1] = "0" + dates[1];
+    }
+    if (dates[2].length == 1) {
+      dates[2] = "0" + dates[2];
+    }
+    date = dates.join("-");
+    return date;
+  } else {
+    return null;
+  }
+}
+
+function parseTime(timestamp) {
+  var date = new Date(parseInt(timestamp)).toLocaleDateString();
+  　　//输出结果为2016/8/9
+  date = formatDate(date);
+  return date;
 }

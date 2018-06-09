@@ -4,9 +4,8 @@
     <view class="avatar flex-item">
       <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
     </view>
-    <view class="user-info flex-item">
+    <view class="user-info flex-item"  bindtap='bindViewTap'>
       <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-      <text class="edit">查看或编辑个人主页</text>
     </view>
   </view>
 
@@ -17,7 +16,7 @@
       </view>
       <view class="myitem-name flex-item">
         <text>姓名</text>
-        <text class="item">黄靖萱</text>
+        <text class="item">{{userInfo.nickName}}</text>
       </view>  
     </view>
     <view class="my-item flex-wrp">
@@ -26,7 +25,7 @@
       </view>
       <view class="myitem-name flex-item">
         <text>性别</text>
-        <text class="item">女</text>
+        <text class="item">{{sex}}</text>
       </view>
     </view>
     <view class="my-item flex-wrp">
@@ -35,10 +34,10 @@
       </view>
       <view class="myitem-name flex-item">
         <text>身份</text>
-        <text class="item">学生</text>
+        <text class="item">{{role}}</text>
       </view>
     </view>
-    <view class="my-item flex-wrp">
+    <!-- <view class="my-item flex-wrp">
       <view class="myitem-icon flex-item" >
         <image src="../../images/stuId.png"></image>
       </view>
@@ -55,6 +54,6 @@
         <text>邮箱</text>
         <text class="item">66666@qq.com</text>
       </view>
-    </view>
+    </view> -->
   </view>
 </view>

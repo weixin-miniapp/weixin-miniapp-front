@@ -197,14 +197,72 @@
   border: none;
 }
 
-.cover-view{
-  width: 600rpx;  
-  height:700rpx;
-  position: fixed;  
-  /* top: 10%;   */
- 
-  background: #ffffff;
-  opacity: 0.8;
-  margin: 50rpx 25rpx 50rpx 25rpx;   
-  border-radius: 3px;  
-} 
+/*弹窗容器  */
+.cover-view {
+  border: 5rpx solid white;
+  width: 650rpx;
+  height: 650rpx;
+  background: #fff;
+  opacity: 0.85;
+  margin-left: 45rpx;
+  margin-top: 45rpx;
+  border-radius: 20rpx;
+}
+
+.question-group {
+  line-height: 50rpx;
+}
+
+.non-active {
+  line-height: 65rpx;
+  border-bottom: 1px #ededed solid;
+  margin: 0 30rpx;
+}
+
+.active {
+  line-height: 65rpx;
+  color: red;
+  border-bottom: 1px #ededed solid;
+  margin: 0 30rpx;
+}
+/*弹窗内的按钮容器  */
+.btn-group {
+  justify-content: space-around;
+  display: flex;
+  flex-direction: row;
+  margin-top: 15rpx;
+  margin:10rpx 10rpx;
+}
+/*弹窗内的按钮  */
+.btn {
+  font-size: 28rpx;
+  color: #666;
+  background: #cae1ff;
+  border-radius: 8rpx;
+  line-height: 44rpx;
+  margin-top: 8px;
+  padding: 6px 6px;
+}
+
+
+/* 图片+下方文字的容器 */
+.box {
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 28rpx;
+  line-height: 20px;
+  padding: 10rpx;
+  margin-top: 23rpx;
+  border: 8rpx #cccccc solid;
+  border-radius: 20rpx;
+}
+/* 按钮中的图片 */
+.image-btn {
+  width: 80rpx;
+  height: 80rpx;
+  margin: 10rpx 0;
+}

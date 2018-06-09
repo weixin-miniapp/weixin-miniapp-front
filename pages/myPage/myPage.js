@@ -14,8 +14,8 @@ Page({
     genderArr: ['男', '女'],
     identityArr: ['学生', '老师'],
     isFromBack: false,
-    phone: '',
-    stuID: ''
+    sex: '',
+    role: ''
   },
   //事件处理函数
   bindViewTap: function () {
@@ -32,6 +32,27 @@ Page({
       that.setData({
         userInfo: userInfo
       })
+      if(userInfo.role==0){
+        that.setData({
+        role:'老师'
+        })
+      }
+      if (userInfo.role == 1) {
+       
+        that.setData({
+          role: '学生'
+        })
+      }
+      if (userInfo.gender == 1) {
+        that.setData({
+          sex: '男'
+        })
+      }
+      if (userInfo.gender == 2) {
+        that.setData({
+          sex: '女'
+        })
+      }
     })
   }
 })
