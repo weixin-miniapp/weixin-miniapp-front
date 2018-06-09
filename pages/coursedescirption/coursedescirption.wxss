@@ -505,10 +505,10 @@ page .wa-dark {
   position:absolute;
   top:10px;
   left: 0px;
-  width: 115px;
-  height: 115px;
+  width: 100px;
+  height: 100px;
+  margin-left: 10rpx;
 }
-
   .wa-but-con{
     width:43%;
     align-items: center;

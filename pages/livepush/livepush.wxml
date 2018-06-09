@@ -1,57 +1,56 @@
 <view class="page-body">
   <view class="page-section tc">
-    <live-pusher id="pusher" 
-    url="{{rmtp_url}}" mode="RTC" autopush bindstatechange="statechange">
+    <live-pusher id="pusher" url="{{rmtp_url}}" mode="RTC" autopush bindstatechange="statechange">
 
-   <!-- url="rtmp://23921.livepush.myqcloud.com/live/23921_2437192d66?bizid=23921&txSecret=6b6ff27fb1f563e7bc0bf71c570481c9&txTime=5B0D78FF" --> 
-     
+
       <cover-view class="cover-view" wx:if="{{showModalStatus}}">
         <!--问题弹窗-->
-        <cover-view class="drawer-box">
-          <cover-view class="{{list[0].questionId==questionId?'active':'non-active'}}"  id="{{list[0].questionId}}" bindtap='tapQuest'>1.{{list[0].content}} </cover-view>
-          <cover-view id="{{list[1].questionId}}" class="{{list[1].questionId==questionId?'active':'non-active'}}"  bindtap='tapQuest'>2.{{list[1].content}}</cover-view>
+        <cover-view class="question-group">
+          <cover-view class="{{list[0].questionId==questionId?'active':'non-active'}}" id="{{list[0].questionId}}" bindtap='tapQuest'>1.{{list[0].content}} </cover-view>
+          <cover-view id="{{list[1].questionId}}" class="{{list[1].questionId==questionId?'active':'non-active'}}" bindtap='tapQuest'>2.{{list[1].content}}</cover-view>
           <cover-view id="{{list[2].questionId}}" class="{{list[2].questionId==questionId?'active':'non-active'}}" bindtap='tapQuest'>3.{{list[2].content}}</cover-view>
           <cover-view class="{{list[3].questionId==questionId?'active':'non-active'}}" id="{{list[3].questionId}}" bindtap='tapQuest'>4.{{list[3].content}}</cover-view>
           <cover-view class="{{list[4].questionId==questionId?'active':'non-active'}}" id="{{list[4].questionId}}" bindtap='tapQuest'>5.{{list[4].content}}</cover-view>
           <cover-view class="{{list[5].questionId==questionId?'active':'non-active'}}" id="{{list[5].questionId}}" bindtap='tapQuest'>6.{{list[5].content}}</cover-view>
           <cover-view class="{{list[6].questionId==questionId?'active':'non-active'}}" id="{{list[6].questionId}}" bindtap='tapQuest'>7.{{list[6].content}}</cover-view>
           <cover-view class="{{list[7].questionId==questionId?'active':'non-active'}}" id="{{list[7].questionId}}" bindtap='tapQuest'>8.{{list[7].content}}</cover-view>
-
-          <cover-view class="btn-group">
-            <cover-image class="btn-window" src="../../images/choose-question.png" bindtap='sendQuestions'></cover-image>
-            <cover-image class="btn-window" src="../../images/send-answer.png" bindtap='sendAnswer'></cover-image>
-            <cover-image class="btn-window" src="../../images/close-window.png" bindtap='closeQuestion'></cover-image>
-          </cover-view>
-          <cover-view class="message">{{message}}</cover-view>
-          <!-- <cover-view class="radio-cover">
-            <radio-group class="group" bindchange="radioChange">
-              <cover-view class="label-2" wx:for="{{list}}">
-                <radio id="{{item.questionId}}" hidden value="{{item.questionId}}" checked="{{item.checked}}"></radio>
-                <cover-view class="icon">
-                  <cover-view class="icon-checked" style="opacity:{{item.checked ? 1: 0}}"></cover-view>
-                </cover-view>
-                <label class="label-2-text" for="{{item.questionId}}">
-                  <text>{{item.content}}</text>
-                </label>
-              </cover-view>
-            </radio-group>
-          </cover-view>
-          <cover-view class="button-cover">
-            <button bindtap="sendQuestions" size="mini" class="buttonModal" type="default">发送问题</button>
-            <button bindtap="sendAnswer" size="mini" class="buttonModal" type="primary">发送答案</button>
-            <button bindtap="closeQuestion" size="mini" class="buttonModal" type="primary">关闭弹窗</button>
-          </cover-view> -->
+        </cover-view>
+        <cover-view class="btn-group">
+          <cover-view class="btn send-question" bindtap='sendQuestions'>发送问题</cover-view>
+          <cover-view class="btn send-answer" bindtap='sendAnswer'>发送答案</cover-view>
+          <cover-view class="btn see-feedback" bindtap='getFeedback'>回答情况</cover-view>
+          <cover-view class="btn close-window" bindtap='closeQuestion'>关闭回答</cover-view>
         </cover-view>
       </cover-view>
     </live-pusher>
-   
-    <view class="btn-area">
-      <button bindtap="prepareQuestions" size="mini" class="page-body-button" type="primary">发送问题</button>
-      <button bindtap="bindStart" size="mini" class="page-body-button" type="primary">播放推流</button>
-      <button bindtap="bindPause" size="mini" class="page-body-button" type="primary">暂停推流</button>
-      <button bindtap="bindStop" size="mini" class="page-body-button" type="primary">停止推流</button>
-      <!-- <button bindtap="bindResume" class="page-body-button" type="primary">恢复推流</button>
-      <button bindtap="bindSwitchCamera" class="page-body-button" type="primary">切换前后摄像头</button> -->
+    <view class="btn-group">
+      <view class="box" bindtap="bindStart">
+        <image class="image-btn" mode='aspectFill' src="/images/play.png"></image>
+        <text class="image-text">播放推流</text>
+      </view>
+
+      <view class="box" bindtap="bindStart">
+        <image class="image-btn" mode='aspectFill' src="/images/pause.png"></image>
+        <text class="image-text">暂停推流</text>
+      </view>
+      <view class="box" bindtap="bindStop">
+        <image class="image-btn" mode='aspectFill' src="/images/stop.png"></image>
+        <text class="image-text">停止推流</text>
+      </view>
+    </view>
+    <view class="btn-group">
+    <view class="box" bindtap="prepareQuestions">
+        <image class="image-btn" mode='aspectFill' src="/images/send-question.png"></image>
+        <text class="image-text">发送问题</text>
+      </view>
+      <view class="box" bindtap="chooseimage">
+        <image class="image-btn"  src="/images/upload.png" mode="aspecFill"></image>
+        <text class="image-text">选择图片</text>
+      </view>
+      <view class="box" bindtap="bindUploadPhoto">
+        <image class="image-btn"  src="{{tempFilePaths }}" mode="aspecFill"></image>
+        <text class="image-text">发送图片</text>
+      </view>
     </view>
   </view>
 </view>

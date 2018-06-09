@@ -1,38 +1,28 @@
-.page-body-button {
+.btn-area {
+  display: block;
+}
+
+.page-button {
   margin-bottom: 30rpx;
-  size:mini;
 }
-.buttonModal{
-  margin-left: 15rpx;
-  color: #f0d264;
-  font-size: 14px;
-  display: inline-block;
-  
-}
+
 live-pusher {
   margin: 0 auto;
-  width: 650rpx;
+  width: 750rpx;
   height: 800rpx;
- }
- 
- 
+}
+.send-question {
+  background: #fc3;
+}
 
-.btn-group{
-  display: flex;  
-  flex-direction: row;  
+.send-answer {
+  background: #6cc;
 }
-.btn-window{
-  width:200rpx;
-  height:100rpx;
-  margin: 10rpx;
-  flex:1;
-  color:blanchedalmond;
+
+.see-feedback {
+  background: #9cf;
 }
-.active{
-color:red;
-margin:10rpx 10rpx 5px 30rpx;
-}
-.non-active{
-color:black;
-margin:10rpx 10rpx 5px 30rpx;
+
+.close-window {
+  background: #fcc;
 }

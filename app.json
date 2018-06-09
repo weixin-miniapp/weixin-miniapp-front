@@ -1,6 +1,5 @@
 {
-
-  "pages":[
+  "pages": [
     "pages/login/login",
     "pages/index/index",
     "pages/logs/logs",
@@ -12,6 +11,7 @@
     "pages/livepull/livepull",
     "pages/addcourse/addcourse",
     "pages/coursedescirption/coursedescirption",
+    "pages/comments/comments",
     "pages/addquestion/addquestion"
   ],
   "window": {
@@ -41,9 +41,6 @@
         "iconPath": "images/resources/tab_course1.png",
         "selectedIconPath": "images/resources/tab_course1.png"
       }
-    
     ]
   }
 }
-
-

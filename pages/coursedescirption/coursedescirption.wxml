@@ -2,14 +2,14 @@
     <view class="wa-item wa-item-thumbnail-left">
       <text class="icon-right ion-chevron-right"></text>
       <image class="item-img-con" src="{{header}}"></image>
-     <view class="text-content">JAVA程序设计</view>
-     <view><button class="wa-button-con" bindtap="gotolive">开始直播</button></view>
+     <view class="text-content">{{lessonName}}</view>
+     <view><button class="wa-button-con" bindtap="gotolive">{{distinction}}</button></view>
      </view>
      <view class="wa-item-2 wa-item-ava" bindtap="setquestion">
       <image class="item-img" src="/images/click.jpg"></image>
       设置课程题目
     </view>
-    <view class="wa-item-2 wa-item-ava" bindtap="coursemeg">
+    <view class="wa-item-2 wa-item-ava" bindtap="toComments">
       <image class="item-img" src="/images/click.jpg"></image>
       查看课程留言
     </view>

@@ -2,15 +2,15 @@ var client;
 const app = getApp();
 Page({
   data: {
-     //lessonId:'',
-     //rmtp_url: 'rtmp://23921.liveplay.myqcloud.com/live/23921_dfc19e64cf8448f98a1e66ccb9627078',
-    //lessonId: '7e56beb7be8741178f3cde786f4f0421',
-    //rmtp_url: 'rtmp://23921.livepush.myqcloud.com/live/23921_2437192d66?bizid=23921&txSecret=6b6ff27fb1f563e7bc0bf71c570481c9&txTime=5B0D78FF',
-    rmtp_url: "",
+    lessonId: '',
+    rmtp_url: '',
     showModalStatus: false,
     detail: '',
     currentOpt: [false, false, false, false],
-    questionId: null
+    hasAnswered: false,
+    questionId: null,
+    showImage: false,
+    imageUrl: ''
   },
   onLoad: function (options) {
     var that = this;
@@ -18,40 +18,8 @@ Page({
       lessonId: options.lessonId,
       rmtp_url: decodeURIComponent(options.rmtp_url)
     });
-    console.log(this.data.rmtp_url);
-    // watchLive();
   },
-  // watchLive: function(){
-  //   wx.request({
-  //     url: 'https://www.sunlikeme.xyz/live/watchLive',
-  //     data: {
-  //       'lessonId': this.data.lessonId,
-  //     },
-  //     header: {
-  //       "content-type": "application/x-www-form-urlencoded",
-  //       'unionId': getApp().globalData.userId
-  //     },
-  //     method: "POST",
-  //     success: function (result) {
-  //       if (result.data.code == 200) {
-  //         //绑定直播url
-  //         var that = this;
-  //         that.setData({
-  //           rmtp_url: result.data.data
-  //         });
-  //         console.log('开始观看直播')
-  //       }
-  //       else {
-  //       console.log(result.data.msg)
-  //         wx.showToast({
-  //         title: result.data.msg,
-  //         icon: 'none',
-  //         duration: 5000
-  //       });
-  //     }
-  //     }
-  //   });
-  // },
+
   onReady(res) {
     this.ctx = wx.createLivePlayerContext('player')
   },
@@ -147,6 +115,9 @@ Page({
           title: '已提交',
           content: result.data.msg,
         })
+        that.setData({
+          hasAnswered: true
+        })
       },
       fail: function () {
         console.log('提交答案失败')
@@ -165,6 +136,8 @@ Page({
       }
     )
   },
+
+
   /**
    * 生命周期函数--监听页面显示
    */
@@ -251,11 +224,10 @@ Page({
           questionId: res.questionId
         });
       });
-
-      client.subscribe('/user/question/getAnswer', function (result) {
         //显示答案，，学生的回掉
+      client.subscribe('/user/question/getAnswer', function (result) {
         console.log(result);
-        var res = JSON.parse(result.body);
+        var res = result.body;
         console.log(res);
         var answer = '';
         for (var i = 1; i <= 4; i++)
@@ -263,30 +235,48 @@ Page({
             answer = answer + i + ','
         if (answer.length > 1)
           answer = answer.substring(0, answer.length - 1);
+        answer = "\"" + answer + "\""
         console.log(answer)
-      if (answer == res)
-        wx.showToast({
-          title: '回答正确！',
-          duration: 2000
-        })
-      else
-        wx.showModal({
-          title: '回答错误！',
-          content: '正确答案：'+res,
-        })
+
+        if (answer == res && that.data.hasAnswered == true)
+          wx.showToast({
+            title: '回答正确！',
+            duration: 2000
+          })
+        else
+          wx.showModal({
+            title: '回答错误！',
+            content: '正确答案：' + res,
+          })
       });
 
-      client.subscribe('/user/question/getCloseWindow', function (result) {
         //关闭弹窗，学生的回掉
+      client.subscribe('/user/question/getCloseWindow', function (result) {
         console.log(result);
         that.setData({
           showModalStatus: false,
-          currentOpt: [false, false, false, false]
+          currentOpt: [false, false, false, false],
+          hasAnswered: false
+        })
+      });
+
+      //获取图片
+      client.subscribe('/user/question/getMultipart', function (result) {
+        console.log(result);
+        var url = JSON.parse(result.body);
+        that.setData({
+          showImage: true,
+          imageUrl: 'https://www.sunlikeme.xyz' + url
         })
       })
     })
   },
-
+  //关闭图片窗口
+  closeImg: function () {
+    this.setData({
+      showImage: false
+    })
+  },
 
   /**
    * 生命周期函数--监听页面隐藏

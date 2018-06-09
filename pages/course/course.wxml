@@ -5,7 +5,7 @@
     <text class="mobi_icon"></text>
     <text>我的课程</text>
   </view>
-<button class='registerBtn' bindtap='toAddCourse' >添加课程</button>
+<button class='registerBtn' bindtap='toAddCourse' wx:if="{{showButton}}">添加课程</button>
   <block wx:for="{{list}}" wx:key="list.lessonId">
     <view class="list" id="{{item.lessonId}}"  bindtap='toIntroduction' >
       <view class="list-img">

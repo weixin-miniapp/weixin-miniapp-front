@@ -1,4 +1,4 @@
- <view class="wa-item wa-item-thumbnail-left">
+<view class="wa-item wa-item-thumbnail-left">
       <text class="icon-right ion-chevron-right"></text>
       <image class="item-img" bindtap="chooseimage" src="/images/+.jpg"></image>
        <image class="item-img" bindtap="chooseimage" src="/images/+.jpg" src="{{tempFilePaths }}" mode="aspecFill"></image>
