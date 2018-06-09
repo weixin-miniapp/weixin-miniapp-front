@@ -1,5 +1,37 @@
 var client;
 const app = getApp();
+var GetList = function (that) {
+  wx.request({
+    url: 'https://www.sunlikeme.xyz/lesson/getComment',
+    data: {
+      'unionId': app.globalData.userId,
+      'lessonId': that.data.lessonId
+    },
+    header: {
+      "content-type": "application/x-www-form-urlencoded",
+      'unionId': app.globalData.userId
+    },
+    method: "GET",
+    success: function (result) {
+      var commentList = [];
+      for (var i = 0; i < result.data.data.length; i++) {
+
+        commentList.push({
+          comment: result.data.data[i]["content"],
+          userName: result.data.data[i]["user"].nickName,
+          userInfo: result.data.data[i]["user"].portrait
+        });
+        that.setData({
+          commentList: commentList,
+        })
+        console.log(that.data.commentList)
+      }
+    },
+    fail: function () {
+      console.log('获取课程失败，检查网络连接')
+    }
+  })
+}
 Page({
   data: {
     lessonId: '',
@@ -10,7 +42,8 @@ Page({
     list: [],
     questionId: '',
     rmtp_url: '',
-    tempFilePaths: ''
+    tempFilePaths: '',
+    commentList:[]
   },
 
   onLoad: function (options) {
@@ -29,7 +62,7 @@ Page({
       questionId: e.currentTarget.id
     })
   },
-
+ 
 
 
   //调出发送提问弹窗
@@ -85,6 +118,7 @@ Page({
   sendQuestions: function () {
     client.send('/app/question/sendQuestion', { lessonId: this.data.lessonId, questionId: this.data.questionId, userId: getApp().globalData.userId }, );
   },
+
   //发送回答
   sendAnswer: function () {
     client.send('/app/question/sendAnswer', { lessonId: this.data.lessonId, questionId: this.data.questionId, userId: getApp().globalData.userId }, );
@@ -94,6 +128,9 @@ Page({
   closeQuestion: function () {
     client.send('/app/question/closeQuestion', { lessonId: this.data.lessonId, userId: getApp().globalData.userId }, '');
     this.setData({ showModalStatus: false })
+  },
+  sendComment: function (commentBody) {
+    client.send('/app/lesson/comment', { lessonId: this.data.lessonId, userId: getApp().globalData.userId }, commentBody);
   },
   //获取答题情况
   getFeedback: function (e) {
@@ -215,6 +252,7 @@ Page({
     * 生命周期函数--监听页面显示
     */
   onShow: function () {
+    GetList(this);
     var that = this
     // this.startLive();
     var socketOpen = false
@@ -230,6 +268,7 @@ Page({
         socketMsgQueue.push(msg)
       }
     }
+  
     var ws = {
       send: sendSocketMessage,
       onopen: null,
@@ -294,7 +333,22 @@ Page({
           duration: 1000
         })
       });
-
+      client.subscribe('/user/lesson/getComment', function (result) {
+        //评论刷新?????
+        console.log(result);
+        var res = JSON.parse(result.body);
+        var commentList = that.data.commentList;
+        if (res.code == 200) {
+          commentList.push({
+            comment: res.content,
+            userName: res.user.nickName,
+            userInfo: res.user.portrait
+          });
+          that.setData({
+            commentList: commentList,
+          })
+        }
+      });
     })
   },
 

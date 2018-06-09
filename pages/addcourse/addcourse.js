@@ -122,6 +122,14 @@ Page({
   },
   addCourse:function(e){
     var that = this;
+    if (that.data.tempFilePaths == '')
+     { wx.showToast({
+        title: '请设置封面图片',
+        icon: 'none',
+        duration: 1200
+      })
+      return;
+     }
     wx.uploadFile({
       url: 'https://www.sunlikeme.xyz/lesson/create',
       filePath: this.data.tempFilePaths[0],

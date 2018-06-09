@@ -1,5 +1,37 @@
 var client;
 const app = getApp();
+var GetList = function (that) {
+  wx.request({
+    url: 'https://www.sunlikeme.xyz/lesson/getComment',
+    data: {
+      'unionId': app.globalData.userId,
+      'lessonId': that.data.lessonId
+    },
+    header: {
+      "content-type": "application/x-www-form-urlencoded",
+      'unionId': app.globalData.userId
+    },
+    method: "GET",
+    success: function (result) {
+      var commentList = [];
+      for (var i = 0; i < result.data.data.length; i++) {
+
+        commentList.push({
+          comment: result.data.data[i]["content"],
+          userName: result.data.data[i]["user"].nickName,
+          userInfo: result.data.data[i]["user"].portrait
+        });
+        that.setData({
+          commentList: commentList,
+        })
+        console.log(that.data.commentList)
+      }
+    },
+    fail: function () {
+      console.log('获取课程失败，检查网络连接')
+    }
+  })
+}
 Page({
   data: {
     lessonId: '',
@@ -10,7 +42,8 @@ Page({
     hasAnswered: false,
     questionId: null,
     showImage: false,
-    imageUrl: ''
+    imageUrl: '',
+    commentList:[]
   },
   onLoad: function (options) {
     var that = this;
@@ -19,7 +52,9 @@ Page({
       rmtp_url: decodeURIComponent(options.rmtp_url)
     });
   },
-
+  sendComment: function (commentBody) {
+    client.send('/app/lesson/comment', { lessonId: this.data.lessonId, userId: getApp().globalData.userId }, commentBody);
+  },
   onReady(res) {
     this.ctx = wx.createLivePlayerContext('player')
   },
@@ -142,6 +177,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    GetList(this);
     var that = this;
     var socketOpen = false
     var socketMsgQueue = []
@@ -155,7 +191,9 @@ Page({
       } else {
         socketMsgQueue.push(msg)
       }
+      
     }
+
     var ws = {
       send: sendSocketMessage,
       onopen: null,
@@ -224,7 +262,7 @@ Page({
           questionId: res.questionId
         });
       });
-        //显示答案，，学生的回掉
+      //显示答案，，学生的回掉
       client.subscribe('/user/question/getAnswer', function (result) {
         console.log(result);
         var res = result.body;
@@ -250,7 +288,7 @@ Page({
           })
       });
 
-        //关闭弹窗，学生的回掉
+      //关闭弹窗，学生的回掉
       client.subscribe('/user/question/getCloseWindow', function (result) {
         console.log(result);
         that.setData({
@@ -268,7 +306,24 @@ Page({
           showImage: true,
           imageUrl: 'https://www.sunlikeme.xyz' + url
         })
-      })
+      });
+
+      client.subscribe('/user/lesson/getComment', function (result) {
+        //评论刷新?????
+        console.log(result);
+        var res = JSON.parse(result.body);
+        var commentList = that.data.commentList;
+        if (res.code == 200) {
+          commentList.push({
+            comment: res.content,
+            userName: res.user.nickName,
+            userInfo: res.user.portrait
+          });
+          that.setData({
+            commentList: commentList,
+          })
+        }
+      });
     })
   },
   //关闭图片窗口

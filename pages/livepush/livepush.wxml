@@ -39,16 +39,16 @@
       </view>
     </view>
     <view class="btn-group">
-    <view class="box" bindtap="prepareQuestions">
+      <view class="box" bindtap="prepareQuestions">
         <image class="image-btn" mode='aspectFill' src="/images/send-question.png"></image>
         <text class="image-text">发送问题</text>
       </view>
       <view class="box" bindtap="chooseimage">
-        <image class="image-btn"  src="/images/upload.png" mode="aspecFill"></image>
+        <image class="image-btn" src="/images/upload.png" mode="aspecFill"></image>
         <text class="image-text">选择图片</text>
       </view>
       <view class="box" bindtap="bindUploadPhoto">
-        <image class="image-btn"  src="{{tempFilePaths }}" mode="aspecFill"></image>
+        <image class="image-btn" src="{{tempFilePaths }}" mode="aspecFill"></image>
         <text class="image-text">发送图片</text>
       </view>
     </view>

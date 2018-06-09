@@ -12,15 +12,15 @@ Page({
     onlineTime: null,
     offlineTime: null,
     multiparts: null,
-    teach:[],
+    teach: [],
     statusToString: null,
     teacherName: null,
     teacherInfo: null,
-    list:[],
-    showButton:false
+    list: [],
+    showButton: false
   },
 
-  toAddCourse:function(e){
+  toAddCourse: function (e) {
     console.log('yeah');
     wx.navigateTo({
       url: '../addcourse/addcourse',
@@ -35,14 +35,17 @@ Page({
       url: '/pages/coursedescirption/coursedescirption'
     })
   },
-  
-  onLoad: function (e) 
-  {
-    if(app.globalData.userInfo.role==0){
+
+  onLoad: function (e) {
+    if (app.globalData.userInfo.role == 0) {
       this.setData({
-        showButton:true
+        showButton: true
       })
     }
+  },
+
+  onShow: function () {
+
     var that = this;
     wx.request({
       url: 'https://www.sunlikeme.xyz/lesson/list',
@@ -57,9 +60,10 @@ Page({
       },
       method: "GET",
       success: function (result) {
+        var list = [];
+        var teach = [];
         for (var i = 0; i < result.data.data.length; i++) {
-          var list = that.data.list;
-          var teach = that.data.teach;
+        
           if (result.data.data[i]["status"] == 0) {
             that.setData({
               statusToString: '未开始'
@@ -86,7 +90,7 @@ Page({
             multiparts: result.data.data[i]["multiparts"],
             teacherInfo: result.data.data[i]["teach"][0]["portrait"],
             teacherName: result.data.data[i]["teach"][0]["nickName"],
-            statusToString:that.data.statusToString
+            statusToString: that.data.statusToString
           });
           that.setData({
             list: list,
@@ -98,6 +102,5 @@ Page({
         console.log('获取课程失败，检查网络连接')
       }
     })
-  },
-
+  }
 })
