@@ -47,6 +47,7 @@ Page({
           },
           method: "GET",
           success: function (result) {
+            console.log(that.data.list)
             that.setData({
               lessonName:result.data.data.lessonName
             })
@@ -61,7 +62,6 @@ Page({
                 list: list,
               })
             }
-            console.log(that.data.list)
           },
           fail: function () {
             console.log('获取课程失败，检查网络连接')
@@ -106,6 +106,7 @@ Page({
               that.setData({
                 list: list,
               })
+              console.log(that.data.list)
             }
           },
           fail: function () {
