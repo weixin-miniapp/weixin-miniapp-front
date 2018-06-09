@@ -24,7 +24,7 @@ Page({
   },
   toComments:function(e){
     wx.navigateTo({
-      url: '/pages/comments/comments'
+      url: '/pages/comments/comments?lessonName=' + this.data.lessonName + "&lessonId=" + this.data.lessonId
     })
   },
   gotolive: function () {

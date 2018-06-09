@@ -1,27 +1,65 @@
 var app = getApp()
+var GetList= function (that) {
+  that.setData({
+    hidden: false
+  });
+  wx.request({
+    url: 'https://www.sunlikeme.xyz/lesson/getComment',
+    data: {
+      'unionId': app.globalData.userId,
+      'lessonId': that.data.lessonId
+    },
+    header: {
+      "content-type": "application/x-www-form-urlencoded",
+      'unionId': app.globalData.userId
+    },
+    method: "GET",
+    success: function (result) {
+      var list = [];
+      for (var i = 0; i < result.data.data.length; i++) {
+        
+        list.push({
+          comment: result.data.data[i]["content"],
+          userName: result.data.data[i]["user"].nickName,
+          userInfo: result.data.data[i]["user"].portrait
+        });
+        that.setData({
+          list: list,
+        })
+        console.log(that.data.list)
+      }
+      that.setData({
+        hidden: true
+      });
+    },
+    fail: function () {
+      console.log('获取课程失败，检查网络连接')
+    }
+  })
+}
 Page({
-
   data: {
-    initialInput:'',
-    lessonId:null,
-    lessonName:null,
-    list:[],
-    comment:null,
-    myComment:null,
-    userName:null,
-    userInfo:null,
+    initialInput: '',
+    lessonId: null,
+    lessonName: null,
+    list: [],
+    comment: null,
+    myComment: null,
+    userName: null,
+    userInfo: null,
+    hidden: true,
   },
-  getComment:function(e){
-    this.setData ({
-      myComment : e.detail.value
+  getComment: function (e) {
+    this.setData({
+      myComment: e.detail.value
     })
     console.log(this.data.myComment)
   },
-  submitComments:function(e){
+  submitComments: function (e) {
     this.setData({
-      initialInput:''
+      initialInput: ''
     })
-    var that =this;
+    var that = this;
     wx.request({
       url: 'https://www.sunlikeme.xyz/lesson/comment',
       data: {
@@ -35,88 +73,33 @@ Page({
       },
       method: "POST",
       success: function (result) {
-        wx.request({
-          url: 'https://www.sunlikeme.xyz/lesson/listLessonById',
-          data: {
-            'unionId': app.globalData.userId,
-            'lessonId': that.data.lessonId
-          },
-          header: {
-            "content-type": "application/x-www-form-urlencoded",
-            'unionId': app.globalData.userId
-          },
-          method: "GET",
-          success: function (result) {
-            console.log(that.data.list)
-            that.setData({
-              lessonName:result.data.data.lessonName
-            })
-            for (var i = result.data.data.comments.length-1; i < result.data.data.comments.length; i++) {
-              var list = that.data.list;
-              list.push({
-                comment: result.data.data.comments[i]["content"],
-                userName: result.data.data.comments[i]["user"].nickName,
-                userInfo: result.data.data.comments[i]["user"].portrait
-              });
-              that.setData({
-                list: list,
-              })
-            }
-          },
-          fail: function () {
-            console.log('获取课程失败，检查网络连接')
-          }
-        })
-      },
-      fail: function () {
-        console.log('登陆失败，检查网络连接')
-      }
-    })  
-  },
-  onLoad: function (options) {
-    var that = this;
-    wx.getStorage({
-      key: 'lessonId',
-      success: function(result) {
-        that.setData({
-          lessonId: result.data
-        })
-        wx.request({
-          url: 'https://www.sunlikeme.xyz/lesson/listLessonById',
-          data: {
-            'unionId': app.globalData.userId,
-            'lessonId': that.data.lessonId
-          },
-          header: {
-            "content-type": "application/x-www-form-urlencoded",
-            'unionId': app.globalData.userId
-          },
-          method: "GET",
-          success: function (result) {
-            that.setData({
-              lessonName: result.data.data.lessonName
-            })
-            for (var i = 0; i < result.data.data.comments.length; i++) {
-              var list = that.data.list;
-              list.push({
-                comment: result.data.data.comments[i]["content"],
-                userName: result.data.data.comments[i]["user"].nickName,
-                userInfo: result.data.data.comments[i]["user"].portrait
-              });
-              that.setData({
-                list: list,
-              })
-              console.log(that.data.list)
-            }
-          },
-          fail: function () {
-            console.log('获取课程失败，检查网络连接')
-          }
-        })
+
+        that.refresh();
       },
       fail: function () {
         console.log('登陆失败，检查网络连接')
       }
     })
-  }
+  },
+  onLoad: function (options) {
+    var that = this;
+
+        that.setData({
+          lessonId: options.lessonId,
+          lessonName: options.lessonName
+        })
+    
+  },
+
+  refresh: function (event) {
+    //  该方法绑定了页面滑动到顶部的事件，然后做上拉刷新
+    GetList(this)
+  },
+  onShow: function () {
+    //  在页面展示之后先获取一次数据
+    var that = this;
+    GetList(that);
+  },
+
+
 })
