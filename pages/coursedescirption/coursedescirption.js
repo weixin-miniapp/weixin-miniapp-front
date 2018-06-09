@@ -1,5 +1,6 @@
 // pages/coursedescirption/coursedescirption.js
 var app=getApp()
+var utils = require('../../utils/util.js')
 Page({
   data: {
     lessonId: null,
@@ -139,8 +140,8 @@ startLive: function () {
               lessonName: result.data.data.lessonName,
               introduction: result.data.data.introduction,
               status: result.data.data.status,
-              onlineTime: result.data.data.onlineTime,
-              offlineTime: result.data.data.offlineTime,
+              onlineTime: utils.parseTime(result.data.data.onlineTime),
+              offlineTime: utils.parseTime(result.data.data.offlineTime),
               multiparts: result.data.data.multiparts,
               teacherName: result.data.data.teach[0]["nickName"]
             })

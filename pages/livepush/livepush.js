@@ -83,7 +83,7 @@ Page({
  
   //发送问题
   sendQuestions: function (questionId) {
-    client.send('/app/question/sendQuestion', { lessonId: this.data.lessonId, questionId: '008de9c1ab654e6b8bc08bb5935a9f92', userId: getApp().globalData.userId }, );
+    client.send('/app/question/sendQuestion', { lessonId: this.data.lessonId, questionId: this.data.questionId, userId: getApp().globalData.userId }, );
   },
   //发送回答
   sendAnswer: function () {
