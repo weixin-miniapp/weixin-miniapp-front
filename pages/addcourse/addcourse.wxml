@@ -17,12 +17,13 @@
 </view>
 </picker>
 </view>
+   
   </view>
     <view class="space">课程简介：</view>
   <view class="padding">
     <view class="wa-input-icon">
       <text class="icon-left ion-search placeholder-icon"></text>
-      <input class="wa-input" placeholder="请填写课程简介" value="" bindtap='inputIntroduction'/>
+      <input class="wa-input" placeholder="请填写课程简介" value="" bindinput='inputIntroduction'/>
     </view>
   </view>
   <view><button class="wa-button-block" bindtap="addCourse">提交课程信息</button></view>

@@ -15,7 +15,7 @@
     </view>
     <view class="wa-item">任课老师:<text>{{teacherName}}</text></view>
      <view class="wa-item-1">开课时间:<text>{{onlineTime}}</text>
-       结课时间:<text>{{offlineTime}}</text></view>
+       </view>
      <view class="wa-item-content">课程简介:</view>
      <view class="wa-item-con">{{introduction}}</view>
      <view class="wa-item-content">参加该课程的学生:</view>

@@ -16,7 +16,7 @@ Page({
     dateTime1: null,
     startYear: 2000,
     endYear: 2050,
-
+    timechanged:false,
     tempFilePaths: '',
     lessonName:null,
     teacherName:null,
@@ -88,7 +88,8 @@ Page({
 
     this.setData({
       dateTimeArray: dateArr,
-      dateTime: arr
+      dateTime: arr,
+      timechanged:true
     });
   },
   chooseimage: function () {
@@ -121,42 +122,51 @@ Page({
     })
   },
   addCourse:function(e){
-    var that = this;
-    if (that.data.tempFilePaths == '')
-     { wx.showToast({
-        title: '请设置封面图片',
-        icon: 'none',
-        duration: 1200
-      })
-      return;
-     }
-    wx.uploadFile({
-      url: 'https://www.sunlikeme.xyz/lesson/create',
-      filePath: this.data.tempFilePaths[0],
-      name: 'headerFile',
-      formData: {
-        'lessonName': this.data.lessonName,
-        'introduction': this.data.introduction,
-        'onlineTime': this.data.time,
-        'unionId':app.globalData.userId
-      },
-      header: {
-        "Content-Type":"multipart/form-data",
-        'unionId': app.globalData.userId
-      },
-      success: function (res) {
-        var data = JSON.parse(res.data)
-        console.log(data)
+    if (this.data.timechanged==true){
+      var that = this;
+      if (that.data.tempFilePaths == '') {
         wx.showToast({
-          title: '提交成功',
-          icon: 'success',
+          title: '请设置封面图片',
+          icon: 'none',
           duration: 1200
         })
-      },
-      fail: function () {
-        console.log('创建失败，检查网络连接')
+        return;
       }
-    })
+      wx.uploadFile({
+        url: 'https://www.sunlikeme.xyz/lesson/create',
+        filePath: this.data.tempFilePaths[0],
+        name: 'headerFile',
+        formData: {
+          'lessonName': this.data.lessonName,
+          'introduction': this.data.introduction,
+          'onlineTime': this.data.time,
+          'unionId': app.globalData.userId
+        },
+        header: {
+          "Content-Type": "multipart/form-data",
+          'unionId': app.globalData.userId
+        },
+        success: function (res) {
+          var data = JSON.parse(res.data)
+          console.log(data)
+          wx.showToast({
+            title: '提交成功',
+            icon: 'success',
+            duration: 1200
+          })
+        },
+        fail: function () {
+          console.log('创建失败，检查网络连接')
+        }
+      })
+    }
+    else{
+      wx.showToast({
+        title: '请选择提交时间',
+        icon:'loading',
+        duration: 1200
+      })
+    }
   }
 })  
 
