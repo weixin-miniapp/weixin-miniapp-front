@@ -41,7 +41,7 @@
           <text>推荐课程</text>
         </view>
         <view class="right">
-          <text>查看更多课程</text>
+          <text bindtap='toMore'>查看更多课程</text>
           <view class="bilibili-index-sprite bilibili-index-arrow"></view>
         </view>
       </navigator>

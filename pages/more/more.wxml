@@ -1,0 +1,19 @@
+<!--pages/course/course.wxml-->
+
+<scroll-view scroll-y="true" bindscroll="scroll">
+
+  <block wx:for="{{list}}" wx:key="list.lessonId">
+    <view class="list" id="{{item.lessonId}}"  bindtap='toIntroduction' >
+      <view class="list-img">
+        <image class="video-img" mode="scaleToFill" src="{{item.header}}"></image>
+      </view>
+      <view class="list-detail" >
+        <view class="list-title"><text>{{item.lessonName}}</text></view>
+        <view class="list-tag"><view class="state">{{statusToString}}</view></view>
+        <view class="list-info"><text>{{item.teacherName}}</text></view>
+      </view> 
+    </view>
+  </block>
+</scroll-view>
+<include src="../layout/footer.wxml"/>
+

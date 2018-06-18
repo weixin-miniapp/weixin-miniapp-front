@@ -12,7 +12,8 @@
     "pages/addcourse/addcourse",
     "pages/coursedescirption/coursedescirption",
     "pages/comments/comments",
-    "pages/addquestion/addquestion"
+    "pages/addquestion/addquestion",
+    "pages/more/more"
   ],
   "window": {
     "backgroundTextStyle": "light",

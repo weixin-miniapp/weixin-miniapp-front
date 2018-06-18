@@ -54,6 +54,11 @@ Page({
       url: '/pages/search/search',
     })
   },
+  toMore:function(e){
+    wx.navigateTo({
+      url: '/pages/more/more'
+    })
+  },
   //事件处理函数
   bindViewTap: function () {
     wx.navigateTo({
