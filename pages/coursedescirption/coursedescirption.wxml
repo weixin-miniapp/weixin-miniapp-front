@@ -1,28 +1,33 @@
 <!--pages/coursedescription/coursedescription.wxml-->
-    <view class="wa-item wa-item-thumbnail-left">
-      <text class="icon-right ion-chevron-right"></text>
-      <image class="item-img-con" src="{{header}}"></image>
-     <view class="text-content">{{lessonName}}</view>
-     <view><button class="wa-button-con" bindtap="gotolive">{{distinction}}</button></view>
-     </view>
-     <view class="wa-item-2 wa-item-ava" bindtap="setquestion">
-      <image class="item-img" src="/images/click.jpg"></image>
-      设置课程题目
-    </view>
-    <view class="wa-item-2 wa-item-ava" bindtap="toComments">
-      <image class="item-img" src="/images/click.jpg"></image>
-      查看课程留言
-    </view>
-    <view class="wa-item">任课老师:<text>{{teacherName}}</text></view>
-     <view class="wa-item-1">开课时间:<text>{{onlineTime}}</text>
-       </view>
-     <view class="wa-item-content">课程简介:</view>
-     <view class="wa-item-con">{{introduction}}</view>
-     <view class="wa-item-content">参加该课程的学生:</view>
+<view class="wa-item wa-item-thumbnail-left">
+  <text class="icon-right ion-chevron-right"></text>
+  <image class="item-img-con" src="{{header}}"></image>
+  <view class="text-content">{{lessonName}}</view>
+  <view>
+    <button class="wa-button-con" bindtap="gotolive">{{distinction}}</button>
+  </view>
+</view>
+<view wx:if="{{showSetTest}}" class="wa-item-2 wa-item-ava" bindtap="setquestion">
+  <image class="item-img" src="/images/click.jpg"></image>
+  设置课程题目
+</view>
+<view class="wa-item-2 wa-item-ava" bindtap="toComments">
+  <image class="item-img" src="/images/click.jpg"></image>
+  查看课程留言
+</view>
+<view class="wa-item">任课老师:
+  <text>{{teacherName}}</text>
+</view>
+<view class="wa-item-1">开课时间:
+  <text>{{onlineTime}}</text>
+</view>
+<view class="wa-item-content">课程简介:</view>
+<view class="wa-item-con">{{introduction}}</view>
+<view class="wa-item-content">参加该课程的学生:</view>
 
 <view class="shelf-nav">
- <view class="shelf-nav-item" wx:for="{{studentList}}">
-   <image src="{{item.studentInfo}}"  class="shelf-nav-item__image">  </image>
-   <text>{{item.studentName}}</text>
- </view>
+  <view class="shelf-nav-item" wx:for="{{studentList}}">
+    <image src="{{item.studentInfo}}" class="shelf-nav-item__image"> </image>
+    <text>{{item.studentName}}</text>
+  </view>
 </view>

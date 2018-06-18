@@ -21,7 +21,8 @@
   <!-- 滚动广告 begin -->
   <view class="slider-wrapper">
     <swiper indicator-dots="{{indicatorDots}}"
-  autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+  autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}"
+  bindchange='swiperListener' bindtap='bindTapSwiper'>
       <block wx:for="{{imgUrls}}" wx:key="*this">
         <swiper-item>
           <image src="{{item}}" class="slide-image"/>

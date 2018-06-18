@@ -89,8 +89,8 @@ page .wa-dark {
   font-size: 18px;
   display: block;
   color: #576b95;
-  padding:10px;
-  height: 45px;
+  padding:20rpx;
+  line-height: 40rpx;
   box-sizing: border-box;
   position:relative;
   background-color: #fff;

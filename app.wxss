@@ -248,6 +248,8 @@
 /* 图片+下方文字的容器 */
 .box {
   width: 20%;
+  background: #eeeeee;
+  opacity: 0.8;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -257,7 +259,7 @@
   line-height: 20px;
   padding: 10rpx;
   margin-top: 23rpx;
-  border: 8rpx #cccccc solid;
+  border: 2rpx #cccccc solid;
   border-radius: 20rpx;
 }
 /* 按钮中的图片 */

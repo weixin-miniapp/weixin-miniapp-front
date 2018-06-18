@@ -7,29 +7,23 @@ Page({
     motto: 'Hello World',
 
     userInfo: {},
-    lessonId:null,
-    header:null,
-    lessonName:null,
-    introduction:null,
-    status:null,
-    onlineTime:null,
-    offlineTime:null,
-    multiparts:null,
-    teach:[],
-    statusToString:'',
-    teacherName:null,
-    teacherInfo:null,
-    list:[],
+    lessonId: null,
+    header: null,
+    lessonName: null,
+    introduction: null,
+    status: null,
+    onlineTime: null,
+    offlineTime: null,
+    multiparts: null,
+    teach: [],
+    statusToString: '',
+    teacherName: null,
+    teacherInfo: null,
+    list: [],
 
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    imgUrls: [
-      'http://i0.hdslb.com/bfs/archive/9bab17a99758cc7a72531d15d2d5a85d73b78ded.jpg',
-      'http://i0.hdslb.com/bfs/archive/57d8001838ff81c64bef2682070e53efbe2736b7.jpg',
-      'http://i0.hdslb.com/bfs/archive/499730dbcd76823664c48e661726a37164158795.jpg',
-      'http://i0.hdslb.com/bfs/archive/c9682eac8f46fd2b261b739c5c88e21adaffab53.jpg',
-      'http://i0.hdslb.com/bfs/archive/414cf391f88bb098ded766b1d7effd9216be34ef.jpg'
-    ],
+    imgUrls: [],
     // 是否显示面板指示点
     indicatorDots: false,
     // 是否自动切换
@@ -37,20 +31,36 @@ Page({
     // 自动切换时间间隔
     interval: 5000,
     // 滑动动画时长
-    duration: 1000
-  }, 
-  goToSearch:function(e){
+    duration: 1000,
+    //滑动页数
+    swiperIndex:0,
+  },
+  swiperListener:function(e){
+    this.setData({
+      swiperIndex:e.detail.current
+    })
+  },
+  bindTapSwiper:function(e){
+    wx.setStorage({
+      key: "lessonId",
+      data:this.data.list[this.data.swiperIndex].lessonId
+    })
+    wx.navigateTo({
+      url: '/pages/coursedescirption/coursedescirption'
+    })
+  },
+  goToSearch: function (e) {
     wx.navigateTo({
       url: '/pages/search/search',
     })
   },
   //事件处理函数
-  bindViewTap: function() {
+  bindViewTap: function () {
     wx.navigateTo({
       url: '../logs/logs'
     })
   },
-  toIntroduction:function(e){
+  toIntroduction: function (e) {
     wx.setStorage({
       key: "lessonId",
       data: e.currentTarget.id
@@ -102,9 +112,9 @@ Page({
             }
           });
         }
-        });
-      }
-  
+      });
+    }
+
     wx.request({
       url: 'https://www.sunlikeme.xyz/lesson/list',
       data: {
@@ -120,20 +130,21 @@ Page({
       success: function (result) {
         for (var i = 0; i < result.data.data.length; i++) {
           var list = that.data.list;
+          var imgUrls = that.data.imgUrls;
           var statusToString;
           if (result.data.data[i]["status"] == 0) {
-           
-              statusToString='未开始';
-            
+
+            statusToString = '未开始';
+
           }
           else if (result.data.data[i]["status"] == 1) {
-            
-              statusToString= '直播中';
+
+            statusToString = '直播中';
           }
           else if (result.data.data[i]["status"] == 2) {
-            
-              statusToString='已结束';
-            
+
+            statusToString = '已结束';
+
           }
           list.push({
             header: 'https://www.sunlikeme.xyz' + result.data.data[i]["header"],
@@ -148,10 +159,14 @@ Page({
             teacherName: result.data.data[i]["teach"][0]["nickName"],
             statusToString: statusToString
           });
+          imgUrls.push(['https://www.sunlikeme.xyz' + result.data.data[i]["header"]])
           that.setData({
             list: list,
+            imgUrls:imgUrls
           })
-        
+          
+          
+
         }
         console.log(that.data.list);
       },
@@ -159,9 +174,9 @@ Page({
         console.log('获取课程失败，检查网络连接')
       }
     }),
-    this.setData({
-            userInfo: app.globalData.userInfo,
-            hasUserInfo: true
-          })
-    }  
+      this.setData({
+        userInfo: app.globalData.userInfo,
+        hasUserInfo: true
+      })
+  }
 })

@@ -1,5 +1,5 @@
 // pages/coursedescirption/coursedescirption.js
-var app=getApp()
+var app = getApp()
 var utils = require('../../utils/util.js')
 Page({
   data: {
@@ -11,18 +11,20 @@ Page({
     onlineTime: null,
     offlineTime: null,
     multiparts: null,
+    showSetTest: false,
     teach: [],
     statusToString: '',
     teacherName: null,
+    teacherId: null,
     teacherInfo: null,
-    studentName:null,
-    studentInfo:null,
-    studentList:[],
-    comments:[],
-    question:null,
-    distinction:'进入课程'
+    studentName: null,
+    studentInfo: null,
+    studentList: [],
+    comments: [],
+    question: null,
+    distinction: '进入课程'
   },
-  toComments:function(e){
+  toComments: function (e) {
     wx.navigateTo({
       url: '/pages/comments/comments?lessonName=' + this.data.lessonName + "&lessonId=" + this.data.lessonId
     })
@@ -30,20 +32,20 @@ Page({
   gotolive: function () {
     //开始直播按钮
     //0为老师
-    if (getApp().globalData.userInfo.role ==0)
-        this.startLive();
+    if (getApp().globalData.userInfo.role == 0)
+      this.startLive();
     else if (getApp().globalData.userInfo.role == 1)
       this.watchLive();
-      else {
+    else {
       wx.showToast({
         title: "直播未开始",
         icon: 'none',
         duration: 5000
       });
-      }
+    }
   },
- watchLive: function(){
-   var that = this;
+  watchLive: function () {
+    var that = this;
     wx.request({
       url: 'https://www.sunlikeme.xyz/live/watchLive',
       data: {
@@ -62,23 +64,23 @@ Page({
             url: '../livepull/livepull?lessonId=' + that.data.lessonId + "&rmtp_url=" + encodeURIComponent(result.data.data),
           });
 
-          
+
         }
         else {
-        console.log(result.data.msg)
+          console.log(result.data.msg)
           wx.showToast({
-          title: result.data.msg,
-          icon: 'none',
-          duration: 5000
-        });
-      }
+            title: result.data.msg,
+            icon: 'none',
+            duration: 5000
+          });
+        }
       }
     });
   },
 
 
-startLive: function () {
-  var that = this;
+  startLive: function () {
+    var that = this;
     wx.request({
       url: 'https://www.sunlikeme.xyz/live/startLive',
       data: {
@@ -95,9 +97,9 @@ startLive: function () {
         if (result.data.code == 200) {
           //绑定直播url
           wx.navigateTo({
-            url: '../livepush/livepush?lessonId=' + that.data.lessonId +"&rmtp_url="+encodeURIComponent(result.data.data),
+            url: '../livepush/livepush?lessonId=' + that.data.lessonId + "&rmtp_url=" + encodeURIComponent(result.data.data),
           });
-          
+
         }
         else {
           console.log(result.data.msg)
@@ -120,9 +122,10 @@ startLive: function () {
   },
 
   onLoad: function (options) {
-    if (app.globalData.role==0){
+    console.log("my userId:" + getApp().globalData.userId)
+    if (app.globalData.role == 0) {
       setData({
-        distinction:'开始直播'
+        distinction: '开始直播'
       })
     }
     var that = this;
@@ -130,7 +133,7 @@ startLive: function () {
       key: 'lessonId',
       success: function (result) {
         that.setData({
-          lessonId:result.data
+          lessonId: result.data
         })
         console.log(that.data.lessonId)
         wx.request({
@@ -145,7 +148,7 @@ startLive: function () {
           },
           method: "GET",
           success: function (result) {
-            console.log(result.data.data.introduction)
+            console.log(result.data.data)
             that.setData({
               header: 'https://www.sunlikeme.xyz' + result.data.data.header,
               lessonId: result.data.data.lessonId,
@@ -155,19 +158,26 @@ startLive: function () {
               onlineTime: utils.parseTime(result.data.data.onlineTime),
               offlineTime: utils.parseTime(result.data.data.offlineTime),
               multiparts: result.data.data.multiparts,
-              teacherName: result.data.data.teach[0]["nickName"]
+              teacherName: result.data.data.teach[0]["nickName"],
+              teacherId: result.data.data.teach[0]["userId"]
             })
-            for (var i=0;i<result.data.data.study.length;i++){
+
+            for (var i = 0; i < result.data.data.study.length; i++) {
               var studentList = that.data.studentList;
               studentList.push({
-                studentName:result.data.data.study[i]["nickName"],
-                studentInfo:result.data.data.study[i]["portrait"]
+                studentName: result.data.data.study[i]["nickName"],
+                studentInfo: result.data.data.study[i]["portrait"]
               })
             }
             console.log(that.data.studentList)
             that.setData({
               studentList: studentList,
             })
+            if (that.data.teacherId == app.globalData.userId) {
+              that.setData({
+                showSetTest: true
+              })
+            }
           },
           fail: function () {
             console.log('获取课程失败，检查网络连接')
@@ -178,7 +188,7 @@ startLive: function () {
   },
   setquestion: function () {
     wx.navigateTo({
-      url: '../addquestion/addquestion?lessonId='+this.data.lessonId,
+      url: '../addquestion/addquestion?lessonId=' + this.data.lessonId,
     })
   }
 })
