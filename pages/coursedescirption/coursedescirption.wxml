@@ -22,7 +22,7 @@
   <text>{{onlineTime}}</text>
 </view>
 <view class="wa-item-content">课程简介:</view>
-<view class="wa-item-con">{{introduction}}</view>
+<text class="wa-item-con">{{introduction}}</text>
 <view class="wa-item-content">参加该课程的学生:</view>
 
 <view class="shelf-nav">
